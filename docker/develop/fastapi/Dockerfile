@@ -8,7 +8,7 @@ ENV PYTHONUNBUFFERED 1
 # Update system and install base dependencies 
 RUN apt-get update && apt-get -y install gcc \
   # Network utilities
-  netcat \
+  netcat curl\
   # Database dependencies
   postgresql \
   # Cleaning
