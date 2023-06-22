@@ -3,3 +3,7 @@ fastapi==0.97
 
 # Web Server
 uvicorn==0.22.0
+
+## Database
+# ORM
+alembic==1.11.1
