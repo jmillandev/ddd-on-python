@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  mercury_api:
+    build:
+      context: ./ # We need run this from the root of the project
+      dockerfile: ./docker/develop/fastapi/Dockerfile
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - 8080:8080
+    env_file:
+      - .env
