@@ -1,12 +1,15 @@
-from typing import List, Union, Optional, Dict, Any
+from os import path
+from typing import Any, Dict, List, Optional, Union
 
-from pydantic import AnyHttpUrl, BaseSettings, validator, PostgresDsn
+from pydantic import AnyHttpUrl, BaseSettings, PostgresDsn, validator
 
 
 class Settings(BaseSettings):
     API_PREFIX: str = "/api"
     PROJECT_NAME: str = "Mercury"
-     # BACKEND_CORS_ORIGINS is a JSON-formatted list of origins
+    BASE_DIR: str = path.dirname(path.dirname(__file__))
+
+    # BACKEND_CORS_ORIGINS is a JSON-formatted list of origins
     # e.g: '["http://localhost", "http://localhost:4200", "http://localhost:3000"]'
     BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []
 

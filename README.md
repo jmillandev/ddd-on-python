@@ -8,9 +8,9 @@
 ## How to run a new migration
 1. Create a new migration file
 ```bash
-$ alembic revision --autogenerate -m "migration name"
+alembic revision --autogenerate -m "migration name"
 ```
 2. Run the migration
 ```bash
-$ alembic upgrade head
+alembic upgrade head
 ```
