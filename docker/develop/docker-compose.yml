@@ -17,3 +17,17 @@ services:
       retries: 5
       start_period: 5s
       timeout: 2s
+    depends_on:
+      - database
+
+  database:
+    image: postgres:15
+    volumes:
+      - mercury-db:/var/lib/postgresql/data/pgdata
+    env_file:
+      - .env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+
+volumes:
+  mercury-db:

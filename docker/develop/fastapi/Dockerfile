@@ -19,7 +19,7 @@ RUN pip install --upgrade pip
 COPY ./requirements ./requirements
 RUN pip install -r requirements/develop.txt
 
-# COPY ./docker/develop/fast_api/entrypoint.sh /entrypoint.sh
+COPY ["./docker/develop/fastapi/entrypoint.sh", "/entrypoint.sh"]
 
-# ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["uvicorn", "main:app", "--reload", "--workers", "1", "--host", "0.0.0.0", "--port", "8080"]

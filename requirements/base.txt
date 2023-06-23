@@ -7,3 +7,6 @@ uvicorn==0.22.0
 ## Database
 # ORM
 alembic==1.11.1
+
+# Engine
+asyncpg==0.27.0
