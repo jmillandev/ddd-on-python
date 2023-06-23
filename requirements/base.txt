@@ -4,9 +4,7 @@ fastapi==0.97
 # Web Server
 uvicorn==0.22.0
 
-## Database
-# ORM
-alembic==1.11.1
-
-# Engine
-asyncpg==0.27.0
+# Database
+sqlalchemy==2.0.16 # ORM
+alembic==1.11.1 # Migrations
+asyncpg==0.27.0 # Engine
