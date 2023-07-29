@@ -13,4 +13,5 @@ class UserRepository(BaseRepository):
         result = await self.session.execute(
             select(self.model).where(self.model.email == email).limit(1)
         )
-        return result.first()
+        data = result.scalars()
+        return data.first()

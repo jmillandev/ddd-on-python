@@ -6,4 +6,4 @@ from mercury.config import settings
 
 def make_session() -> AsyncSession:
     engine = create_async_engine(settings.DATABASE_URI, pool_pre_ping=True, echo=True)
-    return async_sessionmaker(engine, autocommit=False, autoflush=False, expire_on_commit=False)()
+    return async_sessionmaker(engine, autoflush=False, expire_on_commit=False)()

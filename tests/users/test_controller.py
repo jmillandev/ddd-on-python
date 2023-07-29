@@ -23,4 +23,8 @@ async def test_sign_up(client: TestClient, db: AsyncSession) -> None:
     created_user = response.json()
     user = await UserRepository(db).find_by_email(params['email'])
     assert user
-    assert user.name == created_user['name']
+    assert user.email == created_user.get('email')
+    assert user.name == created_user.get('name')
+    assert user.last_name == created_user.get('last_name')
+    assert created_user.get('public_id')
+    assert user.id == 1

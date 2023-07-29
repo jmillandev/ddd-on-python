@@ -25,11 +25,11 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         self.session = session
 
     async def create(self, object: ModelType) -> ModelType:
-        async with self.session.begin():
-            self.session.add(object)
-            await self.session.commit()
-            await self.session.refresh(object)
-            return object
+        # async with self.session.begin():
+        self.session.add(object) 
+        await self.session.commit()
+        await self.session.refresh(object)
+        return object
 
     # TODO: Migrate method to async https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html
 

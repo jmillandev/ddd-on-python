@@ -24,12 +24,11 @@ async def sign_up(*, session: AsyncSession = Depends(get_db), params: UserCreate
     validated_data = params.dict()
     validated_data['hashed_password'] = validated_data.pop('password')
     user = User(**validated_data)
-    respository.create(user)
+    await respository.create(user)
 
     return UserSchema(
+        public_id=str(user.public_id),
         email=user.email, 
-        is_active=True,
-        is_superuser=False,
         name=user.name,
         last_name=user.last_name
     )
