@@ -10,14 +10,14 @@ from apps.users.repositories import UserRepository
 fake = Faker()
 
 
-def test_create_user_new_email(client: TestClient, db: Session) -> None:
+def test_sign_up(client: TestClient, db: Session) -> None:
     params = {
         "name": fake.name(),
         "email": fake.email(),
         "password": fake.password()
     }
 
-    response = client.post(f"{settings.API_PREFIX}/v1/users/", json=params)
+    response = client.post(f"{settings.API_PREFIX}/v1/sign-up/", json=params)
 
     assert response.status_code == 201
     created_user = response.json()

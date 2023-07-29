@@ -2,7 +2,6 @@ from typing import Generator
 
 from fastapi.testclient import TestClient
 from pytest import fixture
-from sqlalchemy.orm import Session
 
 from db.session import SessionLocal
 from main import app
