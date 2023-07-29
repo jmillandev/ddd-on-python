@@ -1,6 +1,6 @@
 from sqlalchemy import UUID, Column, Integer, DateTime, func
 
-from sqlalchemy.ext.declarative import as_declarative, declared_attr
+from sqlalchemy.orm import as_declarative, declared_attr
 from uuid import uuid4
 
 @as_declarative()

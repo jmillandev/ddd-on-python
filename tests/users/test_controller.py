@@ -1,5 +1,3 @@
-from typing import Dict
-
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 from mercury.config import settings
@@ -12,14 +10,15 @@ fake = Faker()
 
 def test_sign_up(client: TestClient, db: Session) -> None:
     params = {
-        "name": fake.name(),
-        "email": fake.email(),
-        "password": fake.password()
+        'name': fake.name(),
+        'last_name': fake.last_name(),
+        'email': fake.email(),
+        'password': fake.password()
     }
 
     response = client.post(f"{settings.API_PREFIX}/v1/sign-up/", json=params)
 
-    assert response.status_code == 201
+    assert response.status_code == 201, response.text
     created_user = response.json()
     user = UserRepository(db).find_by_email(params['email'])
     assert user
