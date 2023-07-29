@@ -1,1 +1,4 @@
--r base.txt
+-r test.txt
+
+# Tool to generate fake data
+Faker==19.2.0

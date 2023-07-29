@@ -7,6 +7,7 @@ services:
       dockerfile: ./docker/develop/fastapi/Dockerfile
     volumes:
       - .:/usr/src/app
+      - dependencies:/usr/local/lib/python3.11/site-packages
     ports:
       - 8080:8080
     env_file:
@@ -31,3 +32,4 @@ services:
 
 volumes:
   mercury-db:
+  dependencies:
