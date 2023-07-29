@@ -1,11 +1,8 @@
 from typing import Generator
 
-from db.session import SessionLocal
+from db.session import make_session
 
 
-def get_db() -> Generator:
-    try:
-        db = SessionLocal()
-        yield db
-    finally:
-        db.close()
+async def get_db() -> Generator:
+    async with make_session() as session:
+        yield session

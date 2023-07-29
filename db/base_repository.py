@@ -14,23 +14,22 @@ UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     model = Base  # type: Type[ModelType]
 
-    def __init__(self, db: async_sessionmaker[AsyncSession]):
+    def __init__(self, session: async_sessionmaker[AsyncSession]):
         """
         CRUD object with default methods to Create, Read, Update, Delete (CRUD).
 
         **Parameters**
 
-        * `db`: A SQLAlchemy database session object.
+        * `session`: A SQLAlchemy database session object.
         """
-        self.db = db
+        self.session = session
 
     async def create(self, object: ModelType) -> ModelType:
-        async with self.db as session:
-            async with session.begin():
-                session.add(object)
-                await session.commit()
-                await session.refresh(object)
-                return object
+        async with self.session.begin():
+            self.session.add(object)
+            await self.session.commit()
+            await self.session.refresh(object)
+            return object
 
     # TODO: Migrate method to async https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html
 

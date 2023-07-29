@@ -10,8 +10,7 @@ class UserRepository(BaseRepository):
 
     async def find_by_email(self, email: str) -> User:
         """Find user by email"""
-        async with self.db as session:
-            result = await session.execute(
-                select(self.model).where(self.model.email == email).limit(1)
-            )
-            return result.first()
+        result = await self.session.execute(
+            select(self.model).where(self.model.email == email).limit(1)
+        )
+        return result.first()

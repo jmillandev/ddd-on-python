@@ -1,7 +1,7 @@
 from typing import Any
 
 from fastapi import Depends, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession 
 
 from apps.users.contracts import UserCreateContract
 from apps.users.models import User
@@ -10,11 +10,11 @@ from apps.users.repositories import UserRepository
 from mercury.dependencies import get_db
 
 
-async def sign_up(*, db: Session = Depends(get_db), params: UserCreateContract) -> Any:
+async def sign_up(*, session: AsyncSession = Depends(get_db), params: UserCreateContract) -> Any:
     """
     Create new user.
     """
-    respository = UserRepository(db)
+    respository = UserRepository(session)
     user = await respository.find_by_email(params.email)
     if user:
         raise HTTPException(
