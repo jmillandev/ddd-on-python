@@ -7,14 +7,14 @@ from apps.users.contracts import UserCreateContract
 from apps.users.models import User
 from apps.users.schemas import User as UserSchema
 from apps.users.repositories import UserRepository
-from mercury.dependencies import get_db
+from db.session import get_db
 
 
-async def sign_up(*, session: AsyncSession = Depends(get_db), params: UserCreateContract) -> Any:
+async def sign_up(*, db_session: AsyncSession = Depends(get_db), params: UserCreateContract) -> Any:
     """
     Create new user.
     """
-    respository = UserRepository(session)
+    respository = UserRepository(db_session)
     user = await respository.find_by_email(params.email)
     if user:
         raise HTTPException(

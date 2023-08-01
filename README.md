@@ -14,3 +14,14 @@ alembic revision --autogenerate -m "migration name"
 ```bash
 alembic upgrade head
 ```
+
+# Dev Notes
+
+## Asyncio and SQLAlchemy
+
+https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html
+https://testdriven.io/blog/fastapi-sqlmodel/
+https://lewoudar.medium.com/anyio-all-you-need-for-async-programming-stuff-4cd084d0f6bd
+
+## Databases
+https://sqlmodel.tiangolo.com/

@@ -1,9 +1,14 @@
 # from sqlalchemy import create_engine
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
-
+from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession, create_async_engine
 from mercury.config import settings
 
 
-def make_session() -> AsyncSession:
-    engine = create_async_engine(settings.DATABASE_URI, pool_pre_ping=True, echo=True)
-    return async_sessionmaker(engine, autoflush=False, expire_on_commit=False)()
+engine = create_async_engine(
+    settings.DATABASE_URI, pool_pre_ping=True, echo=True)
+LocalSession = async_sessionmaker(
+    engine, autoflush=False, expire_on_commit=False)
+
+
+async def get_db() -> AsyncSession:
+    async with LocalSession() as session:
+        yield session
