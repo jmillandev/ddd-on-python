@@ -1,8 +1,8 @@
 from typing import Generator
 
-from fastapi.testclient import TestClient
 from sqlalchemy.ext.asyncio import AsyncSession
 import pytest
+from httpx import AsyncClient
 
 from db.session import engine, LocalSession, get_db
 
@@ -42,20 +42,22 @@ class TestDatabaseSession:
 
         yield self._session
 
+
 database = TestDatabaseSession()
 app.dependency_overrides[get_db] = database
 
 
 @pytest.mark.asyncio
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="session")
 async def db_session() -> Generator:
     async with database as session:
         yield session
 
+
 @pytest.fixture(scope="module")
-def client() -> Generator:
-    with TestClient(app) as c:
-        yield c
+async def client() -> Generator:
+    async with AsyncClient(app=app, base_url="http://testserver") as ac:    
+        yield ac
 
 
 @pytest.fixture(scope='session')

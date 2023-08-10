@@ -1,5 +1,5 @@
 from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
-
+from sqlalchemy import select
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
@@ -30,14 +30,18 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         await self.session.commit()
         await self.session.refresh(object)
         return object
+    
+    async def all(self, skip: int = 0, limit: int = 10) -> List[ModelType]:
+        stmt = select(self.model).offset(skip)
+        if limit is not None:
+            stmt = stmt.limit(limit)
+        result = await self.session.execute(stmt)
+        return result.scalars().all()
 
     # TODO: Migrate method to async https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html
 
     # def find(self, id: Any) -> Optional[ModelType]:
     #     return self.db.query(self.model).filter(self.model.id == id).first()
-
-    # def search(self, *, skip: int = 0, limit: int = 10) -> List[ModelType]:
-    #     return self.db.query(self.model).offset(skip).limit(limit).all()
 
     # def update(self, *, db_obj: ModelType, obj_in: Union[UpdateSchemaType, Dict[str, Any]]) -> ModelType:
     #     obj_data = jsonable_encoder(db_obj)
