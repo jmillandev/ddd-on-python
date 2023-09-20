@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from apps.users.models import Pronoun
+from apps.users.types import Pronoun
 
 class UserCreateContract(BaseModel):
     email: EmailStr

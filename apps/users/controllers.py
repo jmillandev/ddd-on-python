@@ -4,9 +4,9 @@ from fastapi import Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession 
 
 from apps.users.contracts import UserCreateContract
-from apps.users.models import User
 from apps.users.schemas import User as UserSchema
 from apps.users.repositories import UserRepository
+from apps.users.interactors.v1.create import UserCreate
 from db.session import get_db
 
 
@@ -15,20 +15,16 @@ async def sign_up(*, db_session: AsyncSession = Depends(get_db), params: UserCre
     Create new user.
     """
     respository = UserRepository(db_session)
-    user = await respository.find_by_email(params.email)
-    if user:
+    context = await UserCreate.exec(respository=respository, params=params)
+    if context.error:
         raise HTTPException(
-            status_code=400,
-            detail='The user with this username already exists in the system.',
+            status_code=context.error.status_code,
+            detail=dict(context.error),
         )
-    validated_data = params.dict()
-    validated_data['hashed_password'] = validated_data.pop('password')
-    user = User(**validated_data)
-    await respository.create(user)
 
     return UserSchema(
-        public_id=str(user.public_id),
-        email=user.email, 
-        name=user.name,
-        last_name=user.last_name
+        public_id=str(context.user.public_id),
+        email=context.user.email, 
+        name=context.user.name,
+        last_name=context.user.last_name
     )

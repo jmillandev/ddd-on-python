@@ -1,16 +1,8 @@
-from sqlalchemy import Boolean, Column, String, Enum
+from sqlalchemy import Boolean, Column, Enum, String
 
+from apps.users.types import Pronoun
 from db.base_class import Base
-import enum
 
-
-class Pronoun(str, enum.Enum):
-    HE = 'he'
-    SHE = 'she'
-
-    @staticmethod
-    def keys():
-        return [c.value for c in Pronoun]
 
 class User(Base):
     email = Column(String(50), nullable=False)
