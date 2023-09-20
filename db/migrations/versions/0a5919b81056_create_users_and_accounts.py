@@ -29,6 +29,7 @@ def upgrade() -> None:
     op.create_index(op.f('ix_currencies_code'), 'currencies', ['code'], unique=True)
     op.create_index(op.f('ix_currencies_id'), 'currencies', ['id'], unique=False)
     op.create_index(op.f('ix_currencies_public_id'), 'currencies', ['public_id'], unique=True)
+
     op.create_table('users',
     sa.Column('email', sa.String(length=50), nullable=False),
     sa.Column('name', sa.String(length=50), nullable=False),
@@ -37,12 +38,14 @@ def upgrade() -> None:
     sa.Column('is_active', sa.Boolean(), nullable=True),
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('public_id', sa.UUID(), nullable=False),
+    sa.Column('pronoun', sa.Enum('he', 'she', name='pronouns'), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_users_id'), 'users', ['id'], unique=False)
     op.create_index(op.f('ix_users_public_id'), 'users', ['public_id'], unique=True)
+
     op.create_table('accounts',
     sa.Column('name', sa.String(length=50), nullable=False),
     sa.Column('currency_id', sa.Integer(), nullable=True),

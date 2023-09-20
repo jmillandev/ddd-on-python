@@ -24,7 +24,8 @@ async def test_sign_up(client: AsyncClient, db_session: AsyncSession) -> None:
         'name': fake.name(),
         'last_name': fake.last_name(),
         'email': fake.email(),
-        'password': fake.password()
+        'password': fake.password(),
+        'pronoun': 'he'
     }
     response = await client.post(f"{settings.API_PREFIX}/v1/sign-up", json=params)
 
@@ -34,9 +35,14 @@ async def test_sign_up(client: AsyncClient, db_session: AsyncSession) -> None:
     user = await UserRepository(db_session).find_by_email(params['email'])
     assert user
     assert user.id
-    assert user.email == created_user.get('email')
-    assert user.name == created_user.get('name')
-    assert user.last_name == created_user.get('last_name')
+    assert user.public_id
+    assert user.email == created_user.get('email') == params['email']
+    assert user.name == created_user.get('name') == params['name']
+    assert user.last_name == created_user.get('last_name') == params['last_name']
     assert created_user.get('public_id')
+    assert user.hashed_password
+    assert user.is_active
+    assert user.pronoun == params['pronoun']
+
     users = await UserRepository(db_session).all(limit=None)
     assert len(users) == 1

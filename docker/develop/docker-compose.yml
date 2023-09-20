@@ -2,6 +2,8 @@ version: '3.8'
 
 services:
   mercury_api:
+    dns:
+        - 8.8.8.8
     build:
       context: ./ # We need run this from the root of the project
       dockerfile: ./docker/develop/fastapi/Dockerfile
