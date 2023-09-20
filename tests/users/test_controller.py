@@ -46,3 +46,27 @@ async def test_sign_up(client: AsyncClient, db_session: AsyncSession) -> None:
 
     users = await UserRepository(db_session).all(limit=None)
     assert len(users) == 1
+
+
+async def test_user_already_exists(client: AsyncClient, db_session: AsyncSession) -> None:
+    params = {
+        'name': fake.name(),
+        'last_name': fake.last_name(),
+        'email': fake.email(),
+        'password': fake.password(),
+        'pronoun': 'he'
+    }
+    response = await client.post(f"{settings.API_PREFIX}/v1/sign-up", json=params)
+    assert response.status_code == 201, response.text
+
+    response = await client.post(f"{settings.API_PREFIX}/v1/sign-up", json=params)
+
+    assert response.status_code == 400
+
+    response = response.json()['detail']
+    assert response['message'] == 'The user with this username already exists in the system.' 
+    assert response['source'] == 'email' 
+    assert response['status_code'] == 400 
+
+    users = await UserRepository(db_session).all(limit=None)
+    assert len(users) == 1

@@ -48,7 +48,7 @@ app.dependency_overrides[get_db] = database
 
 
 @pytest.mark.asyncio
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 async def db_session() -> Generator:
     async with database as session:
         yield session
