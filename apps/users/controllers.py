@@ -1,12 +1,14 @@
-from typing import Any
+from typing import Annotated, Any
 
 from fastapi import Depends, HTTPException
-from sqlalchemy.ext.asyncio import AsyncSession 
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from apps.users.contracts import UserCreateContract
-from apps.users.schemas import User as UserSchema
-from apps.users.repositories import UserRepository
+from apps.users.contracts import UserCreateContract, OAuth2Contract
 from apps.users.interactors.v1.create import UserCreate
+from apps.users.interactors.v1.login import Login
+from apps.users.repositories import UserRepository
+from apps.users.schemas import Token
+from apps.users.schemas import User as UserSchema
 from db.session import get_db
 
 
@@ -22,9 +24,15 @@ async def sign_up(*, db_session: AsyncSession = Depends(get_db), params: UserCre
             detail=[dict(context.error)],
         )
 
-    return UserSchema(
-        public_id=str(context.user.public_id),
-        email=context.user.email, 
-        name=context.user.name,
-        last_name=context.user.last_name
-    )
+    return UserSchema.from_orm(context.user)
+
+
+async def sign_in(*, db_session: AsyncSession = Depends(get_db),params: OAuth2Contract) -> Any:
+    respository = UserRepository(db_session)
+    context = await Login.exec(respository=respository, params=params)
+    if context.error:
+        raise HTTPException(
+            status_code=context.error.status_code,
+            detail=[dict(context.error)],
+        )
+    return Token(access_token=context.access_token, token_type="bearer", user=UserSchema.from_orm(context.user))

@@ -23,16 +23,16 @@ async def test_success(client: AsyncClient, db_session: AsyncSession) -> None:
     response = await client.post(f"{settings.API_PREFIX}/v1/sign-up", json=params)
 
     assert response.status_code == status.HTTP_201_CREATED, response.text
-    created_user = response.json()
+    json_response = response.json()
 
     user = await UserRepository(db_session).find_by_email(params['email'])
     assert user
     assert user.id
     assert user.public_id
-    assert user.email == created_user.get('email') == params['email']
-    assert user.name == created_user.get('name') == params['name']
-    assert user.last_name == created_user.get('last_name') == params['last_name']
-    assert created_user.get('public_id')
+    assert user.email == json_response['email'] == params['email']
+    assert user.name == json_response['name'] == params['name']
+    assert user.last_name == json_response['last_name'] == params['last_name']
+    assert json_response['id'] == str(user.public_id)
     assert user.password == None
     assert user.hashed_password != params['password'] 
     assert user.verify_password(params['password']) == password_context.verify(params['password'], user.hashed_password) == True

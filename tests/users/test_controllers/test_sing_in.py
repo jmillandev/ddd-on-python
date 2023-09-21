@@ -28,10 +28,10 @@ class TestSignIn:
         assert response.status_code == status.HTTP_200_OK, response.text
 
         json_response = response.json()
-        assert json_response['token']
+        assert json_response['access_token']
         assert json_response['user']
         json_user = json_response['user']
-        assert json_user['id'] == user.id
+        assert json_user['id'] == str(user.public_id)
         assert json_user['email'] == user.email
         assert json_user['name'] == user.name
         assert json_user['full_name'] == user.full_name

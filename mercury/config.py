@@ -27,6 +27,8 @@ class Settings(BaseSettings):
     POSTGRES_DB: str
     DATABASE_URI: Optional[PostgresDsn] = None
     ENVIROMENT: str = 'production'
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
+    SECRET_KEY: str
 
     @validator("DATABASE_URI", pre=True)
     def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:

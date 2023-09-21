@@ -28,3 +28,7 @@ class User(Base):
 
     def verify_password(self, password):
         return password_context.verify(password, self.hashed_password)
+
+    @property
+    def full_name(self):
+        return f"{self.name} {self.last_name}".strip()
