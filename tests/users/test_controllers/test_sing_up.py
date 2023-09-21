@@ -19,7 +19,7 @@ class TestAuth:
     # def setup(self):
     #     pass
 
-async def test_sign_up(client: AsyncClient, db_session: AsyncSession) -> None:
+async def test_success(client: AsyncClient, db_session: AsyncSession) -> None:
     params = {
         'name': fake.name(),
         'last_name': fake.last_name(),
@@ -89,6 +89,25 @@ async def test_required_field(client: AsyncClient, db_session: AsyncSession) -> 
     assert response[0]['msg'] == 'field required' 
     assert response[1]['source'] == 'pronoun' 
     assert response[1]['msg'] == "value is not a valid enumeration member; permitted: 'he', 'she'" 
+
+    users = await UserRepository(db_session).all(limit=None)
+    assert len(users) == 0
+
+async def test_invalid_email(client: AsyncClient, db_session: AsyncSession) -> None:
+    params = {
+        'last_name': fake.last_name(),
+        'email': fake.name(),
+        'password': fake.password(),
+        'pronoun': 'she'
+    }
+    response = await client.post(f"{settings.API_PREFIX}/v1/sign-up", json=params)
+
+    assert response.status_code == 422
+
+    response = response.json()['detail']
+
+    assert response[0]['source'] == 'email' 
+    assert response[0]['msg'] == 'value is not a valid email address' 
 
     users = await UserRepository(db_session).all(limit=None)
     assert len(users) == 0
