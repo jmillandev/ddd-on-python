@@ -19,7 +19,7 @@ async def sign_up(*, db_session: AsyncSession = Depends(get_db), params: UserCre
     if context.error:
         raise HTTPException(
             status_code=context.error.status_code,
-            detail=dict(context.error),
+            detail=[dict(context.error)],
         )
 
     return UserSchema(

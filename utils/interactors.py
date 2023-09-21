@@ -6,7 +6,7 @@ class Error(Exception):
 
     def __iter__(self):
         yield 'status_code', self.status_code
-        yield 'message', self.message
+        yield 'msg', self.message
         yield 'source', self.source
 
     def __str__(self):
