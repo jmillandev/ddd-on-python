@@ -3,7 +3,7 @@ from faker import Faker
 from fastapi import status
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
-
+from utils.passwords import password_context
 from apps.users.repositories import UserRepository
 from mercury.config import settings
 
@@ -33,7 +33,9 @@ async def test_success(client: AsyncClient, db_session: AsyncSession) -> None:
     assert user.name == created_user.get('name') == params['name']
     assert user.last_name == created_user.get('last_name') == params['last_name']
     assert created_user.get('public_id')
-    assert user.hashed_password
+    assert user.password == None
+    assert user.hashed_password != params['password'] 
+    assert user.verify_password(params['password']) == password_context.verify(params['password'], user.hashed_password) == True
     assert user.is_active
     assert user.pronoun == params['pronoun']
 

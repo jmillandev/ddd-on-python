@@ -8,6 +8,5 @@ class UserCreate(Interactor):
         if user:
             self.fail('The user with this username already exists in the system.', source='email')
 
-        self.validated_data['hashed_password'] = self.validated_data.pop('password')
         self.context.user = User(**self.validated_data)
         await self.context.respository.create(self.context.user)
