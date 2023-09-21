@@ -14,3 +14,13 @@ class User(Base):
 
     def __str__(self) -> str:
         return f"< {self.public_id} > {self.name} {self.last_name}"
+
+    @property
+    def password(self):
+        return getattr(self, '_password')
+    
+    @password.setter
+    def password(self, value):
+        self._password = value
+        # TODO TAS-21: Encrypt Password
+        self.hashed_password = value

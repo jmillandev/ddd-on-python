@@ -31,8 +31,7 @@ async def test_success(client: AsyncClient, db_session: AsyncSession) -> None:
     assert user.public_id
     assert user.email == created_user.get('email') == params['email']
     assert user.name == created_user.get('name') == params['name']
-    assert user.last_name == created_user.get(
-        'last_name') == params['last_name']
+    assert user.last_name == created_user.get('last_name') == params['last_name']
     assert created_user.get('public_id')
     assert user.hashed_password
     assert user.is_active

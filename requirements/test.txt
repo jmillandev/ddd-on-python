@@ -6,3 +6,4 @@ Faker==19.2.0
 # Test suit
 pytest==7.4.2
 fastapi[all]==0.97
+factory_boy==3.3.0

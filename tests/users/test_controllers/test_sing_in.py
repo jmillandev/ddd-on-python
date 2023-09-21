@@ -4,7 +4,7 @@ from fastapi import status
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from test.users.factories import UserFactory
+from tests.users.factories import UserFactory
 from mercury.config import settings
 
 fake = Faker()
@@ -20,7 +20,7 @@ class TestSignIn:
 
     async def test_success(self, client: AsyncClient, db_session: AsyncSession) -> None:
         password = fake.password()
-        user = UserFactory(password=password)
+        user = await UserFactory(password=password)
         params = {'username': user.email, 'password': password, 'grant_type': 'password'}
 
         response = await client.post(f"{settings.API_PREFIX}/v1/sign-in", json=params)
