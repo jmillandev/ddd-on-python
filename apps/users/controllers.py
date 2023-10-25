@@ -6,13 +6,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from apps.users.contracts import UserCreateContract, OAuth2Contract
 from apps.users.interactors.v1.create import UserCreate
 from apps.users.interactors.v1.login import Login
+from apps.users.interactors.v1.retrieve import UserRetrieve
 from apps.users.repositories import UserRepository
 from apps.users.schemas import Token
 from apps.users.schemas import User as UserSchema
 from db.session import get_db
 
 
-async def sign_up(*, db_session: AsyncSession = Depends(get_db), params: UserCreateContract) -> Any:
+async def sign_up(*, db_session: AsyncSession = Depends(get_db), params: UserCreateContract) -> UserSchema:
     """
     Create new user.
     """
@@ -27,7 +28,7 @@ async def sign_up(*, db_session: AsyncSession = Depends(get_db), params: UserCre
     return UserSchema.from_orm(context.user)
 
 
-async def sign_in(*, db_session: AsyncSession = Depends(get_db),params: OAuth2Contract) -> Any:
+async def sign_in(*, db_session: AsyncSession = Depends(get_db),params: OAuth2Contract) -> Token:
     respository = UserRepository(db_session)
     context = await Login.exec(respository=respository, params=params)
     if context.error:
@@ -36,3 +37,15 @@ async def sign_in(*, db_session: AsyncSession = Depends(get_db),params: OAuth2Co
             detail=[dict(context.error)],
         )
     return Token(access_token=context.access_token, token_type="bearer", user=UserSchema.from_orm(context.user))
+
+
+async def retrieve(id: str, db_session: AsyncSession = Depends(get_db)) -> UserSchema:
+    respository = UserRepository(db_session)    
+    context = await UserRetrieve.exec(respository=respository, id=id)
+    if context.error:
+        raise HTTPException(
+            status_code=context.error.status_code,
+            detail=[dict(context.error)],
+        )
+
+    return UserSchema.from_orm(context.user)

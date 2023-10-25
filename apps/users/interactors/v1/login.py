@@ -1,9 +1,6 @@
-from apps.users.models import User
 from utils.interactors import Interactor
 from utils.auth import authenticate_user, create_access_token
-from fastapi import HTTPException, status
-from datetime import timedelta
-from mercury.config import settings
+from fastapi import status
 
 
 class Login(Interactor):

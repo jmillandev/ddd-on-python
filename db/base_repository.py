@@ -1,6 +1,5 @@
-from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
+from typing import Generic, List, Optional, Type, TypeVar
 from sqlalchemy import select
-from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
@@ -12,6 +11,13 @@ UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 
 
 class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
+    """
+    CRUD object with default methods to Create, Read, Update, Delete (CRUD).
+
+    For more information on how to create new methods, see:
+        https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html
+    """
+
     model = Base  # type: Type[ModelType]
 
     def __init__(self, session: async_sessionmaker[AsyncSession]):
@@ -23,6 +29,17 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         * `session`: A SQLAlchemy database session object.
         """
         self.session = session
+
+    async def find(self, public_id: str) -> Optional[ModelType]:
+        """Find object by id"""
+        try:
+            stmt = select(self.model).where(self.model.public_id == public_id).limit(1)
+            result = await self.session.execute(stmt)
+        except Exception:
+            return None
+
+        data = result.scalars()
+        return data.first()
 
     async def create(self, object: ModelType) -> ModelType:
         # async with self.session.begin():
@@ -38,10 +55,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         result = await self.session.execute(stmt)
         return result.scalars().all()
 
-    # TODO: Migrate method to async https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html
-
-    # def find(self, id: Any) -> Optional[ModelType]:
-    #     return self.db.query(self.model).filter(self.model.id == id).first()
+    # TODO: Migrate method to async 
 
     # def update(self, *, db_obj: ModelType, obj_in: Union[UpdateSchemaType, Dict[str, Any]]) -> ModelType:
     #     obj_data = jsonable_encoder(db_obj)
