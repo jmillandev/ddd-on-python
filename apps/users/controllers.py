@@ -11,15 +11,18 @@ from apps.users.repositories import UserRepository
 from apps.users.schemas import Token
 from apps.users.schemas import User as UserSchema
 from db.session import get_db
+from apps.users.models import User
+from utils.auth import get_current_user
 
 
-async def sign_up(*, db_session: AsyncSession = Depends(get_db), params: UserCreateContract) -> UserSchema:
+async def sign_up(*, db_session: Annotated[AsyncSession, Depends(get_db)], params: UserCreateContract) -> UserSchema:
     """
     Create new user.
     """
     respository = UserRepository(db_session)
     context = await UserCreate.exec(respository=respository, params=params)
     if context.error:
+        # TODO: Refactor this and raise error from Interactor
         raise HTTPException(
             status_code=context.error.status_code,
             detail=[dict(context.error)],
@@ -28,10 +31,11 @@ async def sign_up(*, db_session: AsyncSession = Depends(get_db), params: UserCre
     return UserSchema.from_orm(context.user)
 
 
-async def sign_in(*, db_session: AsyncSession = Depends(get_db),params: OAuth2Contract) -> Token:
+async def sign_in(*, db_session: Annotated[AsyncSession, Depends(get_db)], params: OAuth2Contract) -> Token:
     respository = UserRepository(db_session)
     context = await Login.exec(respository=respository, params=params)
     if context.error:
+        # TODO: Refactor this and raise error from Interactor
         raise HTTPException(
             status_code=context.error.status_code,
             detail=[dict(context.error)],
@@ -39,10 +43,15 @@ async def sign_in(*, db_session: AsyncSession = Depends(get_db),params: OAuth2Co
     return Token(access_token=context.access_token, token_type="bearer", user=UserSchema.from_orm(context.user))
 
 
-async def retrieve(id: str, db_session: AsyncSession = Depends(get_db)) -> UserSchema:
-    respository = UserRepository(db_session)    
+async def retrieve(
+    id: str,
+    db_session: Annotated[AsyncSession, Depends(get_db)],
+    current_user: Annotated[User, Depends(get_current_user)]
+) -> UserSchema:
+    respository = UserRepository(db_session)
     context = await UserRetrieve.exec(respository=respository, id=id)
     if context.error:
+        # TODO: Refactor this and raise error from Interactor
         raise HTTPException(
             status_code=context.error.status_code,
             detail=[dict(context.error)],

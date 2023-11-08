@@ -30,10 +30,13 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         self.session = session
 
-    async def find(self, public_id: str) -> Optional[ModelType]:
+    async def find(self, public_id: str, is_active: bool = True) -> Optional[ModelType]:
         """Find object by id"""
         try:
-            stmt = select(self.model).where(self.model.public_id == public_id).limit(1)
+            stmt = select(self.model).where(
+                self.model.public_id == public_id,
+                self.model.is_active == is_active
+            ).limit(1)
             result = await self.session.execute(stmt)
         except Exception:
             return None
@@ -43,11 +46,11 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
     async def create(self, object: ModelType) -> ModelType:
         # async with self.session.begin():
-        self.session.add(object) 
+        self.session.add(object)
         await self.session.commit()
         await self.session.refresh(object)
         return object
-    
+
     async def all(self, skip: int = 0, limit: int = 10) -> List[ModelType]:
         stmt = select(self.model).offset(skip)
         if limit is not None:
@@ -55,7 +58,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         result = await self.session.execute(stmt)
         return result.scalars().all()
 
-    # TODO: Migrate method to async 
+    # TODO: Migrate method to async
 
     # def update(self, *, db_obj: ModelType, obj_in: Union[UpdateSchemaType, Dict[str, Any]]) -> ModelType:
     #     obj_data = jsonable_encoder(db_obj)
