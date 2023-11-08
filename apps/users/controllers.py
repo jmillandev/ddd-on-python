@@ -21,25 +21,12 @@ async def sign_up(*, db_session: Annotated[AsyncSession, Depends(get_db)], param
     """
     respository = UserRepository(db_session)
     context = await UserCreate.exec(respository=respository, params=params)
-    if context.error:
-        # TODO: Refactor this and raise error from Interactor
-        raise HTTPException(
-            status_code=context.error.status_code,
-            detail=[dict(context.error)],
-        )
-
     return UserSchema.from_orm(context.user)
 
 
 async def sign_in(*, db_session: Annotated[AsyncSession, Depends(get_db)], params: OAuth2Contract) -> Token:
     respository = UserRepository(db_session)
     context = await Login.exec(respository=respository, params=params)
-    if context.error:
-        # TODO: Refactor this and raise error from Interactor
-        raise HTTPException(
-            status_code=context.error.status_code,
-            detail=[dict(context.error)],
-        )
     return Token(access_token=context.access_token, token_type="bearer", user=UserSchema.from_orm(context.user))
 
 
@@ -51,11 +38,4 @@ async def retrieve(
     UserPolicy(current_user).retrieve(id)
     respository = UserRepository(db_session)
     context = await UserRetrieve.exec(respository=respository, id=id)
-    if context.error:
-        # TODO: Refactor this and raise error from Interactor
-        raise HTTPException(
-            status_code=context.error.status_code,
-            detail=[dict(context.error)],
-        )
-
     return UserSchema.from_orm(context.user)

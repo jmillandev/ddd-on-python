@@ -22,10 +22,7 @@ class Interactor:
     @classmethod
     async def exec(cls, **kwargs) -> Context:
         instance = cls(**kwargs)
-        try:
-            await instance.call()
-        except Error as e:
-            instance.context.error = e
+        await instance.call()
         return instance.context
 
     def __init__(self, **kwargs):
