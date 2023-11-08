@@ -13,7 +13,7 @@ from apps.users.schemas import User as UserSchema
 from db.session import get_db
 from apps.users.models import User
 from utils.auth import get_current_user
-
+from apps.users.policies import UserPolicy
 
 async def sign_up(*, db_session: Annotated[AsyncSession, Depends(get_db)], params: UserCreateContract) -> UserSchema:
     """
@@ -48,6 +48,7 @@ async def retrieve(
     db_session: Annotated[AsyncSession, Depends(get_db)],
     current_user: Annotated[User, Depends(get_current_user)]
 ) -> UserSchema:
+    UserPolicy(current_user).retrieve(id)
     respository = UserRepository(db_session)
     context = await UserRetrieve.exec(respository=respository, id=id)
     if context.error:
