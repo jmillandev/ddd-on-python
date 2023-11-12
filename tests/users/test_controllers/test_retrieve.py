@@ -30,13 +30,13 @@ class TestRetrieve:
 
         response = await client.post(f"{settings.API_PREFIX}/v1/users/1", auth=AuthAsUser(user))
 
-        assert response.status_code == status.HTTP_404_NOT_FOUND, response.text
+        assert response.status_code == status.HTTP_403_FORBIDDEN, response.text
 
         json_response = response.json()
         assert len(json_response['detail']) == 1
         error_response = json_response['detail'][0]
-        assert error_response['msg'] == 'User not found'
-        assert error_response['source'] == 'id'
+        assert error_response['msg'] == 'You do not have permission to perform this action'
+        assert error_response['source'] == 'credentials'
 
     async def test_forbidden(self, client: AsyncClient, db_session: AsyncSession) -> None:
         user = await UserFactory()

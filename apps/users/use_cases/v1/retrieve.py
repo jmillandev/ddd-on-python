@@ -2,7 +2,7 @@ from fastapi import status
 from utils.interactors import Interactor
 
 
-class UserRetrieve(Interactor):
+class RetrieveUser(Interactor):
     async def call(self):
         user = await self.context.respository.find(self.context.id)
         if not user:

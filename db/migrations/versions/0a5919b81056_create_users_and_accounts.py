@@ -48,9 +48,9 @@ def upgrade() -> None:
 
     op.create_table('accounts',
     sa.Column('name', sa.String(length=50), nullable=False),
-    sa.Column('currency_id', sa.Integer(), nullable=True),
-    sa.Column('balance', sa.DECIMAL(precision=14, scale=2), nullable=False),
-    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('currency_id', sa.Integer(), nullable=False),
+    sa.Column('balance', sa.BigInteger(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('public_id', sa.UUID(), nullable=False),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),

@@ -2,7 +2,7 @@ from apps.users.models import User
 from utils.interactors import Interactor
 
 
-class UserCreate(Interactor):
+class CreateUser(Interactor):
     async def call(self):
         user = await self.context.respository.find_by_email(self.context.params.email)
         if user:
