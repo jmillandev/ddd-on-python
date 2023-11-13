@@ -8,11 +8,11 @@ from jose.jwt import encode
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from apps.users.models import User
-from apps.users.repositories import UserRepository
 from db.session import get_db
 from mercury.config import settings
-
+from users.infrastructure.repositories import UserRepository
 from utils.auth.errors import UnauthorizedError
+
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token', auto_error=False)
 ALGORITHM = 'HS256'
 

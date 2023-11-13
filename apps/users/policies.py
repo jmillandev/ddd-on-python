@@ -1,5 +1,6 @@
 from utils.auth.errors import ForbiddenError
 
+
 class UserPolicy:
 
   def __init__(self, current_user) -> None:

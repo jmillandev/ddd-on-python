@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Response
+
 from apps.users.urls import router as auth_router
+
 router = APIRouter()
 
 @router.get('/healthcheck')

@@ -1,7 +1,9 @@
 from typing import Optional
 
 from pydantic import BaseModel, EmailStr
+
 from apps.users.types import Pronoun
+
 
 class User(BaseModel):
     id: Optional[str] = None

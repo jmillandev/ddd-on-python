@@ -1,6 +1,7 @@
-from utils.interactors import Interactor
-from utils.auth import authenticate_user, create_access_token
 from fastapi import status
+
+from utils.auth import authenticate_user, create_access_token
+from utils.interactors import Interactor
 
 
 class Login(Interactor):

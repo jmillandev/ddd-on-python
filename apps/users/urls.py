@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status
 
-from apps.users.controllers import sign_in, sign_up, retrieve
+from apps.users.controllers import retrieve, sign_in, sign_up
 from apps.users.schemas import Token, User
 
 router = APIRouter()

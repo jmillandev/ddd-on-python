@@ -1,8 +1,8 @@
+from factory.alchemy import SQLAlchemyModelFactory
 from faker import Faker
 
-from factory.alchemy import SQLAlchemyModelFactory
-from tests.conftest import database
 from db.base_repository import BaseRepository
+from tests.conftest import database
 
 fake = Faker()
 

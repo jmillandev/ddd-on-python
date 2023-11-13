@@ -1,7 +1,7 @@
 from faker import Faker
 
-from tests.factories import Factory
 from apps.users.models import User
+from tests.factories import Factory
 
 fake = Faker()
 

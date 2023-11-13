@@ -1,9 +1,13 @@
-from pydantic import BaseModel, EmailStr
-from apps.users.types import Pronoun
-from typing import Optional
 from enum import Enum
+from typing import Optional
+
+from pydantic import BaseModel, EmailStr
+
+from src.users.domain.value_objects.pronoun import Pronoun
+
 
 class UserCreateContract(BaseModel):
+    # TODO: Create a contract base on the User entity
     email: EmailStr
     name: str
     last_name: str

@@ -1,7 +1,8 @@
-from sqlalchemy import UUID, Column, Integer, DateTime, func
-
-from sqlalchemy.orm import as_declarative, declared_attr
 from uuid import uuid4
+
+from sqlalchemy import UUID, Column, DateTime, Integer, func
+from sqlalchemy.orm import as_declarative, declared_attr
+
 
 @as_declarative()
 class Base:

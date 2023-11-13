@@ -5,7 +5,6 @@ import os
 from db.base_class import Base  # noqa
 from mercury.config import settings
 
-
 file_pattern = os.path.join(settings.BASE_DIR, 'apps', '**', 'models*')
 file_list = glob.glob(file_pattern, recursive=True)
 for file_path in file_list:

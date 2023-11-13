@@ -3,8 +3,8 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.middleware.cors import CORSMiddleware
 
-from mercury.urls import router
 from mercury.config import settings
+from mercury.urls import router
 from utils.errors import BaseError
 
 app = FastAPI(

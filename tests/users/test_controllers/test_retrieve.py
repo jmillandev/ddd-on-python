@@ -3,10 +3,9 @@ from fastapi import status
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from tests.users.factories import UserFactory
 from mercury.config import settings
-
 from tests.support.auth import AuthAsUser
+from tests.users.factories import UserFactory
 
 pytestmark = pytest.mark.anyio
 

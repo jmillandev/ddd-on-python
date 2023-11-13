@@ -3,9 +3,10 @@ from faker import Faker
 from fastapi import status
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
-from utils.passwords import password_context
-from apps.users.repositories import UserRepository
+
 from mercury.config import settings
+from users.infrastructure.repositories import UserRepository
+from utils.passwords import password_context
 
 fake = Faker()
 

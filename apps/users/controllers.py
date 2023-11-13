@@ -3,17 +3,18 @@ from typing import Annotated, Any
 from fastapi import Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from apps.users.contracts import UserCreateContract, OAuth2Contract
+from apps.users.contracts import OAuth2Contract, UserCreateContract
+from apps.users.models import User
+from apps.users.policies import UserPolicy
+from apps.users.schemas import Token
+from apps.users.schemas import User as UserSchema
 from apps.users.use_cases.v1.create import CreateUser
 from apps.users.use_cases.v1.login import Login
 from apps.users.use_cases.v1.retrieve import RetrieveUser
-from apps.users.repositories import UserRepository
-from apps.users.schemas import Token
-from apps.users.schemas import User as UserSchema
 from db.session import get_db
-from apps.users.models import User
+from users.infrastructure.repositories import UserRepository
 from utils.auth import get_current_user
-from apps.users.policies import UserPolicy
+
 
 async def sign_up(*, db_session: Annotated[AsyncSession, Depends(get_db)], params: UserCreateContract) -> UserSchema:
     """

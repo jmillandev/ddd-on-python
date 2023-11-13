@@ -1,6 +1,8 @@
-from db.base_class import Base
-from sqlalchemy import Column, Integer, String, ForeignKey, BigInteger
+from sqlalchemy import BigInteger, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
+
+from db.base_class import Base
+
 
 class Account(Base):
     name = Column(String(50), nullable=False)

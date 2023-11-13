@@ -1,6 +1,7 @@
 from typing import Generic, List, Optional, Type, TypeVar
-from sqlalchemy import select
+
 from pydantic import BaseModel
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from db.base_class import Base

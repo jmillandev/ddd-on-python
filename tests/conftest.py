@@ -1,12 +1,12 @@
 from typing import Generator
 
-from sqlalchemy.ext.asyncio import AsyncSession
 import pytest
 from httpx import AsyncClient
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from db.session import engine, LocalSession, get_db
-
+from db.session import LocalSession, engine, get_db
 from main import app
+
 
 class TestDatabaseSession:
 
