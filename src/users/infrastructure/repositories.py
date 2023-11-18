@@ -33,10 +33,10 @@ class UserSqlAlcheamyRepository(BaseRepository):
         result = await self.session.execute(stmt)
         return result.scalars().first()
 
-    async def find(self, public_id: UserId) -> Optional[User]:
+    async def find(self, id: UserId) -> Optional[User]:
         """Find object by id"""
         try:
-            stmt = select(User).where(User.public_id == public_id).limit(1)
+            stmt = select(User).where(User.id == id).limit(1)
             result = await self.session.execute(stmt)
         except Exception:
             return None

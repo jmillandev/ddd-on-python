@@ -1,7 +1,7 @@
 from typing import Protocol, runtime_checkable
 
-from src.users.domain.user import User
-from src.users.domain.value_objects import UserEmail, UserId
+from users.domain.entity import User
+from src.users.domain.value_objects import UserId
 
 
 @runtime_checkable

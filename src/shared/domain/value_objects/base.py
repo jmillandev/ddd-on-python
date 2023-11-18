@@ -1,4 +1,5 @@
 from typing import Any
+from src.shared.domain.exceptions.invalid_value import InvalidValueException
 
 
 class ValueObject:
@@ -10,15 +11,25 @@ class ValueObject:
     _value: BASE_TYPE
 
     def __init__(self, value: BASE_TYPE) -> None:
-        self.value = value
+        self.value = self._cast(value)
+
+    def _cast(self, value: Any) -> BASE_TYPE:
+        if value is None:
+            return
+        if isinstance(value, self.BASE_TYPE):
+            return value
+        try:
+            return self.BASE_TYPE(value)
+        except Exception:
+            raise InvalidValueException(f"Invalid {self.BASE_TYPE.__name__}")
 
     @property
-    def value(self)-> BASE_TYPE:
+    def value(self) -> BASE_TYPE:
         return self._value
-    
+
     @value.setter
     def value(self, value: BASE_TYPE) -> None:
-        self._value = value
+        self._value = self._cast(value)
         if self.OPTIONAL and self.is_none():
             return
         self._validate()

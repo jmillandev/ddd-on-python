@@ -8,3 +8,7 @@ class DatetimeValueObject(ValueObject):
 
     def _name(self):
         return "datetime"
+    
+    @classmethod
+    def now(cls):
+        return cls(datetime.utcnow())
