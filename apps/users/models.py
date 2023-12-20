@@ -1,6 +1,6 @@
 from sqlalchemy import Boolean, Column, Enum, String
 
-from apps.users.types import Pronoun
+from src.users.domain.value_objects.pronoun import Pronoun
 from db.base_class import Base
 from utils.passwords import password_context
 

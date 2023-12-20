@@ -25,3 +25,9 @@ https://lewoudar.medium.com/anyio-all-you-need-for-async-programming-stuff-4cd08
 
 ## Databases
 https://sqlmodel.tiangolo.com/
+
+## Run command inside of docker
+
+` make dev run mercury_api <command>`
+
+example: `make dev run mercury_api bash`

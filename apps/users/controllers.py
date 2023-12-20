@@ -12,7 +12,7 @@ from apps.users.use_cases.v1.create import CreateUser
 from apps.users.use_cases.v1.login import Login
 from apps.users.use_cases.v1.retrieve import RetrieveUser
 from db.session import get_db
-from users.infrastructure.repositories import UserRepository
+from src.users.infrastructure.repositories import SqlAlcheamyUserRepository
 from utils.auth import get_current_user
 
 
@@ -20,13 +20,20 @@ async def sign_up(*, db_session: Annotated[AsyncSession, Depends(get_db)], param
     """
     Create new user.
     """
-    respository = UserRepository(db_session)
+    respository = SqlAlcheamyUserRepository(db_session)
+    UserCreator(respository).create(
+        email=params.email,
+        name=params.name,
+        last_name=params.last_name,
+        pronoun=params.pronoun,
+        password=params.password
+    )
     context = await CreateUser.exec(respository=respository, params=params)
     return UserSchema.from_orm(context.user)
 
 
 async def sign_in(*, db_session: Annotated[AsyncSession, Depends(get_db)], params: OAuth2Contract) -> Token:
-    respository = UserRepository(db_session)
+    respository = SqlAlcheamyUserRepository(db_session)
     context = await Login.exec(respository=respository, params=params)
     return Token(access_token=context.access_token, token_type="bearer", user=UserSchema.from_orm(context.user))
 
@@ -37,6 +44,6 @@ async def retrieve(
     current_user: Annotated[User, Depends(get_current_user)]
 ) -> UserSchema:
     UserPolicy(current_user).retrieve(id)
-    respository = UserRepository(db_session)
+    respository = SqlAlcheamyUserRepository(db_session)
     context = await RetrieveUser.exec(respository=respository, id=id)
     return UserSchema.from_orm(context.user)

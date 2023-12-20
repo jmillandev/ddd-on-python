@@ -1,6 +1,6 @@
 from typing import Protocol, runtime_checkable
 
-from users.domain.entity import User
+from src.users.domain.entity import User
 from src.users.domain.value_objects import UserId
 
 

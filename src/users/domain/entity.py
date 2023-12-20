@@ -27,9 +27,9 @@ class User:
         self.password = password
 
     @classmethod
-    def create(self, email: UserEmail, name: UserName, last_name: UserLastName, pronoun: UserPronoun, password: UserPassword):
+    def create(self, id: UserId, email: UserEmail, name: UserName, last_name: UserLastName, pronoun: UserPronoun, password: UserPassword):
         user = User(
-            id=UserId.generate(),
+            id=id,
             created_at=UserCreatedAt.now(),
             email=email,
             name=name,

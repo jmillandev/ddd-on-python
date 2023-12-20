@@ -9,7 +9,7 @@ from db.base_repository import BaseRepository
 from src.users.domain.value_objects import UserEmail, UserId
 
 
-class UserSqlAlcheamyRepository(BaseRepository):
+class SqlAlcheamyUserRepository(BaseRepository):
     """
     CRUD object with default methods to Create, Read, Update, Delete (CRUD).
 

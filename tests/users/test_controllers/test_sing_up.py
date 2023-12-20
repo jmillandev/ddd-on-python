@@ -5,7 +5,7 @@ from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from mercury.config import settings
-from users.infrastructure.repositories import UserRepository
+from src.users.infrastructure.repositories import SqlAlcheamyUserRepository as UserRepository
 from utils.passwords import password_context
 
 fake = Faker()

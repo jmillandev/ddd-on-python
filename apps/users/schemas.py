@@ -2,7 +2,7 @@ from typing import Optional
 
 from pydantic import BaseModel, EmailStr
 
-from apps.users.types import Pronoun
+from src.users.domain.value_objects.pronoun import Pronoun
 
 
 class User(BaseModel):
