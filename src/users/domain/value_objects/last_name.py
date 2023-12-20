@@ -7,5 +7,5 @@ class UserLastName(StringValueObject):
 
     def _validate(self) -> None:
         super()._validate()
-        if self.value.len() > self.SIZE:
+        if len(self.value) > self.SIZE:
             raise InvalidValueException(f"{self.value} should be less than {self.SIZE} characters")

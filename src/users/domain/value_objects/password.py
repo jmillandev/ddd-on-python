@@ -4,9 +4,8 @@ from utils.passwords import password_context
 
 class UserPassword(StringValueObject):
 
-    @StringValueObject.value.setter
-    def value(self, value):
-        self.super().value = value
+    def set_value(self, value):
+        super().set_value(value)
         self._value = self._hash_password(value)
 
     def _hash_password(self, password):

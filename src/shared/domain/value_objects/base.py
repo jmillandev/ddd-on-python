@@ -11,7 +11,7 @@ class ValueObject:
     _value: BASE_TYPE
 
     def __init__(self, value: BASE_TYPE) -> None:
-        self.value = self._cast(value)
+        self.set_value(self._cast(value))
 
     def _cast(self, value: Any) -> BASE_TYPE:
         if value is None:
@@ -27,8 +27,7 @@ class ValueObject:
     def value(self) -> BASE_TYPE:
         return self._value
 
-    @value.setter
-    def value(self, value: BASE_TYPE) -> None:
+    def set_value(self, value: BASE_TYPE) -> None:
         self._value = self._cast(value)
         if self.OPTIONAL and self.is_none():
             return
@@ -58,8 +57,10 @@ class ValueObject:
         """
         Override this method to implement custom validations
         """
+        if self.is_none():
+            raise ValueError(f"Is required")
         if not isinstance(self.value, self.BASE_TYPE):
-            raise ValueError(f"invalid type")
+            raise ValueError(f"invalid type: Want {self.BASE_TYPE.__name__} got {type(self.value).__name__}")
 
     @property
     def _name(self) -> str:

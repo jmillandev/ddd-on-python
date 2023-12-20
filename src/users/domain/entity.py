@@ -62,3 +62,8 @@ class User:
     @property
     def full_name(self):
         return f"{self.name} {self.last_name}".strip()
+
+    def __eq__(self, o: object) -> bool:
+        if not isinstance(o, User):
+            return False
+        return self.id == o.id

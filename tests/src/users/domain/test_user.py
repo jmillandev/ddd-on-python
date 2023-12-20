@@ -10,16 +10,13 @@ fake = Faker()
 pytestmark = pytest.mark.anyio
 
 class TestUser:
-    def teardown_success(self):
+    def setup(self):
         self._repository = Mock(UserRepository)
-
-    def setup_success(self):
-        pass
 
     async def test_create_a_user(self) -> None:
         user = UserFactory.build()
 
-        UserCreator(self._repository).create(
+        await UserCreator(self._repository).create(
             id=user.id,
             email=user.email,
             name=user.name,
