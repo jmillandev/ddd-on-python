@@ -1,6 +1,7 @@
 from src.users.domain.repository import UserRepository
 from src.users.domain.entity import User
 from src.users.domain.value_objects import UserId, UserEmail, UserLastName, UserName, UserPassword, UserPronoun
+from src.users.domain.exceptions.email_already_used import EmailAlreadyUsed
 
 
 class UserCreator:
@@ -10,6 +11,10 @@ class UserCreator:
         # self._event_bus = EventBus()
 
     async def create(self, id: UserId, email: UserEmail, name: UserName, last_name: UserLastName, pronoun: UserPronoun, password: UserPassword) -> User:
+        user = await self._repository.find_by_email(email)
+        if user:
+            raise EmailAlreadyUsed(email)
+
         user = User.create(id, email, name, last_name, pronoun, password)
         await self._repository.create(user)
         # TODO-Events: publish events
