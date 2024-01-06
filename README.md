@@ -5,16 +5,6 @@
 - [Alembic](https://alembic.sqlalchemy.org/en/latest/)
 - [SQLAlchemy](https://www.sqlalchemy.org/)
 
-## How to run a new migration
-1. Create a new migration file
-```bash
-alembic revision --autogenerate -m "migration name"
-```
-2. Run the migration
-```bash
-alembic upgrade head
-```
-
 # Dev Notes
 
 ## Asyncio and SQLAlchemy
@@ -31,3 +21,16 @@ https://sqlmodel.tiangolo.com/
 ` make dev run mercury_api <command>`
 
 example: `make dev run mercury_api bash`
+
+# Utils
+
+## Connect to Postgres on bash
+
+`make psql`
+
+## How to run a new migration
+1. Create a new migration file
+```bash
+alembic revision --autogenerate -m "migration name"
+```
+2. Run the migration: `make migrate`
