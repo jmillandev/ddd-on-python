@@ -11,7 +11,7 @@ from src.users.domain.value_objects import UserEmail, UserId, pronoun
 from src.users.domain.entity import User
 
 
-class UserModel(Base):
+class SqlAlcheamyUser(Base):
     email = Column(String(50), nullable=False)
     name = Column(String(50), nullable=False)
     last_name = Column(String(50), nullable=False)
@@ -43,11 +43,11 @@ class SqlAlcheamyUserRepository(BaseRepository):
 
     async def find_by_email(self, email: UserEmail) -> User:
         """Find user by email"""
-        stmt = select(UserModel).where(UserModel.email == email.value).limit(1)
+        stmt = select(SqlAlcheamyUser).where(SqlAlcheamyUser.email == email.value).limit(1)
         result = await self.session.execute(stmt)
         data = result.scalars().first()
         if data:
-            return User(**data)
+            return User.from_dict(data.to_dict())
 
     async def find(self, id: UserId) -> Optional[User]:
         """Find object by id"""
@@ -62,8 +62,6 @@ class SqlAlcheamyUserRepository(BaseRepository):
             return User(**data)
 
     async def create(self,  user: User) -> User:
-        user_object = UserModel.from_entity(user)
+        user_object = SqlAlcheamyUser.from_entity(user)
         self.session.add(user_object)
         await self.session.commit()
-        # await self.session.refresh(user)
-        return user
