@@ -44,24 +44,23 @@ class SqlAlcheamyUserRepository(BaseRepository):
     async def find_by_email(self, email: UserEmail) -> User:
         """Find user by email"""
         stmt = select(SqlAlcheamyUser).where(SqlAlcheamyUser.email == email.value).limit(1)
-        result = await self.session.execute(stmt)
-        data = result.scalars().first()
-        if data:
-            return User.from_dict(data.to_dict())
+        return await self._find(stmt)
 
     async def find(self, id: UserId) -> Optional[User]:
         """Find object by id"""
-        try:
-            stmt = select(SqlAlcheamyUser).where(SqlAlcheamyUser.id == id.value).limit(1)
-            result = await self.session.execute(stmt)
-        except Exception:
-            return None
-
-        data = result.scalars().first()
-        if data:
-            return User.from_dict(data.to_dict())
+        stmt = select(SqlAlcheamyUser).where(SqlAlcheamyUser.id == id.value).limit(1)
+        return await self._find(stmt)
+        
 
     async def create(self,  user: User) -> User:
         user_object = SqlAlcheamyUser.from_entity(user)
         self.session.add(user_object)
         await self.session.commit()
+
+
+    async def _find(self, stmt: select) -> Optional[User]:
+        """Find object by select statement"""
+        result = await self.session.execute(stmt)
+        data = result.scalars().first()
+        if data:
+            return User.from_dict(data.to_dict())

@@ -1,15 +1,14 @@
-from dataclasses import asdict
-from uuid import uuid4
+from dataclasses import asdict, dataclass
 
-from sqlalchemy import UUID, Column, DateTime, Integer, func
-from sqlalchemy.orm import as_declarative, declared_attr
+from sqlalchemy import UUID, Column, DateTime, func
+from sqlalchemy.orm import as_declarative
 
 
 
 @as_declarative()
 class Base:
-    id = Column(UUID, primary_key=True, unique=True)
-    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    id = Column(UUID, primary_key=True)
+    created_at = Column(DateTime(timezone=True), nullable=False)
     updated_at = Column(
         DateTime(timezone=True),
         server_default=func.now(),
@@ -18,7 +17,7 @@ class Base:
     )
 
     @classmethod
-    def from_entity(cls, entity):
+    def from_entity(cls, entity: dataclass) -> 'Base':
         data = asdict(entity)
         for key in data:
             data[key] = data[key].primitive
