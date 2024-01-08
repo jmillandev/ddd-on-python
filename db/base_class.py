@@ -1,13 +1,14 @@
+from dataclasses import asdict
 from uuid import uuid4
 
 from sqlalchemy import UUID, Column, DateTime, Integer, func
 from sqlalchemy.orm import as_declarative, declared_attr
 
 
+
 @as_declarative()
 class Base:
-    id = Column(Integer, primary_key=True, index=True)
-    public_id = Column(UUID, unique=True, index=True, default=uuid4, nullable=False)
+    id = Column(UUID, primary_key=True, unique=True, default=uuid4)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at = Column(
         DateTime(timezone=True),
@@ -16,9 +17,9 @@ class Base:
         nullable=False
     )
 
-    __name__: str
-    # Generate __tablename__ automatically
-
-    @declared_attr
-    def __tablename__(cls) -> str:
-        return cls.__name__.lower() + "s"
+    @classmethod
+    def from_entity(cls, entity):
+        data = asdict(entity)
+        for key in data:
+            data[key] = data[key].primitive
+        return cls(**data)

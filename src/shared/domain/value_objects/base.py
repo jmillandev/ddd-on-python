@@ -26,6 +26,13 @@ class ValueObject:
     @property
     def value(self) -> BASE_TYPE:
         return self._value
+    
+    @property
+    def primitive(self) -> Any:
+        """
+        Use this method to get the primitive value of the object. Useful for serialization
+        """
+        return self.value
 
     def set_value(self, value: BASE_TYPE) -> None:
         self._value = self._cast(value)

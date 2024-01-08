@@ -1,7 +1,7 @@
 import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.users.infrastructure.repositories import SqlAlcheamyUserRepository
+from src.users.infrastructure.repositories.sqlalchemy import SqlAlcheamyUserRepository
 from tests.src.users.factories import UserFactory
 
 pytestmark = pytest.mark.anyio

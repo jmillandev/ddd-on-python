@@ -12,6 +12,7 @@ class UserCreator:
 
     async def create(self, id: UserId, email: UserEmail, name: UserName, last_name: UserLastName, pronoun: UserPronoun, password: UserPassword) -> User:
         user = await self._repository.find_by_email(email)
+        # TODO: Use QueryBus instead Repository? https://pro.codely.com/library/cqrs-command-query-responsibility-segregation-29074/62554/path/step/33532843/discussion/79379/
         if user:
             raise EmailAlreadyUsed(email)
 

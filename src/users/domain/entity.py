@@ -1,9 +1,12 @@
+from dataclasses import dataclass
+
 from src.users.domain.value_objects import (UserCreatedAt, UserEmail, UserId,
                                             UserIsActive, UserLastName,
                                             UserName, UserPassword,
                                             UserPronoun)
 
 
+@dataclass
 class User:
     id: UserId
     created_at: UserCreatedAt
@@ -14,21 +17,9 @@ class User:
     pronoun: UserPronoun
     password: UserPassword
 
-    def __init__(self, id: UserId, created_at: UserCreatedAt, email: UserEmail, name: UserName,
-                 last_name: UserLastName, is_active: UserIsActive, pronoun: UserPronoun,
-                 password: UserPassword) -> None:
-        self.id = id
-        self.created_at = created_at
-        self.email = email
-        self.name = name
-        self.last_name = last_name
-        self.is_active = is_active
-        self.pronoun = pronoun
-        self.password = password
-
     @classmethod
-    def create(self, id: UserId, email: UserEmail, name: UserName, last_name: UserLastName, pronoun: UserPronoun, password: UserPassword):
-        user = User(
+    def create(cls, id: UserId, email: UserEmail, name: UserName, last_name: UserLastName, pronoun: UserPronoun, password: UserPassword):
+        user = cls(
             id=id,
             created_at=UserCreatedAt.now(),
             email=email,

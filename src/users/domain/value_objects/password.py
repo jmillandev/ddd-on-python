@@ -9,7 +9,7 @@ class UserPassword(StringValueObject):
         self._value = self._hash_password(value)
 
     def _hash_password(self, password):
-        # TODO: Refactor and use a adapter
+        # TODO: Refactor and use a adapter(interface) and dont depends on external library implementation
         return password_context.hash(password)
 
     def __eq__(self, o: object) -> bool:

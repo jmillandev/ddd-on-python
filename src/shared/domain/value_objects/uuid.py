@@ -8,3 +8,7 @@ class UuidValueObject(ValueObject):
 
     def _name(self):
         return "uuid"
+
+    @property
+    def primitive(self)->str:
+        return str(self.value)
