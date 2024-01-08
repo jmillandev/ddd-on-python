@@ -3,10 +3,10 @@ from typing import Optional
 
 from sqlalchemy import select
 from sqlalchemy import Boolean, Column, Enum, String
-from db.base_class import Base # TODO: Move to share infrastructure
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
-from db.base_repository import BaseRepository
+from src.shared.infrastructure.persistence.sqlalchemy.repositories import SqlAlcheamyRepository, SqlAlcheamyCreateMixin, SqlAlcheamyFindMixin
+from src.shared.infrastructure.persistence.sqlalchemy.models import Base
 from src.users.domain.value_objects import UserEmail, UserId, pronoun
 from src.users.domain.entity import User
 
@@ -23,44 +23,12 @@ class SqlAlcheamyUser(Base):
     __tablename__ = 'users'
 
 
-class SqlAlcheamyUserRepository(BaseRepository):
-    """
-    CRUD object with default methods to Create, Read, Update, Delete (CRUD).
+class SqlAlcheamyUserRepository(SqlAlcheamyRepository, SqlAlcheamyCreateMixin, SqlAlcheamyFindMixin):
 
-    For more information on how to create new methods, see:
-        https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html
-    """
-
-    def __init__(self, session: async_sessionmaker[AsyncSession]):
-        """
-        CRUD object with default methods to Create, Read, Update, Delete (CRUD).
-
-        **Parameters**
-
-        * `session`: A SQLAlchemy database session object.
-        """
-        self.session = session
+    model_class = SqlAlcheamyUser
+    entity_class = User
 
     async def find_by_email(self, email: UserEmail) -> User:
         """Find user by email"""
         stmt = select(SqlAlcheamyUser).where(SqlAlcheamyUser.email == email.value).limit(1)
         return await self._find(stmt)
-
-    async def find(self, id: UserId) -> Optional[User]:
-        """Find object by id"""
-        stmt = select(SqlAlcheamyUser).where(SqlAlcheamyUser.id == id.value).limit(1)
-        return await self._find(stmt)
-        
-
-    async def create(self,  user: User) -> User:
-        user_object = SqlAlcheamyUser.from_entity(user)
-        self.session.add(user_object)
-        await self.session.commit()
-
-
-    async def _find(self, stmt: select) -> Optional[User]:
-        """Find object by select statement"""
-        result = await self.session.execute(stmt)
-        data = result.scalars().first()
-        if data:
-            return User.from_dict(data.to_dict())
