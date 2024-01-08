@@ -52,14 +52,14 @@ class SqlAlcheamyUserRepository(BaseRepository):
     async def find(self, id: UserId) -> Optional[User]:
         """Find object by id"""
         try:
-            stmt = select(User).where(User.id == id).limit(1)
+            stmt = select(SqlAlcheamyUser).where(SqlAlcheamyUser.id == id.value).limit(1)
             result = await self.session.execute(stmt)
         except Exception:
             return None
 
         data = result.scalars().first()
         if data:
-            return User(**data)
+            return User.from_dict(data.to_dict())
 
     async def create(self,  user: User) -> User:
         user_object = SqlAlcheamyUser.from_entity(user)

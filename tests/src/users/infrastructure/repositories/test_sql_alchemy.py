@@ -38,5 +38,5 @@ class TestSqlAlchemyUserRepository:
         user = UserFactory.build()
 
         await repository.create(user)
-        
-        assert user == await repository.find_by_email(user.email)
+        perssisted_user = await repository.find_by_email(user.email)
+        assert user == perssisted_user

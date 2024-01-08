@@ -8,7 +8,7 @@ from sqlalchemy.orm import as_declarative, declared_attr
 
 @as_declarative()
 class Base:
-    id = Column(UUID, primary_key=True, unique=True, default=uuid4)
+    id = Column(UUID, primary_key=True, unique=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at = Column(
         DateTime(timezone=True),
