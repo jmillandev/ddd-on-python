@@ -1,9 +1,12 @@
+from kink import inject
+
 from src.users.domain.repository import UserRepository
 from src.users.domain.entity import User
 from src.users.domain.value_objects import UserId, UserEmail, UserLastName, UserName, UserPassword, UserPronoun
 from src.users.domain.exceptions.email_already_used import EmailAlreadyUsed
 
 
+@inject
 class UserCreator:
     def __init__(self, repository: UserRepository):
         self._repository = repository

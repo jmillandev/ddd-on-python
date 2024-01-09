@@ -44,7 +44,7 @@ class TestDatabaseSession:
 
 
 database = TestDatabaseSession()
-app.dependency_overrides[get_db] = database
+# app.dependency_overrides[get_db] = database
 
 
 @pytest.mark.asyncio

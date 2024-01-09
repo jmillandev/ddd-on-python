@@ -1,3 +1,4 @@
+from kink import inject
 from typing import Generic, Optional, TypeVar, Tuple
 
 from sqlalchemy import select
@@ -11,6 +12,7 @@ ModelType = TypeVar("ModelType", bound=Base)
 Entity = TypeVar("Entity")
 
 
+@inject
 class SqlAlcheamyRepository(Generic[ModelType]):
     """
     CRUD object with default methods to Create, Read, Update, Delete (CRUD).
@@ -57,6 +59,7 @@ class SqlAlcheamyFindMixin:
 class SqlAlcheamyGetAllMixin:
 
     async def all(self, skip: int = 0, limit: int = 10) -> Tuple[Entity]:
+        # TODO: Create SkipValueObject and LimitValueObject
         stmt = select(self.model).offset(skip)
         if limit is not None:
             stmt = stmt.limit(limit)

@@ -4,8 +4,11 @@ from fastapi.responses import JSONResponse
 from starlette.middleware.cors import CORSMiddleware
 
 from mercury.config import settings
+from mercury.initializers.dependencies import init as init_dependencies
 from mercury.urls import router
 from utils.errors import BaseError
+
+init_dependencies()
 
 app = FastAPI(
     title=settings.PROJECT_NAME, openapi_url=f"{settings.API_PREFIX}/openapi.json"

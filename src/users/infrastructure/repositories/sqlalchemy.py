@@ -3,7 +3,6 @@ from typing import Optional
 
 from sqlalchemy import select
 from sqlalchemy import Boolean, Column, Enum, String
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from src.shared.infrastructure.persistence.sqlalchemy.repositories import SqlAlcheamyRepository, SqlAlcheamyCreateMixin, SqlAlcheamyFindMixin
 from src.shared.infrastructure.persistence.sqlalchemy.models import Base
