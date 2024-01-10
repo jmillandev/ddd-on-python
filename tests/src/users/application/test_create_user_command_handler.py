@@ -47,4 +47,3 @@ class TestCreateUserCommandHandler:
 
         assert isinstance(excinfo.value, DomainException)
         assert excinfo.value.source == 'email'
-
