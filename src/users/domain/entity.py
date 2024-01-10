@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 from typing import Any
 
-from src.users.domain.value_objects import (UserCreatedAt, UserEmail, UserId,
+from src.shared.domain.users import UserId
+from src.users.domain.value_objects import (UserCreatedAt, UserEmail,
                                             UserIsActive, UserLastName,
                                             UserName, UserPassword,
                                             UserPronoun)

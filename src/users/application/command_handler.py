@@ -1,7 +1,11 @@
 from kink import inject
+
+from src.shared.domain.users import UserId
+from src.users.domain.value_objects import (UserEmail, UserLastName, UserName,
+                                            UserPassword, UserPronoun)
+
 from .command import CreateUserCommand
 from .creator import UserCreator
-from src.users.domain.value_objects import UserId, UserEmail, UserLastName, UserName, UserPassword, UserPronoun
 
 
 @inject

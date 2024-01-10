@@ -1,6 +1,5 @@
 from .created_at import UserCreatedAt
 from .email import UserEmail
-from .id import UserId
 from .is_active import UserIsActive
 from .last_name import UserLastName
 from .name import UserName

@@ -1,9 +1,11 @@
 from kink import inject
 
-from src.users.domain.repository import UserRepository
+from src.shared.domain.users import UserId
 from src.users.domain.entity import User
-from src.users.domain.value_objects import UserId, UserEmail, UserLastName, UserName, UserPassword, UserPronoun
 from src.users.domain.exceptions.email_already_used import EmailAlreadyUsed
+from src.users.domain.repository import UserRepository
+from src.users.domain.value_objects import (UserEmail, UserLastName, UserName,
+                                            UserPassword, UserPronoun)
 
 
 @inject

@@ -1,13 +1,13 @@
 """User respository"""
 from typing import Optional
 
-from sqlalchemy import select
-from sqlalchemy import Boolean, Column, Enum, String
+from sqlalchemy import Boolean, Column, Enum, String, select
 
-from src.shared.infrastructure.persistence.sqlalchemy.repositories import SqlAlcheamyRepository, SqlAlcheamyCreateMixin, SqlAlcheamyFindMixin
 from src.shared.infrastructure.persistence.sqlalchemy.models import Base
-from src.users.domain.value_objects import UserEmail, UserId, pronoun
+from src.shared.infrastructure.persistence.sqlalchemy.repositories import (
+    SqlAlcheamyCreateMixin, SqlAlcheamyFindMixin, SqlAlcheamyRepository)
 from src.users.domain.entity import User
+from src.users.domain.value_objects import UserEmail, pronoun
 
 
 class SqlAlcheamyUser(Base):
