@@ -2,4 +2,4 @@ from src.shared.domain.value_objects.boolean import BooleanValueObject
 
 
 class UserIsActive(BooleanValueObject):
-    pass
+    NAME = "is_active"

@@ -7,6 +7,7 @@ from mercury.config import settings
 from mercury.initializers.dependencies import init as init_dependencies
 from mercury.urls import router
 from utils.errors import BaseError
+from src.shared.domain.exceptions.base import DomainException
 
 init_dependencies()
 
@@ -34,6 +35,6 @@ async def validation_exception_handler(request, exc):
     return JSONResponse({'detail': tuple(data)}, status_code=422)
 
 
-@app.exception_handler(BaseError)
+@app.exception_handler(DomainException)
 async def base_error_handler(request, exception):
-    return JSONResponse({'detail': [dict(exception)]}, status_code=exception.status_code)
+    return JSONResponse({'detail': [dict(exception)]}, status_code=exception.code)

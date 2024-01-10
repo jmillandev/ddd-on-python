@@ -1,14 +1,13 @@
-from pydantic import BaseModel, EmailStr, UUID4
-from src.users.domain.value_objects.pronoun import Pronoun
+from pydantic import BaseModel, UUID4
 
 
 class CreateUserCommand(BaseModel):
     id: UUID4
-    email: EmailStr
+    email: str
     name: str
     last_name: str
     password: str
-    pronoun: Pronoun
+    pronoun: str
 
     class Config:
         allow_mutation = False

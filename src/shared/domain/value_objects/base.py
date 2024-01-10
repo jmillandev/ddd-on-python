@@ -21,7 +21,10 @@ class ValueObject:
         try:
             return self.BASE_TYPE(value)
         except Exception:
-            raise InvalidValueException(f"Invalid {self.BASE_TYPE.__name__}")
+            self.fail(f"Invalid {self.BASE_TYPE.__name__}")
+
+    def _fail(self, message: str) -> None:
+        raise InvalidValueException(message=message, source=self._name)
 
     @property
     def value(self) -> BASE_TYPE:
@@ -72,6 +75,9 @@ class ValueObject:
     @property
     def _name(self) -> str:
         """
-        Override this method to implement a name that final users can understand
+        Override this method to implement a name that final users can understand in case of error
         """
-        raise NotImplementedError
+        if hasattr(self, "NAME"):
+            return self.NAME
+
+        raise NotImplementedError("You must implement _name or define NAME in the {self.__class__.__name__}")

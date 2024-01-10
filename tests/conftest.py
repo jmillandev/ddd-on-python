@@ -1,6 +1,7 @@
 from typing import Generator
 
 import pytest
+from faker import Faker
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -63,3 +64,8 @@ async def client() -> Generator:
 @pytest.fixture(scope='session')
 def anyio_backend():
     return 'asyncio'
+
+
+@pytest.fixture(scope='session')
+def fake() -> Generator:
+    return Faker()

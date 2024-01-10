@@ -1,6 +1,5 @@
 import enum
 
-from src.shared.domain.exceptions.invalid_value import InvalidValueException
 from src.shared.domain.value_objects.string import StringValueObject
 
 
@@ -14,7 +13,8 @@ class Pronoun(str, enum.Enum):
 
 
 class UserPronoun(StringValueObject):
+    NAME = 'name'
     def _validate(self) -> None:
         super()._validate()
         if self.value not in Pronoun.keys():
-            raise InvalidValueException(f"{self.value} is not a valid pronoun")
+            raise self._fail(f"{self.value} is not a valid pronoun")

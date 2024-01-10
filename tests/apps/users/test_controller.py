@@ -44,9 +44,10 @@ async def test_email_already_exists(client: AsyncClient, db_session: AsyncSessio
     assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     response = response.json()['detail'][0]
+
     assert response['msg'] == 'The user with this username already exists in the system.'
     assert response['source'] == 'email'
-    assert response['status_code'] == status.HTTP_400_BAD_REQUEST
+    assert response['code'] == status.HTTP_400_BAD_REQUEST
 
 
 async def test_required_field(client: AsyncClient, db_session: AsyncSession) -> None:

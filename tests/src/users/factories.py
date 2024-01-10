@@ -13,7 +13,12 @@ fake = Faker()
 class UserFactory:
     
     @staticmethod
-    def build( 
+    def build(**kwargs) -> User:
+        attrs = UserFactory.to_dict(**kwargs)
+        return User.from_dict(attrs)
+
+    @staticmethod
+    def to_dict( 
             id: str = uuid4(),
             created_at: datetime = datetime.utcnow(),
             email: str = fake.email(),
@@ -22,15 +27,14 @@ class UserFactory:
             is_active: bool = True,
             pronoun: str = fake.random_element(elements=Pronoun.keys()),
             password: str = fake.password()
-        ) -> User:
-        return User(
-            id=UserId(id),
-            created_at=UserCreatedAt(created_at),
-            email=UserEmail(email),
-            name=UserName(name),
-            last_name=UserLastName(last_name),
-            is_active=UserIsActive(is_active),
-            pronoun=UserPronoun(pronoun),
-            password=UserPassword(password)
-        )
-1
+        ) -> dict:
+        return {
+            'id': id,
+            'created_at': created_at,
+            'email': email,
+            'name': name,
+            'last_name': last_name,
+            'is_active': is_active,
+            'pronoun': pronoun,
+            'password': password
+        }

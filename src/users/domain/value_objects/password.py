@@ -3,7 +3,7 @@ from utils.passwords import password_context
 
 
 class UserPassword(StringValueObject):
-
+    NAME = "password"
     def set_value(self, value):
         super().set_value(value)
         self._value = self._hash_password(value)
