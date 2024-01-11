@@ -1,14 +1,16 @@
-import pytest
 from unittest.mock import Mock
 
-from src.users.domain.exceptions.email_already_used import EmailAlreadyUsed
-from src.shared.domain.exceptions.invalid_value import InvalidValueException
+import pytest
+
 from src.shared.domain.exceptions.base import DomainException
+from src.shared.domain.exceptions.invalid_value import InvalidValueException
+from src.users.application.command import CreateUserCommand
+from src.users.application.command_handler import CreateUserCommandHandler
 from src.users.application.creator import UserCreator
+from src.users.domain.exceptions.email_already_used import EmailAlreadyUsed
 from src.users.domain.repository import UserRepository
 from tests.src.users.factories import UserFactory
-from src.users.application.command_handler import CreateUserCommandHandler
-from src.users.application.command import CreateUserCommand
+
 pytestmark = pytest.mark.anyio
 
 class TestCreateUserCommandHandler:

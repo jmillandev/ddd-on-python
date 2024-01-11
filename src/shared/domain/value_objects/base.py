@@ -21,7 +21,7 @@ class ValueObject:
         try:
             return self.BASE_TYPE(value)
         except Exception:
-            self.fail(f"Invalid {self.BASE_TYPE.__name__}")
+            self._fail(f"Invalid {self.BASE_TYPE.__name__}")
 
     def _fail(self, message: str) -> None:
         raise InvalidValueException(message=message, source=self._name)

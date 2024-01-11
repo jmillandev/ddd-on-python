@@ -5,4 +5,4 @@ class InvalidCredentials(DomainException):
     def __init__(self):
         # TODO: Use I18n To translations
         message = 'Invalid credentials'
-        super().__init__(401, message, 'username or password')
+        super().__init__(401, message, 'credentials')

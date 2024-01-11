@@ -3,7 +3,6 @@ from dataclasses import dataclass
 
 from src.auth.domain.value_objects import AuthAccessToken, AuthTokenType, AuthExpiresAt, AuthPassword, AuthUsername
 from src.shared.domain.users import UserId
-from src.auth.domain.encoder import AuthEncoder
 
 
 @dataclass
@@ -15,7 +14,7 @@ class AuthToken:
 
 
     @classmethod
-    def create(cls, user_id: UserId, access_token: AuthAccessToken, expires_at: AuthExpiresAt) -> 'Auth':
+    def create(cls, user_id: UserId, access_token: AuthAccessToken, expires_at: AuthExpiresAt) -> 'AuthToken':
         return cls(
             access_token=access_token,
             user_id=user_id,
@@ -25,7 +24,7 @@ class AuthToken:
     
     @staticmethod
     def payload(user_id: UserId, expires_at: AuthExpiresAt) -> dict[str, Any]:
-        return {'sub': user_id.primitive(), 'exp': expires_at.primitive()}
+        return {'sub': user_id.primitive, 'exp': expires_at.primitive}
 
 
 @dataclass
