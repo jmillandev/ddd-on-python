@@ -11,7 +11,7 @@ class AuthCredentialFactory:
 
     @classmethod
     def build(cls, **kwargs) -> AuthCredential:
-        return dict_to_entity(AuthCredential, cls.to_dict(**kwargs))
+        return dict_to_entity(cls.to_dict(**kwargs), AuthCredential)
 
     @staticmethod
     def to_dict( 

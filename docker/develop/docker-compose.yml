@@ -29,6 +29,8 @@ services:
       - mercury-db:/var/lib/postgresql/data/pgdata
     env_file:
       - .env
+    ports:
+      - 5433:5432
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
 

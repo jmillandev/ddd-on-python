@@ -60,18 +60,3 @@ class User:
         if not isinstance(o, User):
             return False
         return self.id == o.id
-
-    @classmethod
-    def from_dict(cls, data: dict[str, Any]):
-        """Create a User from a dict.
-        Used for deserialization of a User.
-
-        Args:
-            data (dict[str, Any]): A dict with the attributes of a User.
-
-        Returns:
-            User
-        """
-        annotations = cls.__annotations__
-        attributes = { key: annotations[key](value) for key, value in data.items() if key in annotations }
-        return cls(**attributes)

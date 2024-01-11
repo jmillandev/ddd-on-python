@@ -1,4 +1,4 @@
-"""Create Users and Accounts
+"""Create Users, Credentials(View) and Accounts tables
 
 Revision ID: 0a5919b81056
 Revises: 
@@ -42,6 +42,13 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_users_id'), 'users', ['id'], unique=False)
+    op.execute(
+        """
+        CREATE VIEW auth_credentials AS
+            SELECT users.email as username, users.password, users.id as user_id
+            FROM users; 
+        """
+    )
 
     # op.create_table('accounts',
     # sa.Column('name', sa.String(length=50), nullable=False),
@@ -64,6 +71,7 @@ def downgrade() -> None:
     # op.drop_index(op.f('ix_accounts_public_id'), table_name='accounts')
     # op.drop_index(op.f('ix_accounts_id'), table_name='accounts')
     # op.drop_table('accounts')
+    op.execute('DROP VIEW auth_credentials;')
     op.drop_index(op.f('ix_users_id'), table_name='users')
     op.drop_table('users')
     # op.drop_index(op.f('ix_currencies_public_id'), table_name='currencies')

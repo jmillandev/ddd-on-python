@@ -1,7 +1,8 @@
 """User respository"""
 from typing import Optional
 
-from sqlalchemy import Boolean, Column, Enum, String, select
+from sqlalchemy import (UUID, Boolean, Column, DateTime, Enum, String, func,
+                        select)
 
 from src.shared.infrastructure.persistence.sqlalchemy.models import Base
 from src.shared.infrastructure.persistence.sqlalchemy.repositories import (
@@ -11,13 +12,15 @@ from src.users.domain.value_objects import UserEmail, pronoun
 
 
 class SqlAlcheamyUser(Base):
+    id = Column(UUID, primary_key=True)
+    created_at = Column(DateTime(timezone=True), nullable=False)
     email = Column(String(50), nullable=False)
     name = Column(String(50), nullable=False)
     last_name = Column(String(50), nullable=False)
     password = Column(String, nullable=False)
     is_active = Column(Boolean, default=True)
     pronoun = Column(
-        Enum(pronoun.Pronoun, values_callable=lambda x: pronoun.Pronoun.keys(), name='pronouns'))
+        Enum(pronoun.Pronoun, values_callable=lambda _: pronoun.Pronoun.keys(), name='pronouns'))
 
     __tablename__ = 'users'
 
@@ -27,7 +30,7 @@ class SqlAlcheamyUserRepository(SqlAlcheamyRepository, SqlAlcheamyCreateMixin, S
     model_class = SqlAlcheamyUser
     entity_class = User
 
-    async def find_by_email(self, email: UserEmail) -> User:
+    async def find_by_email(self, email: UserEmail) -> Optional[User]:
         """Find user by email"""
         stmt = select(SqlAlcheamyUser).where(SqlAlcheamyUser.email == email.value).limit(1)
         return await self._find(stmt)

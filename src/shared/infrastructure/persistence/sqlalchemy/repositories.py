@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from .models import Base
 from src.shared.domain.value_objects.uuid import UuidValueObject
+from src.shared.application.mappers import dict_to_entity
 
 ModelType = TypeVar("ModelType", bound=Base)
 Entity = TypeVar("Entity")
@@ -54,7 +55,7 @@ class SqlAlcheamyFindMixin:
         result = await self.session.execute(stmt)
         data = result.scalars().first()
         if data:
-            return self.entity_class.from_dict(data.to_dict())
+            return dict_to_entity(data.to_dict(), self.entity_class)
 
 class SqlAlcheamyGetAllMixin:
 
@@ -64,7 +65,7 @@ class SqlAlcheamyGetAllMixin:
         if limit is not None:
             stmt = stmt.limit(limit)
         result = await self.session.execute(stmt)
-        (self.entity_class.from_dict(data.to_dict()) for data in result.scalars().all())
+        return (dict_to_entity(data.to_dict(), self.entity_class) for data in result.scalars().all())
 
     # TODO: Migrate method to async
 

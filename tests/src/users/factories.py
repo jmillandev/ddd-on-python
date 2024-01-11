@@ -1,21 +1,21 @@
 from datetime import datetime
-from src.users.domain.entity import User
-from src.users.domain.value_objects import *
-from src.users.domain.value_objects.pronoun import Pronoun
+from uuid import uuid4
 
 from faker import Faker
 
-from uuid import uuid4
+from src.shared.application.mappers import dict_to_entity
+from src.users.domain.entity import User
+from src.users.domain.value_objects import *
+from src.users.domain.value_objects.pronoun import Pronoun
 
 fake = Faker()
 
 
 class UserFactory:
     
-    @staticmethod
-    def build(**kwargs) -> User:
-        attrs = UserFactory.to_dict(**kwargs)
-        return User.from_dict(attrs)
+    @classmethod
+    def build(cls, **kwargs) -> User:
+        return dict_to_entity(cls.to_dict(**kwargs), User)
 
     @staticmethod
     def to_dict( 
