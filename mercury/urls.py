@@ -1,7 +1,6 @@
-from fastapi import APIRouter, Response
+import os
 
-from apps.users.urls import router as user_router
-from apps.auth.urls import router as auth_router
+from fastapi import APIRouter, Response
 
 router = APIRouter()
 
@@ -9,5 +8,9 @@ router = APIRouter()
 async def healthcheck():
     return Response('OK',status_code=200)
 
-router.include_router(user_router, tags=['users'])
-router.include_router(auth_router, tags=['auth'])
+# Import all apps/*/urls.py files and add them to the router
+for module in os.listdir('apps'):
+    if module.startswith('_'):
+        continue
+    app_router = __import__(f'apps.{module}.urls', fromlist=['router']).router
+    router.include_router(app_router, tags=[module])

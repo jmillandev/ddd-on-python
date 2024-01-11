@@ -24,4 +24,4 @@ RUN pip install -r requirements/develop.txt
 COPY ["./docker/develop/fastapi/entrypoint.sh", "/entrypoint.sh"]
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["uvicorn", "main:app", "--reload", "--workers", "1", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["make", "up"]
