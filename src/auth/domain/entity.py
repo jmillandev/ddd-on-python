@@ -12,7 +12,6 @@ class AuthToken:
     token_type: AuthTokenType
     expires_at: AuthExpiresAt
 
-
     @classmethod
     def create(cls, user_id: UserId, access_token: AuthAccessToken, expires_at: AuthExpiresAt) -> 'AuthToken':
         return cls(
@@ -32,6 +31,3 @@ class AuthCredential:
     user_id: UserId
     username: AuthUsername
     password: AuthPassword
-
-    def verify_password(self, password: AuthPassword) -> bool:
-        return self.password == password.hash()

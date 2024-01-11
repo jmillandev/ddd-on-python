@@ -5,5 +5,5 @@ class AuthPassword(StringValueObject):
     NAME = 'password'
 
     def hash(self) -> str:
-        # TODO: Implement password hashing
+        # TODO: Implement password hashing algorithm and Validate security
         return self.value
