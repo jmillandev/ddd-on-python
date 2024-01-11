@@ -5,7 +5,6 @@ from faker import Faker
 
 from src.shared.application.mappers import dict_to_entity
 from src.users.domain.entity import User
-from src.users.domain.value_objects import *
 from src.users.domain.value_objects.pronoun import Pronoun
 
 fake = Faker()

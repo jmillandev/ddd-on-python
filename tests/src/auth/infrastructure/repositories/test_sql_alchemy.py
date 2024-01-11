@@ -5,7 +5,9 @@ from src.auth.infrastructure.repositories.sqlalchemy import SqlAlcheamyAuthCrede
 from tests.src.auth.factories import AuthCredentialFactory
 from src.users.infrastructure.repositories.sqlalchemy import SqlAlcheamyUserRepository
 from tests.src.users.factories import UserFactory
-
+from src.shared.domain.users import UserId
+from src.auth.domain.value_objects import AuthUsername, AuthPassword
+from src.auth.domain.entity import AuthCredential
 pytestmark = pytest.mark.anyio
 
 
@@ -17,10 +19,10 @@ class TestSqlAlchemyAuthCredentialRepository:
         user_repository = SqlAlcheamyUserRepository(db_session)
         credential_repository = SqlAlcheamyAuthCredentialRepository(db_session)
         user = UserFactory.build(**attrs)
-        credential = AuthCredentialFactory.build(
-            user_id=attrs['id'],
-            username=attrs['email'],
-            password=attrs['password']
+        credential = AuthCredential(
+            user_id=UserId(attrs['id']),
+            username=AuthUsername(attrs['email']),
+            password=AuthPassword(user.password.value, is_hashed=True)
         )
 
         await user_repository.create(user)

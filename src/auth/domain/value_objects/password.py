@@ -1,9 +1,4 @@
-from src.shared.domain.value_objects.string import StringValueObject
+from src.shared.domain.value_objects.secret import SecretValueObject
 
-
-class AuthPassword(StringValueObject):
+class AuthPassword(SecretValueObject):
     NAME = 'password'
-
-    def hash(self) -> str:
-        # TODO: Implement password hashing algorithm and Validate security
-        return self.value

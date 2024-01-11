@@ -41,7 +41,7 @@ def upgrade() -> None:
     sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_index(op.f('ix_users_id'), 'users', ['id'], unique=False)
+    op.create_index(op.f('ix_auth_credentials_username'), 'users', ['email'])
     op.execute(
         """
         CREATE VIEW auth_credentials AS
@@ -72,7 +72,7 @@ def downgrade() -> None:
     # op.drop_index(op.f('ix_accounts_id'), table_name='accounts')
     # op.drop_table('accounts')
     op.execute('DROP VIEW auth_credentials;')
-    op.drop_index(op.f('ix_users_id'), table_name='users')
+    op.drop_index(op.f('ix_auth_credentials_username'), table_name='users')
     op.drop_table('users')
     # op.drop_index(op.f('ix_currencies_public_id'), table_name='currencies')
     # op.drop_index(op.f('ix_currencies_id'), table_name='currencies')

@@ -9,6 +9,8 @@ from src.users.infrastructure.repositories.sqlalchemy import SqlAlcheamyUserRepo
 
 from src.auth.domain.encoder import AuthEncoder
 from src.auth.infrastructure.encoders.jose_jwt import JoseJwtEncoder
+from src.shared.domain.encryptors.unidirectional import UnidirectionalEncryptor
+from src.shared.infrastructure.encryptors.unidirectionals.passlib import PasslibUnidirectionalEncryptor
 
 
 def init():
@@ -16,3 +18,4 @@ def init():
     di[AuthEncoder] = JoseJwtEncoder()
     di[UserRepository] = lambda di: SqlAlcheamyUserRepository()
     di[UserCreator] = lambda di: UserCreator()
+    di[UnidirectionalEncryptor] = PasslibUnidirectionalEncryptor()
