@@ -21,7 +21,7 @@ class SqlAlcheamyAuthCredentialRepository(SqlAlcheamyRepository):
     model_class = SqlAlcheamyAuthCredential
     entity_class = AuthCredential
 
-    async def find(self, username: AuthUsername) -> Optional[AuthCredential]:
+    async def search(self, username: AuthUsername) -> Optional[AuthCredential]:
         """Find credential by username"""
         stmt = select(SqlAlcheamyAuthCredential).where(SqlAlcheamyAuthCredential.username == username.value).limit(1)
         result = await self.session.execute(stmt)

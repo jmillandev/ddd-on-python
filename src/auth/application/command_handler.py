@@ -17,4 +17,4 @@ class CreateAuthTokenCommandHandler:
             username=AuthUsername(command.username),
             password=AuthPassword(command.password)
         )
-        return AuthTokenResponse(auth_token)
+        return AuthTokenResponse.build(auth_token)

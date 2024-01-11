@@ -4,30 +4,28 @@ from fastapi import status
 from httpx import AsyncClient
 
 from mercury.config import settings
-from src.users.infrastructure.repositories.sqlalchemy import SqlAlcheamyUserRepository as UserRepository
+from src.users.infrastructure.repositories.sqlalchemy import SqlAlcheamyUserRepository
 from kink import di
-from tests.users.factories import UserFactory
+from tests.src.users.factories import UserFactory
 fake = Faker()
 
 pytestmark = pytest.mark.anyio
 
 
-async def test_success(client: AsyncClient, fake) -> None:
+async def test_success(client: AsyncClient, fake, db_session) -> None:
     password = fake.password()
     # TODO: Create DB table for Credentials
     user = UserFactory.build(password=password)
-    await di[UserRepository].create(user)
-    params = {'username': fake.email(), 'password': fake.password(), 'grant_type': 'password'}
+    # TODO: Use dependency injection instead of repository implementation
+    await SqlAlcheamyUserRepository(db_session).create(user)
+    params = {'username': user.email.value, 'password': password, 'grant_type': 'password'}
 
     response = await client.post(f"{settings.API_PREFIX}/v1/sign-in", json=params)
 
     assert response.status_code == status.HTTP_200_OK, response.text
 
     json_response = response.json()
-    assert json_response['access_token']
-    assert json_response['user']
-    json_user = json_response['user']
-    assert json_user['user_id'] == user.id.primitive
-    assert json_user['access_token'] is not None
-    assert json_user['expired_at'] is not None
-    assert json_user['token_type'] == 'bearer'
+    assert json_response['user_id'] == user.id.primitive
+    assert json_response['access_token'] is not None
+    assert json_response['expires_at'] is not None
+    assert json_response['token_type'] == 'bearer'

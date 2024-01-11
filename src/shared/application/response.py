@@ -5,6 +5,7 @@ Entity = TypeVar('Entity')
 
 class Response(BaseModel):
 
-    def __init__(self, entity: Entity):
-        attributes = {key: getattr(entity, key).primitive for key in self.__annotations__.keys()}
-        super().__init__(**attributes)
+    @classmethod
+    def build(cls, entity: Entity) -> Entity:
+        attributes = {key: getattr(entity, key).primitive for key in cls.__annotations__.keys()}
+        return cls(**attributes)

@@ -6,7 +6,6 @@ from starlette.middleware.cors import CORSMiddleware
 from mercury.config import settings
 from mercury.initializers.dependencies import init as init_dependencies
 from mercury.urls import router
-from utils.errors import BaseError
 from src.shared.domain.exceptions.base import DomainException
 
 init_dependencies()
