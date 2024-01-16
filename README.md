@@ -1,36 +1,46 @@
-# Database
+<h1 align="center">
+  🐍🎯 Hexagonal Architecture, DDD & CQRS in Python
+</h1>
 
-## Technologies
+
+## 🙌 Environment Setup
+
+### 🐳 Needed tools
+
+1. [Install Docker](https://www.docker.com/get-started)
+
+### 🛠️ Environment configuration
+
+1. Create a local environment file (`cp .env.template .env`)
+2. If you want, you could modify any parameter
+
+### 🔥 Application execution
+
+1. Install all the dependencies and bring up the project with Docker executing: `./init.sh up --build`
+
+### ✅ Tests execution
+
+1. Install the dependencies if you haven't done it previously: `./init.sh build`
+2. Execute PHPUnit and Behat tests: `make test`
+
+## Extras
+
+## Utils
+
+- Run command inside of docker: `make dev <command>`
+
+- Connect to Postgres on bash: `make psql`
+
+- Create a new migration file: `make generate/migration message="migration name"`
+
+- Run the migrations: `make migrate`
+
+## External Links
+
+### Technologies
+
+- [FastAPI](https://fastapi.tiangolo.com/)
+- [Docker](https://www.docker.com/)
 - [PostgreSQL](https://www.postgresql.org/)
-- [Alembic](https://alembic.sqlalchemy.org/en/latest/)
-- [SQLAlchemy](https://www.sqlalchemy.org/)
-
-# Dev Notes
-
-## Asyncio and SQLAlchemy
-
-https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html
-https://testdriven.io/blog/fastapi-sqlmodel/
-https://lewoudar.medium.com/anyio-all-you-need-for-async-programming-stuff-4cd084d0f6bd
-
-## Databases
-https://sqlmodel.tiangolo.com/
-
-## Run command inside of docker
-
-` make dev run mercury_api <command>`
-
-example: `make dev run mercury_api bash`
-
-# Utils
-
-## Connect to Postgres on bash
-
-`make psql`
-
-## How to run a new migration
-1. Create a new migration file
-```bash
-alembic revision --autogenerate -m "migration name"
-```
-2. Run the migration: `make migrate`
+- [Alembic(To handle SQL Migration)](https://alembic.sqlalchemy.org/en/latest/)
+- [SQLAlchemy(ORM)](https://www.sqlalchemy.org/)
