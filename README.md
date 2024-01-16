@@ -79,6 +79,8 @@ src
 
 - Run the migrations: `make migrate`
 
+- Run Tests and Linters: `make test`
+
 ## External Links
 
 ### Architecture

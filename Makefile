@@ -17,6 +17,7 @@ migrate:
 	alembic upgrade head
 
 test:
+	make lint
 	pytest -v
 
 generate/migration:
@@ -24,3 +25,9 @@ generate/migration:
 
 format:
 	black .
+	isort .
+
+lint:
+	flake8 .
+	black --check .
+	isort --check-only .
