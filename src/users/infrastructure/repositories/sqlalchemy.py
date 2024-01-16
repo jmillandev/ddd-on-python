@@ -30,7 +30,7 @@ class SqlAlcheamyUserRepository(SqlAlcheamyRepository, SqlAlcheamyCreateMixin, S
     model_class = SqlAlcheamyUser
     entity_class = User
 
-    async def find_by_email(self, email: UserEmail) -> Optional[User]:
-        """Find user by email"""
+    async def search_by_email(self, email: UserEmail) -> Optional[User]:
+        """Search user by email"""
         stmt = select(SqlAlcheamyUser).where(SqlAlcheamyUser.email == email.value).limit(1)
-        return await self._find(stmt)
+        return await self._search(stmt)

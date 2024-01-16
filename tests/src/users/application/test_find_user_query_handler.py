@@ -42,3 +42,17 @@ class TestFindUserQueryHandler:
 
         assert isinstance(excinfo.value, DomainException)
         assert excinfo.value.code == 404
+
+    async def test_should_raise_forbidden_error(self) -> None:
+        # user = await UserFactory()
+
+        # response = await client.post(f"{settings.API_PREFIX}/v1/users/{user.public_id}", auth=AuthAsUser(await UserFactory()))
+
+        # assert response.status_code == status.HTTP_403_FORBIDDEN, response.text
+
+        # json_response = response.json()
+        # assert len(json_response['detail']) == 1
+        # error_response = json_response['detail'][0]
+        # assert error_response['msg'] == 'You do not have permission to perform this action'
+        # assert error_response['source'] == 'credentials'
+        assert False, 'Not implemented'

@@ -21,12 +21,12 @@ from src.shared.domain.bus.query import QueryBus
 from src.shared.infrastructure.bus.query.hardcoded import HardcodedQueryBus
 
 def init():
-    di[AsyncSession] = lambda _: SqlAlchemySession()
+    di.factories[AsyncSession] = lambda _: SqlAlchemySession()
+    di.factories[UserRepository] = lambda _: SqlAlcheamyUserRepository()
+    di.factories[AuthCredentialRepository] = lambda _: SqlAlcheamyAuthCredentialRepository()
+    di.factories[UserCreator] = lambda _: UserCreator()
+    di.factories[AuthTokenCreator] = lambda _: AuthTokenCreator()
+    di[UnidirectionalEncryptor] = PasslibUnidirectionalEncryptor()
     di[CommandBus] = HardcodedCommandBus()
     di[AuthEncoder] = JoseJwtEncoder()
-    di[UserRepository] = lambda _: SqlAlcheamyUserRepository()
-    di[AuthCredentialRepository] = lambda _: SqlAlcheamyAuthCredentialRepository()
-    di[UserCreator] = lambda _: UserCreator()
-    di[UnidirectionalEncryptor] = PasslibUnidirectionalEncryptor()
-    di[AuthTokenCreator] = lambda _: AuthTokenCreator()
     di[QueryBus] = HardcodedQueryBus()

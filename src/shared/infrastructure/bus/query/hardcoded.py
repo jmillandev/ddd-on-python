@@ -11,6 +11,6 @@ class HardcodedQueryBus:
 
     async def ask(self, command: Query)-> QueryResponse:
         try:
-            await self.HANDLERS[command.__class__]()(command)
+            return await self.HANDLERS[command.__class__]()(command)
         except KeyError:
             raise QueryNotRegistered(command)

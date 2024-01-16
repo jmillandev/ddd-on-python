@@ -2,6 +2,7 @@ import pytest
 from faker import Faker
 from fastapi import status
 from httpx import AsyncClient
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from mercury.config import settings
 from src.users.infrastructure.repositories.sqlalchemy import SqlAlcheamyUserRepository
@@ -12,7 +13,7 @@ fake = Faker()
 pytestmark = pytest.mark.anyio
 
 
-async def test_success(client: AsyncClient, fake, sqlalchemy_session) -> None:
+async def test_success(client: AsyncClient, fake, sqlalchemy_session: AsyncSession) -> None:
     password = fake.password()
     # TODO: Create DB table for Credentials
     user = UserFactory.build(password=password)

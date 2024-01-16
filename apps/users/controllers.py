@@ -18,4 +18,4 @@ async def sign_up(*, command_bus: Annotated[CommandBus, Depends(lambda: di[Comma
 
 
 async def find(id: FindUserQuery.__annotations__['id'], query_bus: Annotated[QueryBus, Depends(lambda: di[QueryBus])]) -> UserResponse:
-    return await query_bus.ask(FindUserQuery(id))
+    return await query_bus.ask(FindUserQuery(id=id))

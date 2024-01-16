@@ -20,7 +20,7 @@ class TestCreateUserCommandHandler:
         self.handler = CreateUserCommandHandler(use_case)
 
     async def test_should_create_a_user(self) -> None:
-        self._repository.find_by_email.return_value = None
+        self._repository.search_by_email.return_value = None
 
         params = UserFactory.to_dict()
         user = UserFactory.build(**params)
@@ -31,7 +31,7 @@ class TestCreateUserCommandHandler:
 
     async def test_should_raise_error_email_already_exists(self) -> None:
         params = UserFactory.to_dict()
-        self._repository.find_by_email.return_value = UserFactory.build(**params)
+        self._repository.search_by_email.return_value = UserFactory.build(**params)
         command = CreateUserCommand(**params)
 
         with pytest.raises(EmailAlreadyUsed) as excinfo:

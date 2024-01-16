@@ -45,13 +45,13 @@ class SqlAlcheamyCreateMixin:
 
 class SqlAlcheamyFindMixin:
 
-    async def find(self, id: UuidValueObject) -> Optional[Entity]:
-        """Find object by id"""
+    async def search(self, id: UuidValueObject) -> Optional[Entity]:
+        """Search object by id"""
         stmt = select(self.model_class).where(self.model_class.id == id.value).limit(1)
-        return await self._find(stmt)
+        return await self._search(stmt)
 
-    async def _find(self, stmt: select) -> Optional[Entity]:
-        """Find object by select statement"""
+    async def _search(self, stmt: select) -> Optional[Entity]:
+        """Search object by select statement"""
         result = await self.session.execute(stmt)
         data = result.scalars().first()
         if data:

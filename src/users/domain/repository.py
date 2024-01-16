@@ -12,5 +12,5 @@ class UserRepository(Protocol):
     async def search(self, user_id: UserId) -> User:
         ...
 
-    async def find_by_email(self, email: UserId) -> User:
+    async def search_by_email(self, email: UserId) -> User:
         ...

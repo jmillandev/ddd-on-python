@@ -22,15 +22,15 @@ class TestSqlAlchemyUserRepository:
 
         await repository.create(user)
         
-        assert user == await repository.find(user.id)
+        assert user == await repository.search(user.id)
 
 
     async def test_should_not_return_a_non_existing_user(self, sqlalchemy_session: AsyncSession):
         repository = SqlAlcheamyUserRepository(sqlalchemy_session)
         user = UserFactory.build()
         
-        assert await repository.find(user.id) == None
-        assert await repository.find_by_email(user.email) == None
+        assert await repository.search(user.id) == None
+        assert await repository.search_by_email(user.email) == None
 
     
     async def test_should_return_a_user_by_email(self, sqlalchemy_session: AsyncSession):
@@ -38,5 +38,5 @@ class TestSqlAlchemyUserRepository:
         user = UserFactory.build()
 
         await repository.create(user)
-        perssisted_user = await repository.find_by_email(user.email)
+        perssisted_user = await repository.search_by_email(user.email)
         assert user == perssisted_user
