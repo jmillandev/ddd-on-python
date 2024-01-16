@@ -4,7 +4,7 @@ from fastapi import status
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from config import settings
+from apps.planner.backend.config import settings
 
 fake = Faker()
 

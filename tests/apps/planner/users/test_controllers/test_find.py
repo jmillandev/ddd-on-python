@@ -5,7 +5,7 @@ from httpx import AsyncClient
 from kink import di
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from config import settings
+from apps.planner.backend.config import settings
 from src.planner.users.domain.repository import UserRepository
 from tests.apps.planner.shared.auth import AuthAsUser
 from tests.src.planner.users.factories import UserFactory

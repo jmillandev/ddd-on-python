@@ -3,7 +3,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.middleware.cors import CORSMiddleware
 
-from config import settings
+from apps.planner.backend.config import settings
 from src.planner.shared.infrastructure.dependency_injector import init as init_dependencies
 from apps.planner.backend.shared.urls import router
 from src.planner.shared.domain.exceptions.base import DomainException

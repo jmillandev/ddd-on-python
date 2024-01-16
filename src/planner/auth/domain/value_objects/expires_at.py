@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from config import settings
+from src.planner.shared.config import settings
 from src.planner.shared.domain.value_objects.integer import IntegerValueObject
 
 
