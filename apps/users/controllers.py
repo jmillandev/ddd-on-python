@@ -13,9 +13,6 @@
 # from db.session import get_db
 # from src.users.infrastructure.repositories import SqlAlcheamyUserRepository
 # from utils.auth import get_current_user
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
-from db.session import get_db
-
 from typing import Annotated
 
 from kink import di
@@ -25,12 +22,10 @@ from src.users.application.command import CreateUserCommand
 from src.shared.domain.bus.command import CommandBus
 
 
-async def sign_up(*, command_bus: Annotated[CommandBus, Depends(lambda: di[CommandBus])], command: CreateUserCommand, db_session: Annotated[AsyncSession, Depends(get_db)]):
+async def sign_up(*, command_bus: Annotated[CommandBus, Depends(lambda: di[CommandBus])], command: CreateUserCommand):
     """
     Create new user.
     """
-    # TODO: This is a problem because we are using the same db_session for all the requests
-    di[async_sessionmaker[AsyncSession]] = db_session
     await command_bus.dispatch(command)
 
 # async def sign_in(*, db_session: Annotated[AsyncSession, Depends(get_db)], params: OAuth2Contract) -> Token:

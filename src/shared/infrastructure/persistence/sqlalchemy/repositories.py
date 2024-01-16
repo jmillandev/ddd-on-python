@@ -2,7 +2,7 @@ from kink import inject
 from typing import Generic, Optional, TypeVar, Tuple
 
 from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 from .models import Base
@@ -25,15 +25,15 @@ class SqlAlcheamyRepository(Generic[ModelType]):
     model_class: ModelType
     entity_class: Entity
 
-    def __init__(self, session: async_sessionmaker[AsyncSession]):
+    def __init__(self, sqlalchemy_session: AsyncSession):
         """
         CRUD object with default methods to Create, Read, Update, Delete (CRUD).
 
         **Parameters**
 
-        * `session`: A SQLAlchemy database session object.
+        * `sqlalchemy_session`: A SQLAlchemy database session object.
         """
-        self.session = session
+        self.session = sqlalchemy_session
 
 
 class SqlAlcheamyCreateMixin:

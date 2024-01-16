@@ -12,12 +12,12 @@ fake = Faker()
 pytestmark = pytest.mark.anyio
 
 
-async def test_success(client: AsyncClient, fake, db_session) -> None:
+async def test_success(client: AsyncClient, fake, sqlalchemy_session) -> None:
     password = fake.password()
     # TODO: Create DB table for Credentials
     user = UserFactory.build(password=password)
     # TODO: Use dependency injection instead of repository implementation
-    await SqlAlcheamyUserRepository(db_session).create(user)
+    await SqlAlcheamyUserRepository(sqlalchemy_session).create(user)
     params = {'username': user.email.value, 'password': password, 'grant_type': 'password'}
 
     response = await client.post(f"{settings.API_PREFIX}/v1/sign-in", json=params)

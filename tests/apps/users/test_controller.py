@@ -12,7 +12,7 @@ fake = Faker()
 pytestmark = pytest.mark.anyio
 
 
-async def test_success(client: AsyncClient, db_session) -> None:
+async def test_success(client: AsyncClient, sqlalchemy_session) -> None:
     params = {
         'id': fake.uuid4(),
         'name': fake.name(),
