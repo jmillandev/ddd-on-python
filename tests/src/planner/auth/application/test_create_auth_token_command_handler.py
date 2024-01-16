@@ -12,11 +12,11 @@ from tests.src.planner.auth.factories import AuthCredentialFactory
 from src.planner.auth.application.response import AuthTokenResponse
 from src.planner.shared.application.response import Response
 from datetime import datetime
+
 pytestmark = pytest.mark.anyio
 
 
 class TestCreateAuthTokenCommandHandler:
-
     def setup(self):
         self._repository = Mock(AuthCredentialRepository)
         use_case = AuthTokenCreator(self._repository)
@@ -45,7 +45,7 @@ class TestCreateAuthTokenCommandHandler:
             await self.handler(command)
 
         assert isinstance(excinfo.value, DomainException)
-        assert excinfo.value.source == 'credentials'
+        assert excinfo.value.source == "credentials"
 
     async def test_should_raise_error_invalid_password(self, fake) -> None:
         params = AuthCredentialFactory.to_dict()
@@ -57,4 +57,4 @@ class TestCreateAuthTokenCommandHandler:
             await self.handler(command)
 
         assert isinstance(excinfo.value, DomainException)
-        assert excinfo.value.source == 'credentials'
+        assert excinfo.value.source == "credentials"

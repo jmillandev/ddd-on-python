@@ -2,10 +2,15 @@ from dataclasses import dataclass
 from typing import Any
 
 from src.planner.shared.domain.users import UserId
-from src.planner.users.domain.value_objects import (UserCreatedAt, UserEmail,
-                                            UserIsActive, UserLastName,
-                                            UserName, UserPassword,
-                                            UserPronoun)
+from src.planner.users.domain.value_objects import (
+    UserCreatedAt,
+    UserEmail,
+    UserIsActive,
+    UserLastName,
+    UserName,
+    UserPassword,
+    UserPronoun,
+)
 
 
 @dataclass
@@ -20,7 +25,15 @@ class User:
     password: UserPassword
 
     @classmethod
-    def create(cls, id: UserId, email: UserEmail, name: UserName, last_name: UserLastName, pronoun: UserPronoun, password: UserPassword):
+    def create(
+        cls,
+        id: UserId,
+        email: UserEmail,
+        name: UserName,
+        last_name: UserLastName,
+        pronoun: UserPronoun,
+        password: UserPassword,
+    ):
         user = cls(
             id=id,
             created_at=UserCreatedAt.now(),
@@ -29,7 +42,7 @@ class User:
             last_name=last_name,
             is_active=UserIsActive(True),
             pronoun=pronoun,
-            password=password
+            password=password,
         )
         # TODO-Events: register event
         # user._register_event(UserCreated(user))
@@ -44,7 +57,7 @@ class User:
 
     # TODO-Events: append event
     # def _register_event(self, event: DomainEvent):
-        # self._domain_events.append(event)
+    # self._domain_events.append(event)
 
     def __str__(self) -> str:
         return f"[{self.id}] {self.email}"

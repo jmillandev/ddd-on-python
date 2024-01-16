@@ -1,11 +1,13 @@
 from kink import di
 from sqlalchemy.ext.asyncio import AsyncSession
 from os import environ
-from src.planner.shared.infrastructure.persistence.sqlalchemy.session import SqlAlchemySession, engine
+from src.planner.shared.infrastructure.persistence.sqlalchemy.session import (
+    SqlAlchemySession,
+    engine,
+)
 
 
 class SqlalchemyAutoRollbackSession:
-
     def __init__(self):
         """
         Database dependency
@@ -19,11 +21,13 @@ class SqlalchemyAutoRollbackSession:
         self._old_factory = di.factories[AsyncSession]
         di.factories[AsyncSession] = get_session
         if self._connection is not None:
-            raise RuntimeError('Already exists a connection!')
+            raise RuntimeError("Already exists a connection!")
 
         self._connection = await engine.connect()
         self._transaction = await self._connection.begin()
-        self._session = SqlAlchemySession(bind=self._connection, join_transaction_mode="create_savepoint")
+        self._session = SqlAlchemySession(
+            bind=self._connection, join_transaction_mode="create_savepoint"
+        )
         di[current_test()] = self._session
         return self._session
 
@@ -38,7 +42,7 @@ class SqlalchemyAutoRollbackSession:
 
 
 def current_test() -> str:
-    return environ['PYTEST_CURRENT_TEST'].split(' ')[0]
+    return environ["PYTEST_CURRENT_TEST"].split(" ")[0]
 
 
 def get_session(di):

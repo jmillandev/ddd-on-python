@@ -10,15 +10,18 @@ fake = Faker()
 
 pytestmark = pytest.mark.anyio
 
+
 class TestSignUpController:
-    async def test_success(self, client: AsyncClient, sqlalchemy_session: AsyncSession) -> None:
+    async def test_success(
+        self, client: AsyncClient, sqlalchemy_session: AsyncSession
+    ) -> None:
         params = {
-            'id': fake.uuid4(),
-            'name': fake.name(),
-            'last_name': fake.last_name(),
-            'email': fake.email(),
-            'password': fake.password(),
-            'pronoun': 'he'
+            "id": fake.uuid4(),
+            "name": fake.name(),
+            "last_name": fake.last_name(),
+            "email": fake.email(),
+            "password": fake.password(),
+            "pronoun": "he",
         }
         response = await client.post(f"{settings.API_PREFIX}/v1/sign-up", json=params)
 

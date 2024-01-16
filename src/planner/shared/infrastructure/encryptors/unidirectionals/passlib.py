@@ -2,8 +2,8 @@ from passlib.context import CryptContext
 
 context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+
 class PasslibUnidirectionalEncryptor:
-   
     def encrypt(self, value: str) -> str:
         return context.hash(value)
 

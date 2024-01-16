@@ -3,7 +3,7 @@ from typing import Protocol, runtime_checkable
 
 @runtime_checkable
 class Command(Protocol):
-    """Is DTO to 
+    """Is DTO to
 
     Args:
         Protocol (_type_): _description_
@@ -12,13 +12,11 @@ class Command(Protocol):
 
 @runtime_checkable
 class CommandBus(Protocol):
-    
-    def dispatch(command: Command)-> None:
+    def dispatch(command: Command) -> None:
         ...
 
 
 @runtime_checkable
 class CommandHandler(Protocol):
-
     async def __call__(self, command: Command) -> None:
         ...

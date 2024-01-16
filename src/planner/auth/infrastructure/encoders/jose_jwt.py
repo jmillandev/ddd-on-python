@@ -8,7 +8,7 @@ from src.planner.auth.domain.encoder import AuthEncoder
 
 
 class JoseJwtEncoder(AuthEncoder):
-    _ALGORITHM = 'HS256'
+    _ALGORITHM = "HS256"
 
     def encode(self, payload: dict) -> str:
         return encode(payload, settings.SECRET_KEY, algorithm=self._ALGORITHM)

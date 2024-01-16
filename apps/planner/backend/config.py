@@ -21,7 +21,7 @@ class Settings(BaseSettings):
             return v
         raise ValueError(v)
 
-    ENVIROMENT: str = 'production'
+    ENVIROMENT: str = "production"
 
     class Config:
         case_sensitive = True

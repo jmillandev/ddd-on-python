@@ -1,6 +1,7 @@
 from typing import Any, TypeVar
 
-Entity = TypeVar('Entity')
+Entity = TypeVar("Entity")
+
 
 def dict_to_entity(data: dict[str, Any], entity: Entity):
     """Create a Entity from a dict.
@@ -14,5 +15,9 @@ def dict_to_entity(data: dict[str, Any], entity: Entity):
         Entity
     """
     annotations = entity.__annotations__
-    attributes = { key: annotations[key](value) for key, value in data.items() if key in annotations }
+    attributes = {
+        key: annotations[key](value)
+        for key, value in data.items()
+        if key in annotations
+    }
     return entity(**attributes)

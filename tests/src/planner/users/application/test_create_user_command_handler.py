@@ -13,6 +13,7 @@ from tests.src.planner.users.factories import UserFactory
 
 pytestmark = pytest.mark.anyio
 
+
 class TestCreateUserCommandHandler:
     def setup(self):
         self._repository = Mock(UserRepository)
@@ -39,7 +40,6 @@ class TestCreateUserCommandHandler:
 
         assert isinstance(excinfo.value, DomainException)
 
-
     async def test_should_raise_error_invalid_email(self, fake) -> None:
         params = UserFactory.to_dict(email=fake.name())
         command = CreateUserCommand(**params)
@@ -48,4 +48,4 @@ class TestCreateUserCommandHandler:
             await self.handler(command)
 
         assert isinstance(excinfo.value, DomainException)
-        assert excinfo.value.source == 'email'
+        assert excinfo.value.source == "email"

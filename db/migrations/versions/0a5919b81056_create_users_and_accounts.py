@@ -9,7 +9,7 @@ import sqlalchemy as sa
 from alembic import op
 
 # revision identifiers, used by Alembic.
-revision = '0a5919b81056'
+revision = "0a5919b81056"
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -29,19 +29,30 @@ def upgrade() -> None:
     # op.create_index(op.f('ix_currencies_id'), 'currencies', ['id'], unique=False)
     # op.create_index(op.f('ix_currencies_public_id'), 'currencies', ['public_id'], unique=True)
 
-    op.create_table('users',
-    sa.Column('email', sa.String(length=50), nullable=False),
-    sa.Column('name', sa.String(length=50), nullable=False),
-    sa.Column('last_name', sa.String(length=50), nullable=False),
-    sa.Column('password', sa.String(), nullable=False),
-    sa.Column('is_active', sa.Boolean(), nullable=True),
-    sa.Column('id', sa.UUID(), nullable=False),
-    sa.Column('pronoun', sa.Enum('he', 'she', name='pronouns'), nullable=True),
-    sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
-    sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    op.create_table(
+        "users",
+        sa.Column("email", sa.String(length=50), nullable=False),
+        sa.Column("name", sa.String(length=50), nullable=False),
+        sa.Column("last_name", sa.String(length=50), nullable=False),
+        sa.Column("password", sa.String(), nullable=False),
+        sa.Column("is_active", sa.Boolean(), nullable=True),
+        sa.Column("id", sa.UUID(), nullable=False),
+        sa.Column("pronoun", sa.Enum("he", "she", name="pronouns"), nullable=True),
+        sa.Column(
+            "created_at",
+            sa.DateTime(timezone=True),
+            server_default=sa.text("now()"),
+            nullable=False,
+        ),
+        sa.Column(
+            "updated_at",
+            sa.DateTime(timezone=True),
+            server_default=sa.text("now()"),
+            nullable=False,
+        ),
+        sa.PrimaryKeyConstraint("id"),
     )
-    op.create_index(op.f('ix_auth_credentials_username'), 'users', ['email'])
+    op.create_index(op.f("ix_auth_credentials_username"), "users", ["email"])
     op.execute(
         """
         CREATE VIEW auth_credentials AS
@@ -71,9 +82,9 @@ def downgrade() -> None:
     # op.drop_index(op.f('ix_accounts_public_id'), table_name='accounts')
     # op.drop_index(op.f('ix_accounts_id'), table_name='accounts')
     # op.drop_table('accounts')
-    op.execute('DROP VIEW auth_credentials;')
-    op.drop_index(op.f('ix_auth_credentials_username'), table_name='users')
-    op.drop_table('users')
+    op.execute("DROP VIEW auth_credentials;")
+    op.drop_index(op.f("ix_auth_credentials_username"), table_name="users")
+    op.drop_table("users")
     # op.drop_index(op.f('ix_currencies_public_id'), table_name='currencies')
     # op.drop_index(op.f('ix_currencies_id'), table_name='currencies')
     # op.drop_index(op.f('ix_currencies_code'), table_name='currencies')

@@ -15,6 +15,7 @@ from tests.src.planner.users.factories import UserFactory
 
 pytestmark = pytest.mark.anyio
 
+
 class TestFindUserQueryHandler:
     def setup(self):
         self._repository = Mock(UserRepository)
@@ -25,7 +26,7 @@ class TestFindUserQueryHandler:
         params = UserFactory.to_dict()
         user = UserFactory.build(**params)
         self._repository.search.return_value = user
-        query = FindUserQuery(id=params['id'], user_id=user.id.primitive)
+        query = FindUserQuery(id=params["id"], user_id=user.id.primitive)
 
         response = await self.handler(query)
         assert isinstance(response, UserResponse)
@@ -34,11 +35,10 @@ class TestFindUserQueryHandler:
         self._repository.search.assert_called_once_with(user.id)
 
     async def test_should_raise_error_user_not_found(self) -> None:
-        """Test that the handler raises a UserNotFound exception when the user is not persisted yet.
-        """
+        """Test that the handler raises a UserNotFound exception when the user is not persisted yet."""
         params = UserFactory.to_dict()
         self._repository.search.return_value = None
-        query = FindUserQuery(id=params['id'], user_id=params['id'])
+        query = FindUserQuery(id=params["id"], user_id=params["id"])
 
         with pytest.raises(UserNotFound) as excinfo:
             await self.handler(query)
@@ -50,12 +50,12 @@ class TestFindUserQueryHandler:
         params = UserFactory.to_dict()
         other_user = UserFactory.build()
         self._repository.search.return_value = None
-        query = FindUserQuery(id=params['id'], user_id=other_user.id.primitive)
+        query = FindUserQuery(id=params["id"], user_id=other_user.id.primitive)
 
         with pytest.raises(ForbiddenAccess) as excinfo:
             await self.handler(query)
 
         assert isinstance(excinfo.value, DomainException)
         assert excinfo.value.code == 403
-        assert excinfo.value.source == 'credentials'
-        assert excinfo.value.message == 'You are not allowed to do this operation'
+        assert excinfo.value.source == "credentials"
+        assert excinfo.value.message == "You are not allowed to do this operation"

@@ -4,12 +4,13 @@ from pydantic import BaseModel
 
 from src.planner.shared.domain.bus.query import QueryResponse
 
-Entity = TypeVar('Entity')
+Entity = TypeVar("Entity")
 
 
 class Response(BaseModel, Generic[QueryResponse]):
-
     @classmethod
     def build(cls, entity: Entity) -> Entity:
-        attributes = {key: getattr(entity, key).primitive for key in cls.__annotations__.keys()}
+        attributes = {
+            key: getattr(entity, key).primitive for key in cls.__annotations__.keys()
+        }
         return cls(**attributes)

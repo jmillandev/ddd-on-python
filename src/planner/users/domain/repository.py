@@ -6,7 +6,7 @@ from src.planner.users.domain.entity import User
 
 @runtime_checkable
 class UserRepository(Protocol):
-    async def create(self, user: User)-> None:
+    async def create(self, user: User) -> None:
         ...
 
     async def search(self, user_id: UserId) -> User:

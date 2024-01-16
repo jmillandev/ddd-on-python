@@ -13,7 +13,9 @@ class AuthAsUser(Auth):
         self._auth_token = None
 
     def auth_flow(self, request):
-        request.headers['Authorization'] = f'Bearer {self.auth_token.access_token.primitive}'
+        request.headers[
+            "Authorization"
+        ] = f"Bearer {self.auth_token.access_token.primitive}"
         yield request
 
     @property

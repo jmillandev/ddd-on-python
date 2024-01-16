@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     POSTGRES_PASSWORD: str
     POSTGRES_DB: str
     DATABASE_URI: Optional[PostgresDsn] = None
-    ENVIROMENT: str = 'production'
+    ENVIROMENT: str = "production"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
     SECRET_KEY: str
 

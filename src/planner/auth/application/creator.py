@@ -3,8 +3,12 @@ from kink import inject
 from src.planner.auth.domain.encoder import AuthEncoder
 from src.planner.auth.domain.entity import AuthToken
 from src.planner.auth.domain.repository import AuthCredentialRepository
-from src.planner.auth.domain.value_objects import (AuthUsername, AuthExpiresAt,
-                                           AuthPassword, AuthAccessToken)
+from src.planner.auth.domain.value_objects import (
+    AuthUsername,
+    AuthExpiresAt,
+    AuthPassword,
+    AuthAccessToken,
+)
 from src.planner.auth.domain.exceptions.invalid_credentials import InvalidCredentials
 
 

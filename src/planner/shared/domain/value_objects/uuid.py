@@ -7,5 +7,5 @@ class UuidValueObject(ValueObject):
     BASE_TYPE = UUID
 
     @property
-    def primitive(self)->str:
+    def primitive(self) -> str:
         return str(self.value)

@@ -4,8 +4,13 @@ from src.planner.shared.domain.users import UserId
 from src.planner.users.domain.entity import User
 from src.planner.users.domain.exceptions.email_already_used import EmailAlreadyUsed
 from src.planner.users.domain.repository import UserRepository
-from src.planner.users.domain.value_objects import (UserEmail, UserLastName, UserName,
-                                            UserPassword, UserPronoun)
+from src.planner.users.domain.value_objects import (
+    UserEmail,
+    UserLastName,
+    UserName,
+    UserPassword,
+    UserPronoun,
+)
 
 
 @inject
@@ -15,7 +20,15 @@ class UserCreator:
         # TODO-Events: add event bus
         # self._event_bus = EventBus()
 
-    async def create(self, id: UserId, email: UserEmail, name: UserName, last_name: UserLastName, pronoun: UserPronoun, password: UserPassword) -> User:
+    async def create(
+        self,
+        id: UserId,
+        email: UserEmail,
+        name: UserName,
+        last_name: UserLastName,
+        pronoun: UserPronoun,
+        password: UserPassword,
+    ) -> User:
         user = await self._repository.search_by_email(email)
         # TODO: Use QueryBus instead Repository? https://pro.codely.com/library/cqrs-command-query-responsibility-segregation-29074/62554/path/step/33532843/discussion/79379/
         if user:

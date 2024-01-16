@@ -3,19 +3,22 @@ from typing import AsyncGenerator
 import pytest
 from faker import Faker
 
-from src.planner.shared.infrastructure.dependency_injector import \
-    init as init_dependencies
-from tests.src.planner.shared.infrastructure.persistence.sqlalchemy.session import \
-    SqlalchemyAutoRollbackSession
+from src.planner.shared.infrastructure.dependency_injector import (
+    init as init_dependencies,
+)
+from tests.src.planner.shared.infrastructure.persistence.sqlalchemy.session import (
+    SqlalchemyAutoRollbackSession,
+)
 
 init_dependencies()
 
-@pytest.fixture(scope='session')
-def anyio_backend()-> str:
-    return 'asyncio'
+
+@pytest.fixture(scope="session")
+def anyio_backend() -> str:
+    return "asyncio"
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def fake() -> Faker:
     return Faker()
 

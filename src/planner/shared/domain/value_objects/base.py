@@ -6,6 +6,7 @@ class ValueObject:
     """
     Base class for value objects
     """
+
     OPTIONAL = False
     BASE_TYPE = Any
     _value: BASE_TYPE
@@ -29,7 +30,7 @@ class ValueObject:
     @property
     def value(self) -> BASE_TYPE:
         return self._value
-    
+
     @property
     def primitive(self) -> Any:
         """
@@ -70,7 +71,9 @@ class ValueObject:
         if self.is_none():
             raise self._fail(f"Is required")
         if not isinstance(self.value, self.BASE_TYPE):
-            raise self._fail(f"invalid type: Want {self.BASE_TYPE.__name__} got {type(self.value).__name__}")
+            raise self._fail(
+                f"invalid type: Want {self.BASE_TYPE.__name__} got {type(self.value).__name__}"
+            )
 
     @property
     def _name(self) -> str:
@@ -80,4 +83,6 @@ class ValueObject:
         if hasattr(self, "NAME"):
             return self.NAME
 
-        raise NotImplementedError("You must implement _name or define NAME in the {self.__class__.__name__}")
+        raise NotImplementedError(
+            "You must implement _name or define NAME in the {self.__class__.__name__}"
+        )

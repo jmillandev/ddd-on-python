@@ -37,14 +37,13 @@ class SqlAlcheamyRepository(Generic[ModelType]):
 
 
 class SqlAlcheamyCreateMixin:
-
     async def create(self, user: Entity) -> Entity:
         user_object = self.model_class.from_entity(user)
         self.session.add(user_object)
         await self.session.commit()
 
-class SqlAlcheamyFindMixin:
 
+class SqlAlcheamyFindMixin:
     async def search(self, id: UuidValueObject) -> Optional[Entity]:
         """Search object by id"""
         stmt = select(self.model_class).where(self.model_class.id == id.value).limit(1)
@@ -57,15 +56,18 @@ class SqlAlcheamyFindMixin:
         if data:
             return dict_to_entity(data.to_dict(), self.entity_class)
 
-class SqlAlcheamyGetAllMixin:
 
+class SqlAlcheamyGetAllMixin:
     async def all(self, skip: int = 0, limit: int = 10) -> Tuple[Entity]:
         # TODO: Create SkipValueObject and LimitValueObject
         stmt = select(self.model).offset(skip)
         if limit is not None:
             stmt = stmt.limit(limit)
         result = await self.session.execute(stmt)
-        return (dict_to_entity(data.to_dict(), self.entity_class) for data in result.scalars().all())
+        return (
+            dict_to_entity(data.to_dict(), self.entity_class)
+            for data in result.scalars().all()
+        )
 
     # TODO: Migrate method to async
 

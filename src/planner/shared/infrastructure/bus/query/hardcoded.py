@@ -7,13 +7,12 @@ from src.planner.users.application.query_handler import FindUserQueryHandler
 
 
 class HardcodedQueryBus:
-
     HANDLERS = {
         FindUserQuery: FindUserQueryHandler,
-        FindAuthTokenQuery: FindAuthTokenQueryHandler
+        FindAuthTokenQuery: FindAuthTokenQueryHandler,
     }
 
-    async def ask(self, command: Query)-> QueryResponse:
+    async def ask(self, command: Query) -> QueryResponse:
         try:
             return await self.HANDLERS[command.__class__]()(command)
         except KeyError:
