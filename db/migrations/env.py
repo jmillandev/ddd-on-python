@@ -5,8 +5,7 @@ from alembic import context
 from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from db.models import Base
-from mercury.config import settings
+from config import settings
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -22,8 +21,6 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 
-target_metadata = Base.metadata
-
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -34,7 +31,6 @@ target_metadata = Base.metadata
 def do_run_migrations(connection):
     context.configure(
         connection=connection,
-        target_metadata=target_metadata,
         compare_type=True
     )
 
@@ -56,7 +52,6 @@ def run_migrations_offline() -> None:
     """
     context.configure(
         url=settings.DATABASE_URI,
-        target_metadata=target_metadata,
         literal_binds=True,
         # dialect_opts={"paramstyle": "named"},
         compare_type=True  # TODO: What's mean this?

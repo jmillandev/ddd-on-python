@@ -3,7 +3,7 @@ from typing import AsyncGenerator
 import pytest
 from httpx import AsyncClient
 
-from main import app
+from apps.planner.backend.server import app
 
 
 @pytest.fixture(scope="module")

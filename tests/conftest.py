@@ -1,12 +1,14 @@
 from typing import AsyncGenerator
 
 import pytest
-from main import app # noqa - Used to load d
 from faker import Faker
 
-from tests.src.shared.infrastructure.persistence.sqlalchemy.session import \
+from src.planner.shared.infrastructure.dependency_injector import \
+    init as init_dependencies
+from tests.src.planner.shared.infrastructure.persistence.sqlalchemy.session import \
     SqlalchemyAutoRollbackSession
 
+init_dependencies()
 
 @pytest.fixture(scope='session')
 def anyio_backend()-> str:
