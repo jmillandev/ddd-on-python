@@ -1,15 +1,15 @@
 from typing import Annotated
 
-from kink import di
 from fastapi import Depends
+from kink import di
 
-from src.planner.users.application.command import CreateUserCommand
-from src.planner.shared.domain.bus.command import CommandBus
-from src.planner.users.application.responses import UserResponse
-from src.planner.shared.domain.bus.query import QueryBus
-from src.planner.users.application.query import FindUserQuery
 from apps.planner.backend.shared.auth import oauth2_scheme
 from src.planner.auth.application.query import FindAuthTokenQuery
+from src.planner.shared.domain.bus.command import CommandBus
+from src.planner.shared.domain.bus.query import QueryBus
+from src.planner.users.application.command import CreateUserCommand
+from src.planner.users.application.query import FindUserQuery
+from src.planner.users.application.responses import UserResponse
 
 
 async def sign_up(

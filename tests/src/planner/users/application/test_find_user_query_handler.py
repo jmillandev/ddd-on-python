@@ -35,7 +35,10 @@ class TestFindUserQueryHandler:
         self._repository.search.assert_called_once_with(user.id)
 
     async def test_should_raise_error_user_not_found(self) -> None:
-        """Test that the handler raises a UserNotFound exception when the user is not persisted yet."""
+        """
+        Test that the handler raises a UserNotFound exception when
+        the user is not persisted yet.
+        """
         params = UserFactory.to_dict()
         self._repository.search.return_value = None
         query = FindUserQuery(id=params["id"], user_id=params["id"])

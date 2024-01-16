@@ -3,8 +3,8 @@ from typing import Optional
 from jose import JWTError, jwt
 from jose.jwt import encode
 
-from src.planner.shared.config import settings
 from src.planner.auth.domain.encoder import AuthEncoder
+from src.planner.shared.config import settings
 
 
 class JoseJwtEncoder(AuthEncoder):

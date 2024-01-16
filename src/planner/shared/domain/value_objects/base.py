@@ -1,4 +1,5 @@
 from typing import Any
+
 from src.planner.shared.domain.exceptions.invalid_value import InvalidValueException
 
 
@@ -69,7 +70,7 @@ class ValueObject:
         Override this method to implement custom validations
         """
         if self.is_none():
-            raise self._fail(f"Is required")
+            raise self._fail("Is required")
         if not isinstance(self.value, self.BASE_TYPE):
             raise self._fail(
                 f"invalid type: Want {self.BASE_TYPE.__name__} got {type(self.value).__name__}"

@@ -30,7 +30,7 @@ class UserCreator:
         password: UserPassword,
     ) -> User:
         user = await self._repository.search_by_email(email)
-        # TODO: Use QueryBus instead Repository? https://pro.codely.com/library/cqrs-command-query-responsibility-segregation-29074/62554/path/step/33532843/discussion/79379/
+        # TODO: Use QueryBus instead Repository? https://pro.codely.com/library/cqrs-command-query-responsibility-segregation-29074/62554/path/step/33532843/discussion/79379/  # noqa:E501
         if user:
             raise EmailAlreadyUsed(email)
 

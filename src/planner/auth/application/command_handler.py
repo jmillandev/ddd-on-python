@@ -1,6 +1,7 @@
 from kink import inject
 
-from src.planner.auth.domain.value_objects import AuthUsername, AuthPassword
+from src.planner.auth.domain.value_objects import AuthPassword, AuthUsername
+
 from .command import CreateAuthTokenCommand
 from .creator import AuthTokenCreator
 from .response import AuthTokenResponse

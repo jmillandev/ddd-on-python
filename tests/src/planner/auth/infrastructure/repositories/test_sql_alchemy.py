@@ -1,24 +1,24 @@
 import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.planner.auth.domain.entity import AuthCredential
+from src.planner.auth.domain.value_objects import AuthPassword, AuthUsername
 from src.planner.auth.infrastructure.repositories.sqlalchemy import (
     SqlAlcheamyAuthCredentialRepository,
 )
-from tests.src.planner.auth.factories import AuthCredentialFactory
+from src.planner.shared.domain.users import UserId
 from src.planner.users.infrastructure.repositories.sqlalchemy import (
     SqlAlcheamyUserRepository,
 )
+from tests.src.planner.auth.factories import AuthCredentialFactory
 from tests.src.planner.users.factories import UserFactory
-from src.planner.shared.domain.users import UserId
-from src.planner.auth.domain.value_objects import AuthUsername, AuthPassword
-from src.planner.auth.domain.entity import AuthCredential
 
 pytestmark = pytest.mark.anyio
 
 
 class TestSqlAlchemyAuthCredentialRepository:
     async def test_should_return_a_credentials(self, sqlalchemy_session: AsyncSession):
-        # TODO: Create a Credential Table and propagate user changes to it. Actually, the credential table is a view
+        # TODO: Create a Credential Table and propagate user changes to it. Actually, the credential table is a view  # noqa:E501
         attrs = UserFactory.to_dict()
         user_repository = SqlAlcheamyUserRepository(sqlalchemy_session)
         credential_repository = SqlAlcheamyAuthCredentialRepository(sqlalchemy_session)
@@ -38,4 +38,4 @@ class TestSqlAlchemyAuthCredentialRepository:
         repository = SqlAlcheamyAuthCredentialRepository(sqlalchemy_session)
         credential = AuthCredentialFactory.build()
 
-        assert await repository.search(credential.username) == None
+        assert await repository.search(credential.username) is None

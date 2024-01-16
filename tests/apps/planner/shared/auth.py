@@ -1,9 +1,6 @@
-from datetime import datetime, timedelta
-
 from httpx import Auth
 
 from src.planner.auth.domain.entity import AuthToken
-from src.planner.auth.domain.value_objects import AuthExpiresAt
 from src.planner.shared.domain.users import UserId
 
 

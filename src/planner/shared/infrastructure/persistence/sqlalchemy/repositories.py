@@ -1,13 +1,13 @@
-from kink import inject
-from typing import Generic, Optional, TypeVar, Tuple
+from typing import Generic, Optional, Tuple, TypeVar
 
+from kink import inject
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.planner.shared.application.mappers import dict_to_entity
+from src.planner.shared.domain.value_objects.uuid import UuidValueObject
 
 from .models import Base
-from src.planner.shared.domain.value_objects.uuid import UuidValueObject
-from src.planner.shared.application.mappers import dict_to_entity
 
 ModelType = TypeVar("ModelType", bound=Base)
 Entity = TypeVar("Entity")
@@ -71,7 +71,7 @@ class SqlAlcheamyGetAllMixin:
 
     # TODO: Migrate method to async
 
-    # def update(self, *, db_obj: ModelType, obj_in: Union[UpdateSchemaType, Dict[str, Any]]) -> ModelType:
+    # def update(self, *, db_obj: ModelType, obj_in: Union[UpdateSchemaType, Dict[str, Any]]) -> ModelType:  # noqa: E501
     #     obj_data = jsonable_encoder(db_obj)
     #     if isinstance(obj_in, dict):
     #         update_data = obj_in

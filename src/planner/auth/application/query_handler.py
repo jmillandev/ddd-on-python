@@ -1,10 +1,11 @@
 from kink import inject
 
-from src.planner.auth.domain.value_objects import AuthAccessToken
-from .query import FindAuthTokenQuery
-from .finder import AuthTokenFinder
-from .response import AuthTokenResponse
 from src.planner.auth.domain.entity import AuthToken
+from src.planner.auth.domain.value_objects import AuthAccessToken
+
+from .finder import AuthTokenFinder
+from .query import FindAuthTokenQuery
+from .response import AuthTokenResponse
 
 
 @inject

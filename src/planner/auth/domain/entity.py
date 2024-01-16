@@ -1,8 +1,9 @@
-from typing import Any, Optional
 from dataclasses import dataclass
-from kink import inject
-from src.planner.auth.domain.encoder import AuthEncoder
+from typing import Any, Optional
 
+from kink import inject
+
+from src.planner.auth.domain.encoder import AuthEncoder
 from src.planner.auth.domain.value_objects import (
     AuthAccessToken,
     AuthExpiresAt,

@@ -1,6 +1,5 @@
 from dataclasses import asdict, dataclass
 
-from sqlalchemy import UUID, Column, DateTime, func
 from sqlalchemy.orm import as_declarative
 
 

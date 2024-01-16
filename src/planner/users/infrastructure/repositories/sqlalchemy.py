@@ -1,7 +1,7 @@
 """User respository"""
 from typing import Optional
 
-from sqlalchemy import UUID, Boolean, Column, DateTime, Enum, String, func, select
+from sqlalchemy import UUID, Boolean, Column, DateTime, Enum, String, select
 
 from src.planner.shared.infrastructure.persistence.sqlalchemy.models import Base
 from src.planner.shared.infrastructure.persistence.sqlalchemy.repositories import (

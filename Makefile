@@ -21,3 +21,6 @@ test:
 
 generate/migration:
 	alembic revision -m "$(message)"
+
+format:
+	black .

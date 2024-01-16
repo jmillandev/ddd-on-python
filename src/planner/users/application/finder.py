@@ -1,9 +1,9 @@
 from kink import inject
 
+from src.planner.shared.domain.exceptions.forbidden import ForbiddenAccess
 from src.planner.shared.domain.users import UserId
 from src.planner.users.domain.entity import User
 from src.planner.users.domain.exceptions.not_found import UserNotFound
-from src.planner.shared.domain.exceptions.forbidden import ForbiddenAccess
 from src.planner.users.domain.repository import UserRepository
 
 

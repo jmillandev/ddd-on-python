@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Any
 
 from src.planner.shared.domain.users import UserId
 from src.planner.users.domain.value_objects import (

@@ -1,6 +1,8 @@
+from os import environ
+
 from kink import di
 from sqlalchemy.ext.asyncio import AsyncSession
-from os import environ
+
 from src.planner.shared.infrastructure.persistence.sqlalchemy.session import (
     SqlAlchemySession,
     engine,
