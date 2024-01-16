@@ -14,5 +14,5 @@ class FindUserQueryHandler:
         self.finder = finder
 
     async def __call__(self, query: FindUserQuery) -> None:
-        user = await self.finder.find(id=UserId(query.id))
+        user = await self.finder.find(id=UserId(query.id), current_user_id=UserId(query.user_id))
         return UserResponse.build(user)

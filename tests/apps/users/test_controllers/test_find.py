@@ -21,6 +21,7 @@ class TestFindController:
 
     async def test_success(self, client: AsyncClient, sqlalchemy_session: AsyncSession) -> None:
         await di[UserRepository].create(self._user)
+
         response = await client.get(f"{settings.API_PREFIX}/v1/users/{self._user.id.primitive}", auth=AuthAsUser(self._user.id))
 
         assert response.status_code == status.HTTP_200_OK, response.text
@@ -32,16 +33,28 @@ class TestFindController:
             'pronoun': self._user.pronoun.primitive,
         }
 
-    # TODO: Add Test case for unauthorized error
-    # async def test_should_return_unauthorized_error(self, client: AsyncClient, sqlalchemy_session: AsyncSession) -> None:
-        # user = await UserFactory()
+    async def test_should_return_unauthorized_missing_token(self, client: AsyncClient, sqlalchemy_session: AsyncSession) -> None:
+        response = await client.get(f"{settings.API_PREFIX}/v1/users/{self._user.id}")
 
-        # response = await client.post(f"{settings.API_PREFIX}/v1/users/{user.public_id}")
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED, response.text
 
-        # assert response.status_code == status.HTTP_401_UNAUTHORIZED, response.text
+        json_response = response.json()
+        assert len(json_response['detail']) == 1
+        error_response = json_response['detail'][0]
+        assert error_response['msg'] == 'Is required'
+        assert error_response['source'] == 'access_token'
 
-        # json_response = response.json()
-        # assert len(json_response['detail']) == 1
-        # error_response = json_response['detail'][0]
-        # assert error_response['msg'] == 'Invalid authentication credentials'
-        # assert error_response['source'] == 'credentials'
+
+    @pytest.mark.skip(reason="TODO: Use Mock to return a invalid token")
+    async def test_should_return_unauthorized_invalid_token(self, client: AsyncClient, sqlalchemy_session: AsyncSession) -> None:
+        user = UserFactory.build()
+
+        response = await client.get(f"{settings.API_PREFIX}/v1/users/{user.id}", auth=AuthAsUser(self._user.id))
+
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED, response.text
+
+        json_response = response.json()
+        assert len(json_response['detail']) == 1
+        error_response = json_response['detail'][0]
+        assert error_response['msg'] == 'Is required'
+        assert error_response['source'] == 'access_token'

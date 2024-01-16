@@ -15,12 +15,12 @@ class AuthCredentialFactory:
 
     @staticmethod
     def to_dict( 
-            user_id: str = uuid4(),
-            username: str = fake.email(),
-            password: str = fake.password()
+            user_id: str = None,
+            username: str = None,
+            password: str = None
         ) -> dict:
         return {
-            'user_id': user_id,
-            'username': username,
-            'password': password
+            'user_id': user_id or uuid4(),
+            'username': username or fake.email(),
+            'password': password or fake.password()
         }

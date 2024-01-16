@@ -4,6 +4,7 @@ import pytest
 
 from src.shared.application.response import Response
 from src.shared.domain.exceptions.base import DomainException
+from src.shared.domain.exceptions.forbidden import ForbiddenAccess
 from src.users.application.finder import UserFinder
 from src.users.application.query import FindUserQuery
 from src.users.application.query_handler import FindUserQueryHandler
@@ -33,6 +34,8 @@ class TestFindUserQueryHandler:
         self._repository.search.assert_called_once_with(user.id)
 
     async def test_should_raise_error_user_not_found(self) -> None:
+        """Test that the handler raises a UserNotFound exception when the user is not persisted yet.
+        """
         params = UserFactory.to_dict()
         self._repository.search.return_value = None
         query = FindUserQuery(id=params['id'], user_id=params['id'])
@@ -43,17 +46,16 @@ class TestFindUserQueryHandler:
         assert isinstance(excinfo.value, DomainException)
         assert excinfo.value.code == 404
 
-    @pytest.mark.skip(reason="TODO: Not implemented")
     async def test_should_raise_forbidden_error(self) -> None:
-        # user = await UserFactory()
+        params = UserFactory.to_dict()
+        other_user = UserFactory.build()
+        self._repository.search.return_value = None
+        query = FindUserQuery(id=params['id'], user_id=other_user.id.primitive)
 
-        # response = await client.post(f"{settings.API_PREFIX}/v1/users/{user.public_id}", auth=AuthAsUser(await UserFactory()))
+        with pytest.raises(ForbiddenAccess) as excinfo:
+            await self.handler(query)
 
-        # assert response.status_code == status.HTTP_403_FORBIDDEN, response.text
-
-        # json_response = response.json()
-        # assert len(json_response['detail']) == 1
-        # error_response = json_response['detail'][0]
-        # assert error_response['msg'] == 'You do not have permission to perform this action'
-        # assert error_response['source'] == 'credentials'
-        ...
+        assert isinstance(excinfo.value, DomainException)
+        assert excinfo.value.code == 403
+        assert excinfo.value.source == 'credentials'
+        assert excinfo.value.message == 'You are not allowed to do this operation'

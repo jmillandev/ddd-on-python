@@ -18,22 +18,22 @@ class UserFactory:
 
     @staticmethod
     def to_dict( 
-            id: str = uuid4(),
-            created_at: datetime = datetime.utcnow(),
-            email: str = fake.email(),
-            name: str = fake.first_name(),
-            last_name: str = fake.last_name(),
-            is_active: bool = True,
-            pronoun: str = fake.random_element(elements=Pronoun.keys()),
-            password: str = fake.password()
+            id: str = None,
+            created_at: datetime = None,
+            email: str = None,
+            name: str = None,
+            last_name: str = None,
+            pronoun: str = None,
+            password: str = None,
+            is_active: bool = True
         ) -> dict:
         return {
-            'id': id,
-            'created_at': created_at,
-            'email': email,
-            'name': name,
-            'last_name': last_name,
+            'id': id or uuid4(),
+            'created_at': created_at or datetime.utcnow(),
+            'email': email or fake.email(),
+            'name': name or fake.first_name(),
+            'last_name': last_name or fake.last_name(),
             'is_active': is_active,
-            'pronoun': pronoun,
-            'password': password
+            'pronoun': pronoun or fake.random_element(elements=Pronoun.keys()),
+            'password': password or fake.password()
         }
