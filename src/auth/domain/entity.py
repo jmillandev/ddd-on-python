@@ -1,29 +1,31 @@
-from typing import Any
+from typing import Any, Optional
 from dataclasses import dataclass
+from kink import inject
+from src.auth.domain.encoder import AuthEncoder
 
-from src.auth.domain.value_objects import AuthAccessToken, AuthTokenType, AuthExpiresAt, AuthPassword, AuthUsername
+from src.auth.domain.value_objects import AuthAccessToken, AuthExpiresAt, AuthPassword, AuthUsername
 from src.shared.domain.users import UserId
 
-
 @dataclass
+@inject
 class AuthToken:
     access_token: AuthAccessToken
     user_id: UserId
-    token_type: AuthTokenType
     expires_at: AuthExpiresAt
 
+    def __init__(self, user_id: UserId, expires_at: AuthExpiresAt, encoder: AuthEncoder, access_token: Optional[AuthAccessToken] = None) -> None:
+        self.encoder = encoder
+        self.user_id = user_id
+        self.expires_at = expires_at
+        self.access_token = access_token or AuthAccessToken(self.encoder.encode(self.payload))
+
     @classmethod
-    def create(cls, user_id: UserId, access_token: AuthAccessToken, expires_at: AuthExpiresAt) -> 'AuthToken':
-        return cls(
-            access_token=access_token,
-            user_id=user_id,
-            token_type=AuthTokenType.bearer(),
-            expires_at=expires_at
-        )
-    
-    @staticmethod
-    def payload(user_id: UserId, expires_at: AuthExpiresAt) -> dict[str, Any]:
-        return {'sub': user_id.primitive, 'exp': expires_at.primitive}
+    def create(cls, user_id: UserId) -> 'AuthToken':
+        return cls(user_id=user_id, expires_at=AuthExpiresAt.create())
+
+    @property
+    def payload(self) -> dict[str, Any]:
+        return {'sub': self.user_id.primitive, 'exp': self.expires_at.primitive}
 
 
 @dataclass

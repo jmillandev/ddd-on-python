@@ -33,7 +33,6 @@ class TestCreateAuthTokenCommandHandler:
         assert isinstance(token, Response)
 
         assert token.access_token is not None
-        assert token.token_type == 'bearer'
         assert token.expires_at > datetime.now().timestamp()
         assert token.user_id == credential.user_id.primitive
 

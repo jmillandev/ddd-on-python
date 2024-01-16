@@ -2,11 +2,12 @@ import pytest
 from faker import Faker
 from fastapi import status
 from httpx import AsyncClient
+from kink import di
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from mercury.config import settings
 from src.users.domain.repository import UserRepository
-from kink import di
+from tests.apps.shared.auth import AuthAsUser
 from tests.src.users.factories import UserFactory
 
 fake = Faker()
@@ -20,7 +21,7 @@ class TestFindController:
 
     async def test_success(self, client: AsyncClient, sqlalchemy_session: AsyncSession) -> None:
         await di[UserRepository].create(self._user)
-        response = await client.get(f"{settings.API_PREFIX}/v1/users/{self._user.id.primitive}")
+        response = await client.get(f"{settings.API_PREFIX}/v1/users/{self._user.id.primitive}", auth=AuthAsUser(self._user.id))
 
         assert response.status_code == status.HTTP_200_OK, response.text
         assert response.json() == {

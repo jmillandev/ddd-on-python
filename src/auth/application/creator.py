@@ -22,13 +22,7 @@ class AuthTokenCreator:
         if not credential or credential.password != password:
             raise InvalidCredentials()
 
-        expires_at = AuthExpiresAt.create()
-        token_payload = AuthToken.payload(credential.user_id, expires_at)
-        auth_token = AuthToken.create(
-            user_id=credential.user_id,
-            access_token=AuthAccessToken(self._encoder.encode(token_payload)),
-            expires_at=expires_at
-        )
+        auth_token = AuthToken.create(user_id=credential.user_id)
         # TODO-Events: publish events
         # self._event_bus.publish(*auth_token.pull_domain_events())
         return auth_token

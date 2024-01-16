@@ -12,5 +12,9 @@ async def healthcheck():
 for module in os.listdir('apps'):
     if module.startswith('_'):
         continue
-    app_router = __import__(f'apps.{module}.urls', fromlist=['router']).router
-    router.include_router(app_router, tags=[module])
+    try:
+        module = __import__(f'apps.{module}.urls', fromlist=['router'])
+    except ImportError:
+        continue
+
+    router.include_router(module.router, tags=[module])

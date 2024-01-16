@@ -68,9 +68,9 @@ class ValueObject:
         Override this method to implement custom validations
         """
         if self.is_none():
-            raise ValueError(f"Is required")
+            raise self._fail(f"Is required")
         if not isinstance(self.value, self.BASE_TYPE):
-            raise ValueError(f"invalid type: Want {self.BASE_TYPE.__name__} got {type(self.value).__name__}")
+            raise self._fail(f"invalid type: Want {self.BASE_TYPE.__name__} got {type(self.value).__name__}")
 
     @property
     def _name(self) -> str:
