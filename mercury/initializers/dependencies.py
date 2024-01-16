@@ -17,7 +17,8 @@ from src.users.application.creator import UserCreator
 from src.users.domain.repository import UserRepository
 from src.users.infrastructure.repositories.sqlalchemy import \
     SqlAlcheamyUserRepository
-
+from src.shared.domain.bus.query import QueryBus
+from src.shared.infrastructure.bus.query.hardcoded import HardcodedQueryBus
 
 def init():
     di[AsyncSession] = lambda _: SqlAlchemySession()
@@ -28,3 +29,4 @@ def init():
     di[UserCreator] = lambda _: UserCreator()
     di[UnidirectionalEncryptor] = PasslibUnidirectionalEncryptor()
     di[AuthTokenCreator] = lambda _: AuthTokenCreator()
+    di[QueryBus] = HardcodedQueryBus()

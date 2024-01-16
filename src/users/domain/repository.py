@@ -9,7 +9,7 @@ class UserRepository(Protocol):
     async def create(self, user: User)-> None:
         ...
 
-    async def find(self, user_id: UserId) -> User:
+    async def search(self, user_id: UserId) -> User:
         ...
 
     async def find_by_email(self, email: UserId) -> User:

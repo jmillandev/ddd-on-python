@@ -1,9 +1,13 @@
-from typing import TypeVar
+from typing import Generic, TypeVar
+
 from pydantic import BaseModel
+
+from src.shared.domain.bus.query import QueryResponse
 
 Entity = TypeVar('Entity')
 
-class Response(BaseModel):
+
+class Response(BaseModel, Generic[QueryResponse]):
 
     @classmethod
     def build(cls, entity: Entity) -> Entity:

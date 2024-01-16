@@ -47,14 +47,10 @@ class User:
         # self._domain_events.append(event)
 
     def __str__(self) -> str:
-        return f"[{self.id}] {self.full_name}"
+        return f"[{self.id}] {self.email}"
 
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__}('{(self)}')>"
-
-    @property
-    def full_name(self):
-        return f"{self.name} {self.last_name}".strip()
 
     def __eq__(self, o: object) -> bool:
         if not isinstance(o, User):
