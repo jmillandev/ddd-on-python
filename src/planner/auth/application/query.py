@@ -1,10 +1,8 @@
+from dataclasses import dataclass
 from typing import Optional
 
-from pydantic import BaseModel
 
 
-class FindAuthTokenQuery(BaseModel):
+@dataclass(frozen=True)
+class FindAuthTokenQuery:
     access_token: Optional[str]
-
-    class Config:
-        allow_mutation = False

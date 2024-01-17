@@ -2,7 +2,6 @@ from typing import Any, Dict, Optional
 
 from pydantic import BaseSettings, PostgresDsn, validator
 
-
 class Settings(BaseSettings):
     POSTGRES_SERVER: str
     POSTGRES_USER: str
@@ -29,4 +28,4 @@ class Settings(BaseSettings):
         case_sensitive = True
 
 
-settings = Settings()
+settings = Settings.construct()

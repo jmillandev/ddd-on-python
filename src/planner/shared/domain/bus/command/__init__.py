@@ -1,13 +1,9 @@
-from typing import Protocol, runtime_checkable
+from typing import Protocol, runtime_checkable, ClassVar, Dict
 
 
 @runtime_checkable
 class Command(Protocol):
-    """Is DTO to
-
-    Args:
-        Protocol (_type_): _description_
-    """
+    __dataclass_fields__: ClassVar[Dict] 
 
 
 @runtime_checkable

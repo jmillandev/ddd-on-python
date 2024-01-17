@@ -1,35 +1,35 @@
-from typing import Any
+from typing import Any, TypeVar, Generic, Optional
 
 from src.planner.shared.domain.exceptions.invalid_value import InvalidValueException
 
+T = TypeVar("T")
 
-class ValueObject:
+class ValueObject(Generic[T]):
     """
     Base class for value objects
     """
+    BASE_TYPE: Any
+    _value: T
 
-    OPTIONAL = False
-    BASE_TYPE = Any
-    _value: BASE_TYPE
+    def __init__(self, value: Any) -> None:
+        self._set_value(self._cast(value))
 
-    def __init__(self, value: BASE_TYPE) -> None:
-        self.set_value(self._cast(value))
-
-    def _cast(self, value: Any) -> BASE_TYPE:
+    def _cast(self, value: Any) -> Optional[T]:
         if value is None:
-            return
+            return None
         if isinstance(value, self.BASE_TYPE):
             return value
         try:
             return self.BASE_TYPE(value)
         except Exception:
             self._fail(f"Invalid {self.BASE_TYPE.__name__}")
+            return None
 
-    def _fail(self, message: str) -> None:
+    def _fail(self, message: str):
         raise InvalidValueException(message=message, source=self._name)
 
     @property
-    def value(self) -> BASE_TYPE:
+    def value(self) -> T:
         return self._value
 
     @property
@@ -39,10 +39,11 @@ class ValueObject:
         """
         return self.value
 
-    def set_value(self, value: BASE_TYPE) -> None:
-        self._value = self._cast(value)
-        if self.OPTIONAL and self.is_none():
-            return
+    def _set_value(self, value: BASE_TYPE):
+        casted_value = self._cast(value)
+        if casted_value is None:
+            raise self._fail("Is required")
+        self._value = casted_value
         self._validate()
 
     def is_none(self) -> bool:
@@ -56,7 +57,7 @@ class ValueObject:
     def __ne__(self, o: object) -> bool:
         return not self.__eq__(o)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self.value)
 
     def __repr__(self) -> str:
@@ -65,7 +66,7 @@ class ValueObject:
     def __hash__(self) -> int:
         return hash(self.value)
 
-    def _validate(self) -> None:
+    def _validate(self):
         """
         Override this method to implement custom validations
         """

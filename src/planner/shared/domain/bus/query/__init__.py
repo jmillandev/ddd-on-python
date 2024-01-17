@@ -1,8 +1,13 @@
 from dataclasses import dataclass
-from typing import Optional, Protocol, TypeVar, runtime_checkable
+from typing import Optional, Protocol, TypeVar, runtime_checkable, ClassVar, Dict
 
-Query = TypeVar("Query", bound=dataclass)
-QueryResponse = TypeVar("QueryResponse", bound=dict)
+@runtime_checkable
+class Query(Protocol):
+    __dataclass_fields__: ClassVar[Dict] 
+
+@runtime_checkable
+class QueryResponse(Protocol):
+    __dataclass_fields__: ClassVar[Dict] 
 
 
 @runtime_checkable

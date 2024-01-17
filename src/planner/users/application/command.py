@@ -1,13 +1,11 @@
-from pydantic import UUID4, BaseModel
+from dataclasses import dataclass
 
 
-class CreateUserCommand(BaseModel):
-    id: UUID4
+@dataclass(frozen=True)
+class CreateUserCommand:
+    id: str
     email: str
     name: str
     last_name: str
     password: str
     pronoun: str
-
-    class Config:
-        allow_mutation = False

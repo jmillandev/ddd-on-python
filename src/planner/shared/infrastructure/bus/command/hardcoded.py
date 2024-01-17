@@ -11,6 +11,6 @@ class HardcodedCommandBus:
 
     async def dispatch(self, command: Command) -> None:
         try:
-            await self.HANDLERS[command.__class__]()(command)
+            await self.HANDLERS[command.__class__]()(command) # type: ignore[call-arg, arg-type, index]
         except KeyError:
             raise CommandNotRegistered(command)

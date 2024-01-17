@@ -1,9 +1,6 @@
-from pydantic import UUID4, BaseModel
+from dataclasses import dataclass
 
-
-class FindUserQuery(BaseModel):
-    id: UUID4
-    user_id: UUID4
-
-    class Config:
-        allow_mutation = False
+@dataclass(frozen=True)
+class FindUserQuery:
+    id: str
+    user_id: str

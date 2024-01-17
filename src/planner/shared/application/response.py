@@ -1,15 +1,14 @@
-from typing import Generic, TypeVar
-
 from pydantic import BaseModel
 
 from src.planner.shared.domain.bus.query import QueryResponse
+from src.planner.shared.domain.aggregates import Aggregate
 
-Entity = TypeVar("Entity")
 
+class Response(BaseModel, QueryResponse):
 
-class Response(BaseModel, Generic[QueryResponse]):
+    # TODO: Use entity_to_response
     @classmethod
-    def build(cls, entity: Entity) -> Entity:
+    def build(cls, entity: Aggregate) -> 'Response':
         attributes = {
             key: getattr(entity, key).primitive for key in cls.__annotations__.keys()
         }

@@ -13,8 +13,8 @@ from src.planner.auth.domain.value_objects import (
 from src.planner.shared.domain.users import UserId
 
 
-@dataclass
 @inject
+@dataclass
 class AuthToken:
     access_token: AuthAccessToken
     user_id: UserId
@@ -36,7 +36,7 @@ class AuthToken:
 
     @classmethod
     def create(cls, user_id: UserId) -> "AuthToken":
-        return cls(user_id=user_id, expires_at=AuthExpiresAt.create())
+        return cls(user_id=user_id, expires_at=AuthExpiresAt.create())  # type: ignore[call-arg]
 
     @property
     def payload(self) -> dict[str, Any]:

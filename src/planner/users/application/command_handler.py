@@ -25,5 +25,5 @@ class CreateUserCommandHandler:
             name=UserName(command.name),
             last_name=UserLastName(command.last_name),
             pronoun=UserPronoun(command.pronoun),
-            password=UserPassword(command.password),
+            password=UserPassword(command.password)  # type: ignore[call-arg]
         )

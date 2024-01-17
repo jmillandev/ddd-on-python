@@ -18,7 +18,7 @@ class AuthTokenFinder:
         payload = self._encoder.decode(access_token.primitive)
         if not payload:
             raise InvalidCredentials()
-        auth_token = AuthToken(
+        auth_token = AuthToken( # type: ignore[call-arg]
             access_token=access_token,
             user_id=UserId(payload["sub"]),
             expires_at=AuthExpiresAt(payload["exp"]),
