@@ -1,5 +1,6 @@
 from passlib.context import CryptContext
 from passlib.exc import UnknownHashError
+
 context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 

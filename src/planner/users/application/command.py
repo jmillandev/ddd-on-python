@@ -1,5 +1,7 @@
 from dataclasses import dataclass
+
 from src.planner.shared.domain.bus.command import Command
+
 
 @dataclass(frozen=True)
 class CreateUserCommand(Command):

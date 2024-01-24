@@ -1,5 +1,6 @@
-from src.planner.users.domain.value_objects.pronoun import Pronoun
 from dataclasses import dataclass
+
+from src.planner.users.domain.value_objects.pronoun import Pronoun
 
 
 @dataclass(frozen=True)

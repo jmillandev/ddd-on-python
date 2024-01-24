@@ -6,5 +6,5 @@ async def sign_in(*, command: CreateAuthTokenCommand):
     """
     Return a token to access to the API
     """
-    response = await CreateAuthTokenCommandHandler()(command)
+    response = await CreateAuthTokenCommandHandler()(command)  # type: ignore[call-arg]
     return response

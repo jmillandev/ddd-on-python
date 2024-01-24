@@ -24,9 +24,9 @@ async def sign_up(
 
 
 async def find(
-    id: FindUserQuery.__annotations__["id"],
+    id: str,
     query_bus: Annotated[QueryBus, Depends(lambda: di[QueryBus])],
     access_token: Annotated[str, Depends(oauth2_scheme)],
 ) -> UserResponse:
     auth_token = await query_bus.ask(FindAuthTokenQuery(access_token=access_token))
-    return await query_bus.ask(FindUserQuery(id=id, user_id=auth_token.user_id))
+    return await query_bus.ask(FindUserQuery(id=id, user_id=auth_token.user_id))  # type: ignore

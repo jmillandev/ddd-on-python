@@ -1,6 +1,6 @@
-from typing import Any, Optional, Union
+from typing import Optional
 
-from pydantic import PostgresDsn, field_validator, ValidationInfo
+from pydantic import PostgresDsn, ValidationInfo, field_validator
 from pydantic_settings import BaseSettings
 
 
@@ -9,14 +9,14 @@ class Settings(BaseSettings):
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
     POSTGRES_DB: str
-    DATABASE_URI: Union[Optional[PostgresDsn], Optional[str]] = None
+    DATABASE_URI: Optional[str] = None
     ENVIROMENT: str = "production"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
     SECRET_KEY: str
 
-    @field_validator("DATABASE_URI", mode='before')
+    @field_validator("DATABASE_URI", mode="before")
     @classmethod
-    def assemble_db_connection(cls, v: Optional[str], info: ValidationInfo) -> Union[PostgresDsn, str]:
+    def assemble_db_connection(cls, v: Optional[str], info: ValidationInfo) -> str:
         if isinstance(v, str):
             return v
         return PostgresDsn.build(
@@ -25,10 +25,10 @@ class Settings(BaseSettings):
             password=info.data.get("POSTGRES_PASSWORD"),
             host=info.data.get("POSTGRES_SERVER"),
             path=f"{info.data.get('POSTGRES_DB') or ''}",
-        )
+        ).unicode_string()
 
     class Config:
         case_sensitive = True
 
 
-settings = Settings()
+settings = Settings()  # type: ignore[call-arg]

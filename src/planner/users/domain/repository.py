@@ -1,8 +1,8 @@
 from typing import Protocol, runtime_checkable
 
 from src.planner.shared.domain.users import UserId
-from src.planner.users.domain.value_objects.email import UserEmail
 from src.planner.users.domain.entity import User
+from src.planner.users.domain.value_objects.email import UserEmail
 
 
 @runtime_checkable

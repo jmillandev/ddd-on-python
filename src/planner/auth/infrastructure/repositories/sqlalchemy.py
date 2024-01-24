@@ -36,5 +36,6 @@ class SqlAlcheamyAuthCredentialRepository(SqlAlcheamyRepository):
             return AuthCredential(
                 user_id=UserId(data.user_id),
                 username=AuthUsername(data.username),
-                password=AuthPassword(data.password, is_hashed=True),
+                password=AuthPassword(str(data.password), is_hashed=True),  # type: ignore[call-arg]
             )
+        return None

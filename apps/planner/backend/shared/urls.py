@@ -17,8 +17,8 @@ for module in os.listdir("apps/planner/backend"):
     if module in ["shared"]:
         continue
     try:
-        module = __import__(f"apps.planner.backend.{module}.urls", fromlist=["router"])
+        module = __import__(f"apps.planner.backend.{module}.urls", fromlist=["router"])  # type: ignore[assignment] # noqa: E501
     except ImportError:
         continue
 
-    router.include_router(module.router, tags=[module])
+    router.include_router(module.router, tags=[module])  # type: ignore[attr-defined]

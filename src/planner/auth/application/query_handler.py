@@ -2,6 +2,7 @@ from kink import inject
 
 from src.planner.auth.domain.value_objects import AuthAccessToken
 from src.planner.shared.application.mappers import entity_to_response
+
 from .finder import AuthTokenFinder
 from .query import FindAuthTokenQuery
 from .response import AuthTokenResponse

@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 from uuid import uuid4
 
 from faker import Faker
@@ -17,14 +18,14 @@ class UserFactory:
 
     @staticmethod
     def to_dict(
-        id: str = None,
-        created_at: datetime = None,
-        email: str = None,
-        name: str = None,
-        last_name: str = None,
-        pronoun: str = None,
-        password: str = None,
-        is_active: bool = True,
+        id: Optional[str] = None,
+        created_at: Optional[datetime] = None,
+        email: Optional[str] = None,
+        name: Optional[str] = None,
+        last_name: Optional[str] = None,
+        pronoun: Optional[str] = None,
+        password: Optional[str] = None,
+        is_active: Optional[bool] = True,
     ) -> dict:
         return {
             "id": id or uuid4(),

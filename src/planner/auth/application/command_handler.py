@@ -16,6 +16,6 @@ class CreateAuthTokenCommandHandler:
     async def __call__(self, command: CreateAuthTokenCommand) -> AuthTokenResponse:
         auth_token = await self.creator.create(
             username=AuthUsername(command.username),
-            password=AuthPassword(command.password),
+            password=AuthPassword(command.password),  # type: ignore[call-arg]
         )
         return entity_to_response(auth_token, AuthTokenResponse)

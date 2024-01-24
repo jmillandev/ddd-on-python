@@ -1,29 +1,31 @@
-from typing import Any, TypeVar, Generic, Optional
+from typing import Any, Generic, TypeVar
 
 from src.planner.shared.domain.exceptions.invalid_value import InvalidValueException
 
 T = TypeVar("T")
 
+
 class ValueObject(Generic[T]):
     """
     Base class for value objects
     """
+
     BASE_TYPE: Any
     _value: T
 
     def __init__(self, value: Any) -> None:
-        self._set_value(self._cast(value))
+        self._set_value(value)
 
-    def _cast(self, value: Any) -> Optional[T]:
+    def _cast(self, value: Any) -> T:
         if value is None:
-            return None
+            raise self._fail("Is required")
         if isinstance(value, self.BASE_TYPE):
             return value
         try:
             return self.BASE_TYPE(value)
         except Exception:
             self._fail(f"Invalid {self.BASE_TYPE.__name__}")
-            return None
+            return None  # type: ignore[return-value]
 
     def _fail(self, message: str):
         raise InvalidValueException(message=message, source=self._name)
@@ -39,9 +41,10 @@ class ValueObject(Generic[T]):
         """
         return self.value
 
-    def _set_value(self, value: T):
-        self._value = self._cast(value)
-        self._validate()
+    def _set_value(self, value: Any) -> None:
+        casted_value = self._cast(value)
+        self._validate(casted_value)
+        self._value = casted_value
 
     def is_none(self) -> bool:
         return self.value is None
@@ -63,15 +66,13 @@ class ValueObject(Generic[T]):
     def __hash__(self) -> int:
         return hash(self.value)
 
-    def _validate(self):
+    def _validate(self, value: T):
         """
         Override this method to implement custom validations
         """
-        if self.is_none():
-            raise self._fail("Is required")
-        if not isinstance(self.value, self.BASE_TYPE):
+        if not isinstance(value, self.BASE_TYPE):
             raise self._fail(
-                f"invalid type: Want {self.BASE_TYPE.__name__} got {type(self.value).__name__}"
+                f"invalid type: Want {self.BASE_TYPE.__name__} got {type(value).__name__}"
             )
 
     @property

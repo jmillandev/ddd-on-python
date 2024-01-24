@@ -1,6 +1,6 @@
-from typing import Protocol, runtime_checkable, ClassVar, Dict
+from typing import ClassVar, Dict, Protocol, runtime_checkable
 
 
 @runtime_checkable
-class Aggregate(Protocol):
-    __dataclass_fields__: ClassVar[Dict] 
+class RootAggregate(Protocol):
+    __dataclass_fields__: ClassVar[Dict]

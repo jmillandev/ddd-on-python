@@ -21,7 +21,7 @@ class SqlAlcheamyUser(Base):
     last_name = Column(String(50), nullable=False)
     password = Column(String, nullable=False)
     is_active = Column(Boolean, default=True)
-    pronoun = Column(
+    pronoun = Column(  # type: ignore[var-annotated]
         Enum(
             pronoun.Pronoun,
             values_callable=lambda _: pronoun.Pronoun.keys(),

@@ -1,3 +1,4 @@
+from typing import Optional
 from uuid import uuid4
 
 from faker import Faker
@@ -15,7 +16,9 @@ class AuthCredentialFactory:
 
     @staticmethod
     def to_dict(
-        user_id: str = None, username: str = None, password: str = None
+        user_id: Optional[str] = None,
+        username: Optional[str] = None,
+        password: Optional[str] = None,
     ) -> dict:
         return {
             "user_id": user_id or uuid4(),

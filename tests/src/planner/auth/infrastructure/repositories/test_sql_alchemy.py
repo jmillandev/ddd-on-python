@@ -26,7 +26,7 @@ class TestSqlAlchemyAuthCredentialRepository:
         credential = AuthCredential(
             user_id=UserId(attrs["id"]),
             username=AuthUsername(attrs["email"]),
-            password=AuthPassword(user.password.value, is_hashed=True),
+            password=AuthPassword(user.password.value, is_hashed=True),  # type: ignore[call-arg]
         )
 
         await user_repository.create(user)

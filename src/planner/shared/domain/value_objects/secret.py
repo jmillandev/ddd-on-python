@@ -1,5 +1,6 @@
-from kink import inject
 from typing import Any
+
+from kink import inject
 
 from src.planner.shared.domain.encryptors.unidirectional import UnidirectionalEncryptor
 from src.planner.shared.domain.value_objects.string import StringValueObject
@@ -7,7 +8,6 @@ from src.planner.shared.domain.value_objects.string import StringValueObject
 
 @inject
 class SecretValueObject(StringValueObject):
-
     def __init__(
         self, value: str, encryptor: UnidirectionalEncryptor, is_hashed: bool = False
     ) -> None:

@@ -48,7 +48,7 @@ def run_migrations_offline() -> None:
 
     """
     context.configure(
-        url=settings.DATABASE_URI.unicode_string(),
+        url=settings.DATABASE_URI,
         literal_binds=True,
         # dialect_opts={"paramstyle": "named"},
         compare_type=True,  # TODO: What's mean this?
@@ -66,9 +66,9 @@ async def run_async_migrations_online() -> None:
 
     """
     configuration = config.get_section(config.config_ini_section)
-    configuration["sqlalchemy.url"] = settings.DATABASE_URI.unicode_string()
+    configuration["sqlalchemy.url"] = str(settings.DATABASE_URI)  # type: ignore[index]
     connectable = async_engine_from_config(
-        configuration,
+        configuration,  # type: ignore[arg-type]
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )
@@ -82,6 +82,7 @@ async def run_async_migrations_online() -> None:
 def run_migrations_online():
     """Run migrations in 'online' mode."""
     asyncio.run(run_async_migrations_online())
+
 
 if context.is_offline_mode():
     run_migrations_offline()
