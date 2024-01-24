@@ -9,7 +9,6 @@ from src.planner.auth.application.creator import AuthTokenCreator
 from src.planner.auth.application.response import AuthTokenResponse
 from src.planner.auth.domain.exceptions.invalid_credentials import InvalidCredentials
 from src.planner.auth.domain.repository import AuthCredentialRepository
-from src.planner.shared.application.response import Response
 from src.planner.shared.domain.exceptions.base import DomainException
 from tests.src.planner.auth.factories import AuthCredentialFactory
 
@@ -30,7 +29,6 @@ class TestCreateAuthTokenCommandHandler:
 
         token = await self.handler(command)
         assert isinstance(token, AuthTokenResponse)
-        assert isinstance(token, Response)
 
         assert token.access_token is not None
         assert token.expires_at > datetime.now().timestamp()

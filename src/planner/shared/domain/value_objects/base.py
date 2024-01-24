@@ -39,11 +39,8 @@ class ValueObject(Generic[T]):
         """
         return self.value
 
-    def _set_value(self, value: BASE_TYPE):
-        casted_value = self._cast(value)
-        if casted_value is None:
-            raise self._fail("Is required")
-        self._value = casted_value
+    def _set_value(self, value: T):
+        self._value = self._cast(value)
         self._validate()
 
     def is_none(self) -> bool:

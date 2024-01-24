@@ -25,7 +25,7 @@ class TestCreateUserCommandHandler:
 
         params = UserFactory.to_dict()
         user = UserFactory.build(**params)
-        command = CreateUserCommand(**params)
+        command = CreateUserCommand.from_dict(params)
         await self.handler(command)
 
         self._repository.create.assert_called_once_with(user)
@@ -33,7 +33,7 @@ class TestCreateUserCommandHandler:
     async def test_should_raise_error_email_already_exists(self) -> None:
         params = UserFactory.to_dict()
         self._repository.search_by_email.return_value = UserFactory.build(**params)
-        command = CreateUserCommand(**params)
+        command = CreateUserCommand.from_dict(params)
 
         with pytest.raises(EmailAlreadyUsed) as excinfo:
             await self.handler(command)
@@ -42,7 +42,7 @@ class TestCreateUserCommandHandler:
 
     async def test_should_raise_error_invalid_email(self, fake) -> None:
         params = UserFactory.to_dict(email=fake.name())
-        command = CreateUserCommand(**params)
+        command = CreateUserCommand.from_dict(params)
 
         with pytest.raises(InvalidValueException) as excinfo:
             await self.handler(command)

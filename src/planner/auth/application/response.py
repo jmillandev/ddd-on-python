@@ -1,7 +1,8 @@
-from src.planner.shared.application.response import Response
+from dataclasses import dataclass
 
 
-class AuthTokenResponse(Response):
+@dataclass(frozen=True)
+class AuthTokenResponse:
     access_token: str
     expires_at: int
     user_id: str

@@ -17,8 +17,8 @@ class SecretValueObject(StringValueObject):
         if is_hashed:
             self._value = value
 
-    def set_value(self, value):
-        super().set_value(value)
+    def _set_value(self, value):
+        super()._set_value(value)
         self._raw_value = value
         self._value = self.encryptor.encrypt(value)
 

@@ -1,8 +1,9 @@
-from src.planner.shared.application.response import Response
 from src.planner.users.domain.value_objects.pronoun import Pronoun
+from dataclasses import dataclass
 
 
-class UserResponse(Response):
+@dataclass(frozen=True)
+class UserResponse:
     id: str
     email: str
     name: str

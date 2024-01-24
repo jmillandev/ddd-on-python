@@ -1,6 +1,7 @@
 from kink import inject
 
 from src.planner.auth.domain.value_objects import AuthPassword, AuthUsername
+from src.planner.shared.application.mappers import entity_to_response
 
 from .command import CreateAuthTokenCommand
 from .creator import AuthTokenCreator
@@ -17,4 +18,4 @@ class CreateAuthTokenCommandHandler:
             username=AuthUsername(command.username),
             password=AuthPassword(command.password),
         )
-        return AuthTokenResponse.build(auth_token)
+        return entity_to_response(auth_token, AuthTokenResponse)

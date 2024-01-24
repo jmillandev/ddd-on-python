@@ -2,7 +2,6 @@ from unittest.mock import Mock
 
 import pytest
 
-from src.planner.shared.application.response import Response
 from src.planner.shared.domain.exceptions.base import DomainException
 from src.planner.shared.domain.exceptions.forbidden import ForbiddenAccess
 from src.planner.users.application.finder import UserFinder
@@ -30,7 +29,6 @@ class TestFindUserQueryHandler:
 
         response = await self.handler(query)
         assert isinstance(response, UserResponse)
-        assert isinstance(response, Response)
 
         self._repository.search.assert_called_once_with(user.id)
 

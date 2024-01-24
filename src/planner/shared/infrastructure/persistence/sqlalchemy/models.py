@@ -1,4 +1,5 @@
-from dataclasses import asdict, dataclass
+from dataclasses import asdict
+from src.planner.shared.domain.aggregates import Aggregate
 
 from sqlalchemy.orm import as_declarative
 
@@ -6,7 +7,7 @@ from sqlalchemy.orm import as_declarative
 @as_declarative()
 class Base:
     @classmethod
-    def from_entity(cls, entity: dataclass) -> "Base":
+    def from_entity(cls, entity: Aggregate) -> "Base":
         data = asdict(entity)
         for key in data:
             data[key] = data[key].primitive

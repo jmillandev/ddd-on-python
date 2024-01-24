@@ -5,7 +5,7 @@ Faker==19.2.0
 
 # Test suit
 pytest==7.4.2
-fastapi[all]==0.97
+fastapi[all]==0.109.0
 factory_boy==3.3.0
 
 # Linter
@@ -18,3 +18,4 @@ isort==5.12.0
 # Type checker
 mypy==1.8.0
 types_passlib==1.7.4
+types-python-jose

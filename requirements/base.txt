@@ -1,5 +1,5 @@
 # Web Framework
-fastapi==0.97
+fastapi==0.109.0
 
 # Web Server
 uvicorn==0.22.0
@@ -14,7 +14,7 @@ passlib[bcrypt]==1.7.4
 python-jose[cryptography]==3.3.0
 
 # DTOs
-pydantic==1.10.13
+pydantic==2.5.3
 
 # Dependecy Injector
 kink==0.7.0
