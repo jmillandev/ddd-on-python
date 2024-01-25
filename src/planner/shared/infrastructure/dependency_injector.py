@@ -1,7 +1,7 @@
 from kink import di
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.planner.auth.application.creator import AuthTokenCreator
+from src.planner.auth.application.create.creator import AuthTokenCreator
 from src.planner.auth.domain.encoder import AuthEncoder
 from src.planner.auth.domain.repository import AuthCredentialRepository
 from src.planner.auth.infrastructure.encoders.jose_jwt import JoseJwtEncoder

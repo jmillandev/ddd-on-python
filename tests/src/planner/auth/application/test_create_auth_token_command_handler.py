@@ -3,10 +3,12 @@ from unittest.mock import Mock
 
 import pytest
 
-from src.planner.auth.application.command import CreateAuthTokenCommand
-from src.planner.auth.application.command_handler import CreateAuthTokenCommandHandler
-from src.planner.auth.application.creator import AuthTokenCreator
-from src.planner.auth.application.response import AuthTokenResponse
+from src.planner.auth.application.create.command import CreateAuthTokenCommand
+from src.planner.auth.application.create.command_handler import (
+    CreateAuthTokenCommandHandler,
+)
+from src.planner.auth.application.create.creator import AuthTokenCreator
+from src.planner.auth.application.shared.response import AuthTokenResponse
 from src.planner.auth.domain.exceptions.invalid_credentials import InvalidCredentials
 from src.planner.auth.domain.repository import AuthCredentialRepository
 from src.planner.shared.domain.exceptions.base import DomainException
