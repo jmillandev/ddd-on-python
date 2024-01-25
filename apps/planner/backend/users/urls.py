@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status
 
 from apps.planner.backend.users.controllers import find, sign_up
-from src.planner.users.application.responses import UserResponse
+from src.planner.users.application.find.responses import UserResponse
 
 router = APIRouter()
 

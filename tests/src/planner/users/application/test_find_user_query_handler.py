@@ -4,10 +4,10 @@ import pytest
 
 from src.planner.shared.domain.exceptions.base import DomainException
 from src.planner.shared.domain.exceptions.forbidden import ForbiddenAccess
-from src.planner.users.application.finder import UserFinder
-from src.planner.users.application.query import FindUserQuery
-from src.planner.users.application.query_handler import FindUserQueryHandler
-from src.planner.users.application.responses import UserResponse
+from src.planner.users.application.find.finder import UserFinder
+from src.planner.users.application.find.query import FindUserQuery
+from src.planner.users.application.find.query_handler import FindUserQueryHandler
+from src.planner.users.application.find.responses import UserResponse
 from src.planner.users.domain.exceptions.not_found import UserNotFound
 from src.planner.users.domain.repository import UserRepository
 from tests.src.planner.users.factories import UserFactory

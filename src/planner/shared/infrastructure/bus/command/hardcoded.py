@@ -1,6 +1,6 @@
 from src.planner.shared.domain.bus.command import Command
 from src.planner.shared.domain.bus.command.exceptions import CommandNotRegistered
-from src.planner.users.application.command_handler import (
+from src.planner.users.application.create.command_handler import (
     CreateUserCommand,
     CreateUserCommandHandler,
 )

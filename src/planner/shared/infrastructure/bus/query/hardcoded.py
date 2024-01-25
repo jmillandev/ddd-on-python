@@ -2,8 +2,8 @@ from src.planner.auth.application.query import FindAuthTokenQuery
 from src.planner.auth.application.query_handler import FindAuthTokenQueryHandler
 from src.planner.shared.domain.bus.query import Query, QueryResponse
 from src.planner.shared.domain.bus.query.exceptions import QueryNotRegistered
-from src.planner.users.application.query import FindUserQuery
-from src.planner.users.application.query_handler import FindUserQueryHandler
+from src.planner.users.application.find.query import FindUserQuery
+from src.planner.users.application.find.query_handler import FindUserQueryHandler
 
 
 class HardcodedQueryBus:

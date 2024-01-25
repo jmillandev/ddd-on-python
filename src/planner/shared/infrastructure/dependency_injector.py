@@ -19,7 +19,7 @@ from src.planner.shared.infrastructure.encryptors.unidirectionals.passlib import
 from src.planner.shared.infrastructure.persistence.sqlalchemy.session import (
     SqlAlchemySession,
 )
-from src.planner.users.application.creator import UserCreator
+from src.planner.users.application.create.creator import UserCreator
 from src.planner.users.domain.repository import UserRepository
 from src.planner.users.infrastructure.repositories.sqlalchemy import (
     SqlAlcheamyUserRepository,
