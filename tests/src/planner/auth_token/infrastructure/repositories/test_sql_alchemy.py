@@ -1,16 +1,16 @@
 import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.planner.auth.domain.entity import AuthCredential
-from src.planner.auth.domain.value_objects import AuthPassword, AuthUsername
-from src.planner.auth.infrastructure.repositories.sqlalchemy import (
+from src.planner.auth_token.domain.entity import AuthCredential
+from src.planner.auth_token.domain.value_objects import AuthPassword, AuthUsername
+from src.planner.auth_token.infrastructure.repositories.sqlalchemy import (
     SqlAlcheamyAuthCredentialRepository,
 )
 from src.planner.shared.domain.users import UserId
 from src.planner.users.infrastructure.repositories.sqlalchemy import (
     SqlAlcheamyUserRepository,
 )
-from tests.src.planner.auth.factories import AuthCredentialFactory
+from tests.src.planner.auth_token.factories import AuthCredentialFactory
 from tests.src.planner.users.factories import UserFactory
 
 pytestmark = pytest.mark.anyio

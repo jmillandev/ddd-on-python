@@ -1,6 +1,6 @@
 from httpx import Auth
 
-from src.planner.auth.domain.entity import AuthToken
+from src.planner.auth_token.domain.entity import AuthToken
 from src.planner.shared.domain.users import UserId
 
 

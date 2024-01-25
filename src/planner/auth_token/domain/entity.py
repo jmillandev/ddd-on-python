@@ -3,8 +3,8 @@ from typing import Any, Optional
 
 from kink import inject
 
-from src.planner.auth.domain.encoder import AuthEncoder
-from src.planner.auth.domain.value_objects import (
+from src.planner.auth_token.domain.encoder import AuthEncoder
+from src.planner.auth_token.domain.value_objects import (
     AuthAccessToken,
     AuthExpiresAt,
     AuthPassword,

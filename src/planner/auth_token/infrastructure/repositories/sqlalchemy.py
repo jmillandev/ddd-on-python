@@ -3,8 +3,8 @@ from typing import Optional
 
 from sqlalchemy import UUID, Column, String, select
 
-from src.planner.auth.domain.entity import AuthCredential
-from src.planner.auth.domain.value_objects import AuthPassword, AuthUsername
+from src.planner.auth_token.domain.entity import AuthCredential
+from src.planner.auth_token.domain.value_objects import AuthPassword, AuthUsername
 from src.planner.shared.domain.users import UserId
 from src.planner.shared.infrastructure.persistence.sqlalchemy.models import Base
 from src.planner.shared.infrastructure.persistence.sqlalchemy.repositories import (

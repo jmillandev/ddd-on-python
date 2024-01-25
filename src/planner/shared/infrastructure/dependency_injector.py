@@ -1,11 +1,11 @@
 from kink import di
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.planner.auth.application.create.creator import AuthTokenCreator
-from src.planner.auth.domain.encoder import AuthEncoder
-from src.planner.auth.domain.repository import AuthCredentialRepository
-from src.planner.auth.infrastructure.encoders.jose_jwt import JoseJwtEncoder
-from src.planner.auth.infrastructure.repositories.sqlalchemy import (
+from src.planner.auth_token.application.create.creator import AuthTokenCreator
+from src.planner.auth_token.domain.encoder import AuthEncoder
+from src.planner.auth_token.domain.repository import AuthCredentialRepository
+from src.planner.auth_token.infrastructure.encoders.jose_jwt import JoseJwtEncoder
+from src.planner.auth_token.infrastructure.repositories.sqlalchemy import (
     SqlAlcheamyAuthCredentialRepository,
 )
 from src.planner.shared.domain.bus.command import CommandBus

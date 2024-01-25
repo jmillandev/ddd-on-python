@@ -1,10 +1,12 @@
 from kink import inject
 
-from src.planner.auth.domain.encoder import AuthEncoder
-from src.planner.auth.domain.entity import AuthToken
-from src.planner.auth.domain.exceptions.invalid_credentials import InvalidCredentials
-from src.planner.auth.domain.repository import AuthCredentialRepository
-from src.planner.auth.domain.value_objects import AuthPassword, AuthUsername
+from src.planner.auth_token.domain.encoder import AuthEncoder
+from src.planner.auth_token.domain.entity import AuthToken
+from src.planner.auth_token.domain.exceptions.invalid_credentials import (
+    InvalidCredentials,
+)
+from src.planner.auth_token.domain.repository import AuthCredentialRepository
+from src.planner.auth_token.domain.value_objects import AuthPassword, AuthUsername
 
 
 @inject

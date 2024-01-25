@@ -3,7 +3,7 @@ from typing import Optional
 from jose import JWTError, jwt
 from jose.jwt import encode
 
-from src.planner.auth.domain.encoder import AuthEncoder
+from src.planner.auth_token.domain.encoder import AuthEncoder
 from src.planner.shared.config import settings
 
 

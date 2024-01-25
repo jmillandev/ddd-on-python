@@ -1,5 +1,5 @@
-from src.planner.auth.application.create.command import CreateAuthTokenCommand
-from src.planner.auth.application.create.command_handler import (
+from src.planner.auth_token.application.create.command import CreateAuthTokenCommand
+from src.planner.auth_token.application.create.command_handler import (
     CreateAuthTokenCommandHandler,
 )
 

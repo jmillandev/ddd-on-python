@@ -4,7 +4,7 @@ from fastapi import Depends
 from kink import di
 
 from apps.planner.backend.shared.auth import oauth2_scheme
-from src.planner.auth.application.find.query import FindAuthTokenQuery
+from src.planner.auth_token.application.find.query import FindAuthTokenQuery
 from src.planner.shared.domain.bus.command import CommandBus
 from src.planner.shared.domain.bus.query import QueryBus
 from src.planner.users.application.create.command import CreateUserCommand

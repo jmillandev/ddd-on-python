@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from faker import Faker
 
-from src.planner.auth.domain.entity import AuthCredential
+from src.planner.auth_token.domain.entity import AuthCredential
 from src.planner.shared.application.mappers import dict_to_entity
 
 fake = Faker()
