@@ -38,4 +38,4 @@ esac
 command=$(echo $@ | sed 's/-e\s\+\w\+\s*//')
 
 echo "Docker command: '$command'"
-docker compose -f ./docker/$environment/docker-compose.yml --project-directory . $command 
+docker compose -f ./docker/planner/$environment/docker-compose.yml --project-directory . $command 

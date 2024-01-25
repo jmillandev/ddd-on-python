@@ -5,7 +5,7 @@ dev:
 		command="bash"; \
 	fi;
 	echo "Running command: $(command)"
-	./init.sh run --rm mercury_api $(command)
+	./init.sh run --rm planner_api $(command)
 
 up:
 	uvicorn apps.planner.backend.server:app --reload --workers 1 --host 0.0.0.0 --port 8080	

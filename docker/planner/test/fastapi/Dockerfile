@@ -19,9 +19,11 @@ RUN apt-get update && apt-get -y install gcc \
 # install python dependencies
 RUN pip install --upgrade pip
 COPY ./requirements ./requirements
-RUN pip install -r requirements/develop.txt
+RUN pip install -r requirements/test.txt
 
-COPY ["./docker/develop/fastapi/entrypoint.sh", "/entrypoint.sh"]
+COPY ["./docker/planner/develop/fastapi/entrypoint.sh", "/entrypoint.sh"]
+COPY ["./docker/planner/test/fastapi/start.sh", "/start.sh"]
+COPY ["./", "./"]
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["make", "up"]
+CMD ["/start.sh"]

@@ -6,7 +6,7 @@ services:
         - 8.8.8.8
     build:
       context: ./ # We need run this from the root of the project
-      dockerfile: ./docker/develop/fastapi/Dockerfile
+      dockerfile: ./docker/planner/develop/fastapi/Dockerfile
     volumes:
       - .:/usr/src/app
       - dependencies:/usr/local/lib/python3.11/site-packages

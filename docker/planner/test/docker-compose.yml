@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  planner_api:
+    dns:
+        - 8.8.8.8
+    build:
+      context: ./ # We need run this from the root of the project
+      dockerfile: ./docker/planner/test/fastapi/Dockerfile
+    env_file:
+      - .env.test
+    depends_on:
+      - database
+  database:
+    image: postgres:15
+    env_file:
+      - .env.test
