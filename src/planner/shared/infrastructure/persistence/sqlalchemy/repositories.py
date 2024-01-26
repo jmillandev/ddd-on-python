@@ -68,6 +68,7 @@ class SqlAlcheamyFindMixin(Generic[Aggregate]):
 
 # class SqlAlcheamyGetAllMixin:
 #     async def all(self, skip: int = 0, limit: int = 10) -> Tuple[Aggregate]:
+    # TODO: Use criteria instead offset and limit
 # TODO: Create SkipValueObject and LimitValueObject
 # stmt = select(self.model).offset(skip)
 # if limit is not None:

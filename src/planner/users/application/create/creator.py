@@ -1,5 +1,5 @@
 from kink import inject
-
+from src.shared.domain.bus.event.event_bus import EventBus
 from src.planner.shared.domain.users import UserId
 from src.planner.users.domain.entity import User
 from src.planner.users.domain.exceptions.email_already_used import EmailAlreadyUsed
@@ -15,10 +15,9 @@ from src.planner.users.domain.value_objects import (
 
 @inject
 class UserCreator:
-    def __init__(self, repository: UserRepository):
+    def __init__(self, repository: UserRepository, event_bus: EventBus):
         self._repository = repository
-        # TODO-Events: add event bus
-        # self._event_bus = EventBus()
+        self._event_bus = event_bus
 
     async def create(
         self,
@@ -36,6 +35,5 @@ class UserCreator:
 
         user = User.create(id, email, name, last_name, pronoun, password)
         await self._repository.create(user)
-        # TODO-Events: publish events
-        # self._event_bus.publish(*user.pull_domain_events())
+        await self._event_bus.publish(*user.pull_domain_events())
         return user

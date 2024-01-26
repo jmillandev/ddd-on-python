@@ -1,5 +1,6 @@
 from dataclasses import dataclass
-
+from typing import List
+from src.shared.domain.bus.event.domain_event import DomainEvent
 from src.planner.shared.domain.users import UserId
 from src.planner.users.domain.value_objects import (
     UserCreatedAt,
@@ -10,7 +11,7 @@ from src.planner.users.domain.value_objects import (
     UserPassword,
     UserPronoun,
 )
-
+from src.planner.users.domain.events.registered import UserRegistered
 
 @dataclass
 class User:
@@ -22,6 +23,11 @@ class User:
     is_active: UserIsActive
     pronoun: UserPronoun
     password: UserPassword
+
+    def __init__(self, *args, **kwargs)-> None:
+        super().__init__(*args, **kwargs)
+        # TODO: Move to AggregateRoot
+        self._recorded_events = []
 
     @classmethod
     def create(
@@ -43,20 +49,27 @@ class User:
             pronoun=pronoun,
             password=password,
         )
-        # TODO-Events: register event
-        # user._register_event(UserCreated(user))
+        user._record_event(
+            UserRegistered.make(
+                user.id.value,
+                ocurrend_at=user.created_at.primitive,
+                email=user.email.primitive,
+                pronoun=user.pronoun.primitive,
+                name=user.name.primitive,
+                last_name=user.last_name.primitive,
+            )
+        )
         return user
 
-    def pull_domain_events(self):
-        # TODO-Events: return events
-        # events = self._domain_events
-        # self._domain_events = []
-        # return events
-        pass
+    def pull_domain_events(self) -> List[DomainEvent]:
+        # TODO: Move to AggregateRoot
+        events = self._recorded_events
+        self._recorded_events = []
+        return events
 
-    # TODO-Events: append event
-    # def _register_event(self, event: DomainEvent):
-    # self._domain_events.append(event)
+    def _record_event(self, event: DomainEvent):
+        # TODO: Move to AggregateRoot
+        self._recorded_events.append(event)
 
     def __str__(self) -> str:
         return f"[{self.id}] {self.email}"

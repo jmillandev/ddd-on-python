@@ -29,4 +29,5 @@ async def find(
     access_token: Annotated[str, Depends(oauth2_scheme)],
 ) -> UserResponse:
     auth_token = await query_bus.ask(FindAuthTokenQuery(access_token=access_token))
-    return await query_bus.ask(FindUserQuery(id=id, user_id=auth_token.user_id))  # type: ignore
+    find_user_query = FindUserQuery(id=id, user_id=auth_token.user_id)  # type: ignore[union-attr]
+    return await query_bus.ask(find_user_query)  # type: ignore[return-value]
