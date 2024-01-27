@@ -25,7 +25,7 @@ class User:
     password: UserPassword
 
     @classmethod
-    def create(
+    def register(
         cls,
         id: UserId,
         email: UserEmail,

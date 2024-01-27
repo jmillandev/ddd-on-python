@@ -16,7 +16,7 @@ class AuthTokenFinder:
         # TODO-Events: add event bus
         # self._event_bus = EventBus()
 
-    async def find(self, access_token: AuthAccessToken) -> AuthToken:
+    async def __call__(self, access_token: AuthAccessToken) -> AuthToken:
         payload = self._encoder.decode(access_token.primitive)
         if not payload:
             raise InvalidCredentials()

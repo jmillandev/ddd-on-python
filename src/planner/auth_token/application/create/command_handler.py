@@ -10,11 +10,11 @@ from .creator import AuthTokenCreator
 
 @inject
 class CreateAuthTokenCommandHandler:
-    def __init__(self, creator: AuthTokenCreator) -> None:
-        self.creator = creator
+    def __init__(self, use_case: AuthTokenCreator) -> None:
+        self.use_case = use_case
 
     async def __call__(self, command: CreateAuthTokenCommand) -> AuthTokenResponse:
-        auth_token = await self.creator.create(
+        auth_token = await self.use_case(
             username=AuthUsername(command.username),
             password=AuthPassword(command.password),  # type: ignore[call-arg]
         )

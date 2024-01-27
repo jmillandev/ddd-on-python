@@ -17,7 +17,7 @@ class AuthTokenCreator:
         # TODO-Events: add event bus
         # self._event_bus = EventBus()
 
-    async def create(self, username: AuthUsername, password: AuthPassword) -> AuthToken:
+    async def __call__(self, username: AuthUsername, password: AuthPassword) -> AuthToken:
         credential = await self._repository.search(username)
         # TODO: Use QueryBus instead Repository? https://pro.codely.com/library/cqrs-command-query-responsibility-segregation-29074/62554/path/step/33532843/discussion/79379/  # noqa:E501
         if not credential or credential.password != password:

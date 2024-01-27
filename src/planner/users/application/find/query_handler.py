@@ -10,11 +10,11 @@ from .responses import UserResponse
 
 @inject
 class FindUserQueryHandler:
-    def __init__(self, finder: UserFinder) -> None:
-        self.finder = finder
+    def __init__(self, use_case: UserFinder) -> None:
+        self.use_case = use_case
 
     async def __call__(self, query: FindUserQuery) -> UserResponse:
-        user = await self.finder.find(
+        user = await self.use_case(
             id=UserId(query.id), current_user_id=UserId(query.user_id)
         )
         return entity_to_response(user, UserResponse)

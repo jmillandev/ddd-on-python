@@ -12,7 +12,7 @@ class UserFinder:
     def __init__(self, repository: UserRepository):
         self._repository = repository
 
-    async def find(self, id: UserId, current_user_id: UserId) -> User:
+    async def __call__(self, id: UserId, current_user_id: UserId) -> User:
         if id != current_user_id:
             raise ForbiddenAccess
         user = await self._repository.search(id)

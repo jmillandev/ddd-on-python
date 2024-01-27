@@ -10,11 +10,11 @@ from .query import FindAuthTokenQuery
 
 @inject
 class FindAuthTokenQueryHandler:
-    def __init__(self, finder: AuthTokenFinder) -> None:
-        self.finder = finder
+    def __init__(self, use_case: AuthTokenFinder) -> None:
+        self.use_case = use_case
 
     async def __call__(self, query: FindAuthTokenQuery) -> AuthTokenResponse:
-        auth_token = await self.finder.find(
+        auth_token = await self.use_case(
             access_token=AuthAccessToken(query.access_token)
         )
         return entity_to_response(auth_token, AuthTokenResponse)
