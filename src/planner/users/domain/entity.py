@@ -26,6 +26,9 @@ class User:
     pronoun: UserPronoun
     password: UserPassword
 
+    def __post_init__(self, *args, **kwargs):
+        self._flush_events()
+
     @classmethod
     def register(
         cls,
@@ -79,13 +82,6 @@ class User:
             return False
         return self.id == o.id
 
-    @property
-    def _recorded_events(self) -> List[DomainEvent]:
-        # TODO: Move to AggregateRoot
-        if not hasattr(self, "__recorded_events"):
-            self._flush_events()
-        return self.__recorded_events
-
     def _flush_events(self) -> None:
         # TODO: Move to AggregateRoot
-        self.__recorded_events: List[DomainEvent] = []
+        self._recorded_events: List[DomainEvent] = []

@@ -3,6 +3,7 @@ from typing import ClassVar, Dict, Protocol, runtime_checkable
 
 @runtime_checkable
 class Command(Protocol):
+    # TODO: Change to Abstract Class
     __dataclass_fields__: ClassVar[Dict]
 
     @classmethod
