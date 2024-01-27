@@ -24,6 +24,8 @@ from src.planner.users.domain.repository import UserRepository
 from src.planner.users.infrastructure.repositories.sqlalchemy import (
     SqlAlcheamyUserRepository,
 )
+from src.shared.domain.bus.event.event_bus import EventBus
+from .event_bus import start_event_bus
 
 
 def init():
@@ -38,3 +40,4 @@ def init():
     di[CommandBus] = HardcodedCommandBus()
     di[AuthEncoder] = JoseJwtEncoder()
     di[QueryBus] = HardcodedQueryBus()
+    di[EventBus] = start_event_bus()

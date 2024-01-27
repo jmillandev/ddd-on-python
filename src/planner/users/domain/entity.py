@@ -24,11 +24,6 @@ class User:
     pronoun: UserPronoun
     password: UserPassword
 
-    def __init__(self, *args, **kwargs)-> None:
-        super().__init__(*args, **kwargs)
-        # TODO: Move to AggregateRoot
-        self._recorded_events = []
-
     @classmethod
     def create(
         cls,
@@ -64,7 +59,7 @@ class User:
     def pull_domain_events(self) -> List[DomainEvent]:
         # TODO: Move to AggregateRoot
         events = self._recorded_events
-        self._recorded_events = []
+        self.__recorded_events = []
         return events
 
     def _record_event(self, event: DomainEvent):
@@ -81,3 +76,9 @@ class User:
         if not isinstance(o, User):
             return False
         return self.id == o.id
+
+    @property
+    def _recorded_events(self) -> List[DomainEvent]:
+        # TODO: Move to AggregateRoot
+        if not hasattr(self, "__recorded_events"): self.__recorded_events = []
+        return self.__recorded_events

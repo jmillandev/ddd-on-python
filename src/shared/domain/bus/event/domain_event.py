@@ -1,8 +1,10 @@
 from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Optional, Union
+from typing import Optional, Union, TypeVar
 from uuid import UUID, uuid4
+
+DomainEventName = TypeVar("DomainEventName", bound=str)
 
 
 @dataclass(frozen=True)
@@ -13,7 +15,7 @@ class DomainEvent(metaclass=ABCMeta):
 
     @staticmethod
     @abstractmethod
-    def event_name() -> str:
+    def event_name() -> DomainEventName:
         ...
 
     @abstractmethod
