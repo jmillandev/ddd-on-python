@@ -1,5 +1,5 @@
 from kink import inject
-from src.shared.domain.bus.event.event_bus import EventBus
+
 from src.planner.shared.domain.users import UserId
 from src.planner.users.domain.entity import User
 from src.planner.users.domain.exceptions.email_already_used import EmailAlreadyUsed
@@ -11,6 +11,7 @@ from src.planner.users.domain.value_objects import (
     UserPassword,
     UserPronoun,
 )
+from src.shared.domain.bus.event.event_bus import EventBus
 
 
 @inject

@@ -5,7 +5,9 @@ import pytest
 from src.planner.shared.domain.exceptions.base import DomainException
 from src.planner.shared.domain.exceptions.invalid_value import InvalidValueException
 from src.planner.users.application.register.command import RegisterUserCommand
-from src.planner.users.application.register.command_handler import RegisterUserCommandHandler
+from src.planner.users.application.register.command_handler import (
+    RegisterUserCommandHandler,
+)
 from src.planner.users.application.register.register import UserRegistrator
 from src.planner.users.domain.exceptions.email_already_used import EmailAlreadyUsed
 from src.planner.users.domain.repository import UserRepository

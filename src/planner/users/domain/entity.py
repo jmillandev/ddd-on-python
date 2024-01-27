@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 from typing import List
-from src.shared.domain.bus.event.domain_event import DomainEvent
+
 from src.planner.shared.domain.users import UserId
+from src.planner.users.domain.events.registered import UserRegistered
 from src.planner.users.domain.value_objects import (
     UserCreatedAt,
     UserEmail,
@@ -11,7 +12,8 @@ from src.planner.users.domain.value_objects import (
     UserPassword,
     UserPronoun,
 )
-from src.planner.users.domain.events.registered import UserRegistered
+from src.shared.domain.bus.event.domain_event import DomainEvent
+
 
 @dataclass
 class User:
@@ -59,7 +61,7 @@ class User:
     def pull_domain_events(self) -> List[DomainEvent]:
         # TODO: Move to AggregateRoot
         events = self._recorded_events
-        self.__recorded_events = []
+        self._flush_events()
         return events
 
     def _record_event(self, event: DomainEvent):
@@ -80,5 +82,10 @@ class User:
     @property
     def _recorded_events(self) -> List[DomainEvent]:
         # TODO: Move to AggregateRoot
-        if not hasattr(self, "__recorded_events"): self.__recorded_events = []
+        if not hasattr(self, "__recorded_events"):
+            self._flush_events()
         return self.__recorded_events
+
+    def _flush_events(self) -> None:
+        # TODO: Move to AggregateRoot
+        self.__recorded_events: List[DomainEvent] = []

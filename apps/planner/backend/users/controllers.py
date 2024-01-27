@@ -7,9 +7,9 @@ from apps.planner.backend.shared.auth import oauth2_scheme
 from src.planner.auth_token.application.find.query import FindAuthTokenQuery
 from src.planner.shared.domain.bus.command import CommandBus
 from src.planner.shared.domain.bus.query import QueryBus
-from src.planner.users.application.register.command import RegisterUserCommand
 from src.planner.users.application.find.query import FindUserQuery
 from src.planner.users.application.find.responses import UserResponse
+from src.planner.users.application.register.command import RegisterUserCommand
 
 
 async def sign_up(

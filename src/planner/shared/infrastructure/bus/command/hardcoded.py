@@ -1,7 +1,9 @@
 from src.planner.shared.domain.bus.command import Command
 from src.planner.shared.domain.bus.command.exceptions import CommandNotRegistered
 from src.planner.users.application.register.command import RegisterUserCommand
-from src.planner.users.application.register.command_handler import RegisterUserCommandHandler
+from src.planner.users.application.register.command_handler import (
+    RegisterUserCommandHandler,
+)
 
 
 class HardcodedCommandBus:
