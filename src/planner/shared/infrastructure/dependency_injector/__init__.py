@@ -19,7 +19,7 @@ from src.planner.shared.infrastructure.encryptors.unidirectionals.passlib import
 from src.planner.shared.infrastructure.persistence.sqlalchemy.session import (
     SqlAlchemySession,
 )
-from src.planner.users.application.create.creator import UserCreator
+from src.planner.users.application.register.register import UserRegistrator
 from src.planner.users.domain.repository import UserRepository
 from src.planner.users.infrastructure.repositories.sqlalchemy import (
     SqlAlcheamyUserRepository,
@@ -34,7 +34,7 @@ def init():
     di.factories[
         AuthCredentialRepository
     ] = lambda _: SqlAlcheamyAuthCredentialRepository()
-    di.factories[UserCreator] = lambda _: UserCreator()
+    di.factories[UserRegistrator] = lambda _: UserRegistrator()
     di.factories[AuthTokenCreator] = lambda _: AuthTokenCreator()
     di[UnidirectionalEncryptor] = PasslibUnidirectionalEncryptor()
     di[CommandBus] = HardcodedCommandBus()

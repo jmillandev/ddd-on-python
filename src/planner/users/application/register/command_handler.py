@@ -9,16 +9,16 @@ from src.planner.users.domain.value_objects import (
     UserPronoun,
 )
 
-from .command import CreateUserCommand
-from .creator import UserCreator
+from .command import RegisterUserCommand
+from .register import UserRegistrator
 
 
 @inject
-class CreateUserCommandHandler:
-    def __init__(self, creator: UserCreator) -> None:
+class RegisterUserCommandHandler:
+    def __init__(self, creator: UserRegistrator) -> None:
         self.creator = creator
 
-    async def __call__(self, command: CreateUserCommand) -> None:
+    async def __call__(self, command: RegisterUserCommand) -> None:
         await self.creator.create(
             id=UserId(command.id),
             email=UserEmail(command.email),
