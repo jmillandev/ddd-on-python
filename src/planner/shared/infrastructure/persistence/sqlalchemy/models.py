@@ -2,13 +2,13 @@ from dataclasses import asdict
 
 from sqlalchemy.orm import as_declarative
 
-from src.planner.shared.domain.aggregates import RootAggregate
+from src.planner.shared.domain.aggregates import AggregateRoot
 
 
 @as_declarative()
 class Base:
     @classmethod
-    def from_entity(cls, entity: RootAggregate) -> "Base":
+    def from_entity(cls, entity: AggregateRoot) -> "Base":
         data = asdict(entity)
         for key in data:
             data[key] = data[key].primitive

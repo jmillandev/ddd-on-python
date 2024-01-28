@@ -5,13 +5,13 @@ from sqlalchemy import Select, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.planner.shared.application.mappers import dict_to_entity
-from src.planner.shared.domain.aggregates import RootAggregate
+from src.planner.shared.domain.aggregates import AggregateRoot
 from src.planner.shared.domain.value_objects.uuid import UuidValueObject
 
 from .models import Base
 
 ModelType = TypeVar("ModelType", bound=Base)
-Aggregate = TypeVar("Aggregate", bound=RootAggregate)
+Aggregate = TypeVar("Aggregate", bound=AggregateRoot)
 
 
 @inject

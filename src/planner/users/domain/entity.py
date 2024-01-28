@@ -1,6 +1,3 @@
-from dataclasses import dataclass
-from typing import List
-
 from src.planner.shared.domain.users import UserId
 from src.planner.users.domain.events.registered import UserRegistered
 from src.planner.users.domain.value_objects import (
@@ -12,11 +9,10 @@ from src.planner.users.domain.value_objects import (
     UserPassword,
     UserPronoun,
 )
-from src.shared.domain.bus.event.domain_event import DomainEvent
+from src.planner.shared.domain.aggregates import AggregateRoot
 
 
-@dataclass
-class User:
+class User(AggregateRoot):
     id: UserId
     created_at: UserCreatedAt
     email: UserEmail
@@ -26,8 +22,8 @@ class User:
     pronoun: UserPronoun
     password: UserPassword
 
-    def __post_init__(self, *args, **kwargs):
-        self._flush_events()
+    def __str__(self) -> str:
+        return f"[{self.id}] {self.email}"
 
     @classmethod
     def register(
@@ -60,28 +56,3 @@ class User:
             )
         )
         return user
-
-    def pull_domain_events(self) -> List[DomainEvent]:
-        # TODO: Move to AggregateRoot
-        events = self._recorded_events
-        self._flush_events()
-        return events
-
-    def _record_event(self, event: DomainEvent):
-        # TODO: Move to AggregateRoot
-        self._recorded_events.append(event)
-
-    def __str__(self) -> str:
-        return f"[{self.id}] {self.email}"
-
-    def __repr__(self) -> str:
-        return f"<{self.__class__.__name__}('{(self)}')>"
-
-    def __eq__(self, o: object) -> bool:
-        if not isinstance(o, User):
-            return False
-        return self.id == o.id
-
-    def _flush_events(self) -> None:
-        # TODO: Move to AggregateRoot
-        self._recorded_events: List[DomainEvent] = []

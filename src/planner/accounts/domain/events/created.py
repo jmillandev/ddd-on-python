@@ -4,20 +4,21 @@ from src.shared.domain.bus.event.domain_event import DomainEvent
 
 
 @dataclass(frozen=True)
-class UserRegistered(DomainEvent):
-    email: str
-    pronoun: str
+class AccountCreated(DomainEvent):
+    user_id: str
     name: str
-    last_name: str
+    currency: str
+    balance: int
 
     @staticmethod
     def event_name() -> str:
-        return "planner.user.registered"
+        return "planner.account.created"
 
     def payload(self) -> dict:
         return {
-            "email": self.email,
-            "pronoun": self.pronoun,
+            "user_id": self.user_id,
+            "currency": self.currency,
             "name": self.name,
-            "last_name": self.last_name,
+            "balance": self.balance,
         }
+    

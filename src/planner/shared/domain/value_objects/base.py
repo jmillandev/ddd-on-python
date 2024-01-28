@@ -10,6 +10,7 @@ class ValueObject(Generic[T]):
     Base class for value objects
     """
 
+    NAME: str
     BASE_TYPE: Any
     _value: T
 

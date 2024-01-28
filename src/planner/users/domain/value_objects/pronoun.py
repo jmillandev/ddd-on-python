@@ -13,7 +13,7 @@ class Pronoun(str, enum.Enum):
 
 
 class UserPronoun(StringValueObject):
-    NAME = "name"
+    NAME = "pronoun"
 
     def _validate(self, value: str):
         super()._validate(value)

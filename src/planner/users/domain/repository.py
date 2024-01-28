@@ -1,4 +1,4 @@
-from typing import Protocol, runtime_checkable
+from typing import Protocol, runtime_checkable, Optional
 
 from src.planner.shared.domain.users import UserId
 from src.planner.users.domain.entity import User
@@ -10,8 +10,8 @@ class UserRepository(Protocol):
     async def create(self, user: User) -> None:
         ...
 
-    async def search(self, user_id: UserId) -> User:
+    async def search(self, user_id: UserId) -> Optional[User]:
         ...
 
-    async def search_by_email(self, email: UserEmail) -> User:
+    async def search_by_email(self, email: UserEmail) -> Optional[User]:
         ...

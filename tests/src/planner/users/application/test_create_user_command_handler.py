@@ -19,19 +19,14 @@ pytestmark = pytest.mark.anyio
 
 
 class TestCreateUserCommandHandler:
-    def setup(self):
+    def setup_method(self):
         self._repository = Mock(UserRepository)
         self._event_bus = Mock(EventBus)
         use_case = UserRegistrator(self._repository, self._event_bus)
         self.handler = RegisterUserCommandHandler(use_case)
 
-    def should_publish_domain_event(self) -> None:
-        assert self._event_bus.publish.call_count == 1
-        self._event_bus.publish.call_args_list
-
     async def test_should_create_a_user(self) -> None:
         self._repository.search_by_email.return_value = None
-
         params = UserFactory.to_dict()
         user = UserFactory.build(**params)
         command = RegisterUserCommand.from_dict(params)
@@ -48,7 +43,6 @@ class TestCreateUserCommandHandler:
         await self.handler(command)
 
         self._repository.create.assert_called_once_with(user)
-
         self._event_bus.publish.assert_called_once_with(user_registered)
 
     async def test_should_raise_error_email_already_exists(self) -> None:

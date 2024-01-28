@@ -1,18 +1,18 @@
 from typing import Any, Dict, TypeVar
 
-from src.planner.shared.domain.aggregates import RootAggregate
+from src.planner.shared.domain.aggregates import AggregateRoot
 from src.planner.shared.domain.bus.query import QueryResponse
 
-Aggregate = TypeVar("Aggregate", bound=RootAggregate)
+Aggregate = TypeVar("Aggregate", bound=AggregateRoot)
 
 
 def dict_to_entity(data: Dict[str, Any], entity_class: type[Aggregate]) -> Aggregate:
     """Create a Entity from a dict.
-    Used for deserialization of a RootAggregate. Usually used in a Database.
+    Used for deserialization of a AggregateRoot. Usually used in a Database.
 
     Args:
         data (dict[str, Any]): A dict with the attributes of a Entity
-        entity_class (RootAggregate): A Entity class(like User, AuthCredential, etc)
+        entity_class (AggregateRoot): A Entity class(like User, AuthCredential, etc)
 
     Returns:
         Entity
@@ -29,7 +29,7 @@ def dict_to_entity(data: Dict[str, Any], entity_class: type[Aggregate]) -> Aggre
 QR = TypeVar("QR", bound=QueryResponse)
 
 
-def entity_to_response(entity: RootAggregate, response: type[QR]) -> QR:
+def entity_to_response(entity: AggregateRoot, response: type[QR]) -> QR:
     attributes = {
         key: getattr(entity, key).primitive for key in response.__annotations__.keys()
     }
