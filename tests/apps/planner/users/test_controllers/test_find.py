@@ -15,6 +15,19 @@ fake = Faker()
 pytestmark = pytest.mark.anyio
 
 
+class InvalidAuthToken(AuthAsUser):
+    def auth_flow(self, request):
+        request.headers["Authorization"] = f"Bearer {self.auth_token}"
+        yield request
+
+    @property
+    def auth_token(self):
+        return (
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6I"
+            "kpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+        )
+
+
 class TestFindController:
     def setup(self):
         self._user = UserFactory.build()
@@ -51,14 +64,14 @@ class TestFindController:
         assert error_response["msg"] == "Is required"
         assert error_response["source"] == "access_token"
 
-    @pytest.mark.skip(reason="TODO: Use Mock to return a invalid token")
     async def test_should_return_unauthorized_invalid_token(
         self, client: AsyncClient, sqlalchemy_session: AsyncSession
     ) -> None:
         user = UserFactory.build()
 
         response = await client.get(
-            f"{settings.API_PREFIX}/v1/users/{user.id}", auth=AuthAsUser(self._user.id)
+            f"{settings.API_PREFIX}/v1/users/{user.id}",
+            auth=InvalidAuthToken(self._user.id),
         )
 
         assert response.status_code == status.HTTP_401_UNAUTHORIZED, response.text
@@ -66,5 +79,5 @@ class TestFindController:
         json_response = response.json()
         assert len(json_response["detail"]) == 1
         error_response = json_response["detail"][0]
-        assert error_response["msg"] == "Is required"
-        assert error_response["source"] == "access_token"
+        assert error_response["msg"] == "Invalid credentials"
+        assert error_response["source"] == "credentials"
