@@ -16,7 +16,7 @@ pytestmark = pytest.mark.anyio
 
 
 class TestFindUserQueryHandler:
-    def setup(self):
+    def setup_method(self):
         self._repository = Mock(UserRepository)
         use_case = UserFinder(self._repository)
         self.handler = FindUserQueryHandler(use_case)

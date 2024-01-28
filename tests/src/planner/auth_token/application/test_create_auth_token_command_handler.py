@@ -20,7 +20,7 @@ pytestmark = pytest.mark.anyio
 
 
 class TestCreateAuthTokenCommandHandler:
-    def setup(self):
+    def setup_method(self):
         self._repository = Mock(AuthCredentialRepository)
         use_case = AuthTokenCreator(self._repository)
         self.handler = CreateAuthTokenCommandHandler(use_case)

@@ -29,7 +29,7 @@ class InvalidAuthToken(AuthAsUser):
 
 
 class TestFindController:
-    def setup(self):
+    def setup_method(self):
         self._user = UserFactory.build()
 
     async def test_success(

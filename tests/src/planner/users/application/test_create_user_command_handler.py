@@ -19,7 +19,7 @@ pytestmark = pytest.mark.anyio
 
 
 class TestCreateUserCommandHandler:
-    def setup(self):
+    def setup_method(self):
         self._repository = Mock(UserRepository)
         self._event_bus = Mock(EventBus)
         use_case = UserRegistrator(self._repository, self._event_bus)
