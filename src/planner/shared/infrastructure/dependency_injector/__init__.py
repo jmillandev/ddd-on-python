@@ -13,8 +13,8 @@ from src.planner.shared.domain.bus.query import QueryBus
 from src.planner.shared.domain.encryptors.unidirectional import UnidirectionalEncryptor
 from src.planner.shared.infrastructure.bus.command.hardcoded import HardcodedCommandBus
 from src.planner.shared.infrastructure.bus.query.hardcoded import HardcodedQueryBus
-from src.planner.shared.infrastructure.encryptors.unidirectionals.passlib import (
-    PasslibUnidirectionalEncryptor,
+from src.planner.shared.infrastructure.encryptors.unidirectionals.bcrypt import (
+  BcryptUnidirectionalEncryptor
 )
 from src.planner.shared.infrastructure.persistence.sqlalchemy.session import (
     SqlAlchemySession,
@@ -37,7 +37,7 @@ def init():
     ] = lambda _: SqlAlcheamyAuthCredentialRepository()
     di.factories[UserRegistrator] = lambda _: UserRegistrator()
     di.factories[AuthTokenCreator] = lambda _: AuthTokenCreator()
-    di[UnidirectionalEncryptor] = PasslibUnidirectionalEncryptor()
+    di[UnidirectionalEncryptor] = BcryptUnidirectionalEncryptor()
     di[CommandBus] = HardcodedCommandBus()
     di[AuthEncoder] = JoseJwtEncoder()
     di[QueryBus] = HardcodedQueryBus()

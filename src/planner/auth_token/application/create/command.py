@@ -1,9 +1,7 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class CreateAuthTokenCommand(BaseModel):
+    model_config = ConfigDict(frozen=True)
     username: str
     password: str
-
-    class Config:
-        allow_mutation = False

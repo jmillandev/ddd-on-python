@@ -1,11 +1,12 @@
 from os import path
 from typing import List, Union
 
-from pydantic import AnyHttpUrl, field_validator
+from pydantic import AnyHttpUrl, field_validator, ConfigDict
 from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
+    model_config = ConfigDict()
     API_PREFIX: str = "/api"
     PROJECT_NAME: str = "Financial Planner"
     BASE_DIR: str = path.dirname(path.dirname(__file__))
@@ -24,9 +25,6 @@ class Settings(BaseSettings):
         raise ValueError(v)
 
     ENVIROMENT: str = "production"
-
-    class Config:
-        case_sensitive = True
 
 
 settings = Settings()
