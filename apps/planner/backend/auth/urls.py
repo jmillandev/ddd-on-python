@@ -11,6 +11,5 @@ router.add_api_route(
     methods=["POST"],
     response_model=AuthTokenResponse,
     endpoint=sign_in,
-    tags=["auth"],
     status_code=status.HTTP_200_OK,
 )

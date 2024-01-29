@@ -10,7 +10,7 @@ router.add_api_route(
     "/v1/sign-up",
     methods=["POST"],
     endpoint=sign_up,
-    tags=["users"],
+    tags=["auth"],
     status_code=status.HTTP_201_CREATED,
 )
 router.add_api_route(
@@ -18,6 +18,5 @@ router.add_api_route(
     methods=["GET"],
     response_model=UserResponse,
     endpoint=find,
-    tags=["users"],
     status_code=status.HTTP_200_OK,
 )
