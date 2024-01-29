@@ -1,4 +1,4 @@
-from bcrypt import checkpw, hashpw, gensalt
+from bcrypt import checkpw, gensalt, hashpw
 
 
 class BcryptUnidirectionalEncryptor:
@@ -9,4 +9,4 @@ class BcryptUnidirectionalEncryptor:
         # try:
         return checkpw(value.encode(), encrypted_value.encode())
         # except UnknownHashError:
-            # return False
+        # return False

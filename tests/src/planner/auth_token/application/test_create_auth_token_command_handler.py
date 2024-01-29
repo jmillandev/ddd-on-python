@@ -26,7 +26,7 @@ class TestCreateAuthTokenCommandHandler:
         self.handler = CreateAuthTokenCommandHandler(use_case)
 
     async def test_should_create_a_token(self) -> None:
-        params = AuthCredentialFactory.to_dict()
+        params = AuthCredentialFactory().to_dict()
         credential = AuthCredentialFactory.build(**params)
         self._repository.search.return_value = credential
         command = CreateAuthTokenCommand(**params)
@@ -39,7 +39,7 @@ class TestCreateAuthTokenCommandHandler:
         assert token.user_id == credential.user_id.primitive
 
     async def test_should_raise_error_invalid_username(self) -> None:
-        params = AuthCredentialFactory.to_dict()
+        params = AuthCredentialFactory().to_dict()
         command = CreateAuthTokenCommand(**params)
         self._repository.search.return_value = None
 
@@ -50,7 +50,7 @@ class TestCreateAuthTokenCommandHandler:
         assert excinfo.value.source == "credentials"
 
     async def test_should_raise_error_invalid_password(self, fake) -> None:
-        params = AuthCredentialFactory.to_dict()
+        params = AuthCredentialFactory().to_dict()
         command = CreateAuthTokenCommand(**params)
         params.update(password=fake.password())
         self._repository.search.return_value = AuthCredentialFactory.build(**params)

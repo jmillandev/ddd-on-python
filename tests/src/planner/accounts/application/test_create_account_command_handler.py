@@ -18,13 +18,14 @@ from tests.src.planner.accounts.factories import AccountFactory
 
 pytestmark = pytest.mark.anyio
 
+
 class TestCreateAccountCommandHandler:
     def setup_method(self):
         self._repository = Mock(AccountRepository)
         self._event_bus = Mock(EventBus)
         use_case = AccountCreator(self._repository, self._event_bus)
         self.handler = CreateAccountCommandHandler(use_case)
-    
+
     async def test_should_create_an_account(self) -> None:
         self._repository.search_by_name_and_user_id.return_value = None
         params = AccountFactory().to_dict()
@@ -47,7 +48,9 @@ class TestCreateAccountCommandHandler:
 
     async def test_should_raise_error_name_already_registered(self) -> None:
         params = AccountFactory().to_dict()
-        self._repository.search_by_name_and_user_id.return_value = AccountFactory.build(**params)
+        self._repository.search_by_name_and_user_id.return_value = AccountFactory.build(
+            **params
+        )
         command = CreateAccountCommand.from_dict(params)
 
         with pytest.raises(NameAlreadyRegistered) as excinfo:

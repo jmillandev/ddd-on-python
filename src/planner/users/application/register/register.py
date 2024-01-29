@@ -27,7 +27,7 @@ class UserRegistrator:
         name: UserName,
         last_name: UserLastName,
         pronoun: UserPronoun,
-        password: UserPassword
+        password: UserPassword,
     ) -> None:
         user = await self._repository.search_by_email(email)
         if user:

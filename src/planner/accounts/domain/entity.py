@@ -5,10 +5,11 @@ from src.planner.accounts.domain.value_objects import (
     AccountId,
     AccountName,
 )
-from src.planner.shared.domain.aggregates import AggregateRoot
+from src.planner.shared.domain.aggregates import AggregateRoot, aggregate_dataclass
 from src.planner.shared.domain.users import UserId
 
 
+@aggregate_dataclass
 class Account(AggregateRoot):
     id: AccountId
     user_id: UserId
@@ -20,13 +21,17 @@ class Account(AggregateRoot):
         return f"[{self.id}] {self.name}"
 
     @classmethod
-    def create(cls, 
-            id: AccountId,
-            user_id: UserId,
-            name: AccountName,
-            currency: AccountCurrency,
-            balance: AccountBalance):
-        account = cls(id=id, user_id=user_id, name=name, currency=currency, balance=balance)
+    def create(
+        cls,
+        id: AccountId,
+        user_id: UserId,
+        name: AccountName,
+        currency: AccountCurrency,
+        balance: AccountBalance,
+    ):
+        account = cls(
+            id=id, user_id=user_id, name=name, currency=currency, balance=balance
+        )
         account._record_event(
             AccountCreated.make(
                 account.id.value,

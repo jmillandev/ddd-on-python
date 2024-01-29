@@ -9,7 +9,7 @@ from src.planner.shared.domain.aggregates import AggregateRoot
 class Base:
     @classmethod
     def from_entity(cls, entity: AggregateRoot) -> "Base":
-        data = asdict(entity)
+        data = asdict(entity)  # type: ignore[call-overload]
         for key in data:
             data[key] = data[key].primitive
         return cls(**data)

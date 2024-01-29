@@ -1,19 +1,23 @@
 from abc import ABCMeta, abstractmethod
-from typing import List
+from dataclasses import dataclass as _dataclass
+from typing import List, dataclass_transform
+
 from src.shared.domain.bus.event.domain_event import DomainEvent
-from dataclasses import dataclass
+
+
+@dataclass_transform()
+def aggregate_dataclass(cls):
+    """Decorator that applies dataclass_transform to all fields of the class"""
+
+    def wrap(cls):
+        return _dataclass(cls, eq=False, repr=False)
+
+    return wrap(cls)
 
 
 class AggregateRoot(metaclass=ABCMeta):
-
-    def __init_subclass__(cls, **kwargs):
-        """Apply dataclass decorator to all of subclasses 
-        """  
-        return dataclass(cls, eq=False, repr=False)
-
     def __post_init__(self, *args, **kwargs):
-        """Dataclass Method used instead __init__
-        """
+        """Dataclass Method used instead __init__"""
         self._flush_events()
 
     def pull_domain_events(self) -> List[DomainEvent]:
@@ -30,7 +34,7 @@ class AggregateRoot(metaclass=ABCMeta):
     def __eq__(self, o: object) -> bool:
         if not isinstance(o, self.__class__):
             return False
-        return self.id == o.id
+        return self.id == o.id  # type: ignore[attr-defined]
 
     def _flush_events(self) -> None:
         self._recorded_events: List[DomainEvent] = []

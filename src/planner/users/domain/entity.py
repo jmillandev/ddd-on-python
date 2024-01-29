@@ -1,3 +1,4 @@
+from src.planner.shared.domain.aggregates import AggregateRoot, aggregate_dataclass
 from src.planner.shared.domain.users import UserId
 from src.planner.users.domain.events.registered import UserRegistered
 from src.planner.users.domain.value_objects import (
@@ -9,9 +10,9 @@ from src.planner.users.domain.value_objects import (
     UserPassword,
     UserPronoun,
 )
-from src.planner.shared.domain.aggregates import AggregateRoot
 
 
+@aggregate_dataclass
 class User(AggregateRoot):
     id: UserId
     created_at: UserCreatedAt
@@ -34,7 +35,7 @@ class User(AggregateRoot):
         last_name: UserLastName,
         pronoun: UserPronoun,
         password: UserPassword,
-    ):
+    ) -> "User":
         user = cls(
             id=id,
             created_at=UserCreatedAt.now(),

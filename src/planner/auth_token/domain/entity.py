@@ -10,12 +10,13 @@ from src.planner.auth_token.domain.value_objects import (
     AuthPassword,
     AuthUsername,
 )
+from src.planner.shared.domain.aggregates import AggregateRoot
 from src.planner.shared.domain.users import UserId
 
 
 @inject
 @dataclass
-class AuthToken:
+class AuthToken(AggregateRoot):
     access_token: AuthAccessToken
     user_id: UserId
     expires_at: AuthExpiresAt
@@ -42,9 +43,15 @@ class AuthToken:
     def payload(self) -> dict[str, Any]:
         return {"sub": self.user_id.primitive, "exp": self.expires_at.primitive}
 
+    def __str__(self) -> str:
+        return f"[{self.user_id}] {self.access_token}"
+
 
 @dataclass
-class AuthCredential:
+class AuthCredential(AggregateRoot):
     user_id: UserId
     username: AuthUsername
     password: AuthPassword
+
+    def __str__(self) -> str:
+        return f"[{self.user_id}] {self.username}"

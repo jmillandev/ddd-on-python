@@ -21,4 +21,3 @@ class AccountCreated(DomainEvent):
             "name": self.name,
             "balance": self.balance,
         }
-    

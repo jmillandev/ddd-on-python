@@ -1,11 +1,11 @@
 from typing import Optional
 
-from pydantic import PostgresDsn, ValidationInfo, field_validator, ConfigDict
-from pydantic_settings import BaseSettings
+from pydantic import PostgresDsn, ValidationInfo, field_validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    model_config = ConfigDict()
+    model_config = SettingsConfigDict(case_sensitive=True)
     POSTGRES_SERVER: str
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str

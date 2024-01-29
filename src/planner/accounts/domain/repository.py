@@ -1,7 +1,7 @@
-from typing import Protocol, runtime_checkable, Optional
+from typing import Optional, Protocol, runtime_checkable
 
-from src.planner.accounts.domain.value_objects import AccountId, AccountName
 from src.planner.accounts.domain.entity import Account
+from src.planner.accounts.domain.value_objects import AccountId, AccountName
 from src.planner.shared.domain.users.id import UserId
 
 
@@ -13,5 +13,7 @@ class AccountRepository(Protocol):
     async def search(self, account_id: AccountId) -> Optional[Account]:
         ...
 
-    async def search_by_name_and_user_id(self, name: AccountName, user_id: UserId) -> Optional[Account]:
+    async def search_by_name_and_user_id(
+        self, name: AccountName, user_id: UserId
+    ) -> Optional[Account]:
         ...

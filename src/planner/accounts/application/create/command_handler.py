@@ -23,5 +23,5 @@ class CreateAccountCommandHandler:
             user_id=UserId(command.user_id),
             name=AccountName(command.name),
             currency=AccountCurrency(command.currency),
-            balance=AccountBalance(command.balance)
+            balance=AccountBalance(command.balance),
         )

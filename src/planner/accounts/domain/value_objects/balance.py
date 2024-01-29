@@ -1,5 +1,6 @@
 from src.planner.shared.domain.value_objects.integer import IntegerValueObject
 
+
 class AccountBalance(IntegerValueObject):
     NAME = "balance"
 

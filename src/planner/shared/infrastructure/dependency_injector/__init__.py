@@ -14,7 +14,7 @@ from src.planner.shared.domain.encryptors.unidirectional import UnidirectionalEn
 from src.planner.shared.infrastructure.bus.command.hardcoded import HardcodedCommandBus
 from src.planner.shared.infrastructure.bus.query.hardcoded import HardcodedQueryBus
 from src.planner.shared.infrastructure.encryptors.unidirectionals.bcrypt import (
-  BcryptUnidirectionalEncryptor
+    BcryptUnidirectionalEncryptor,
 )
 from src.planner.shared.infrastructure.persistence.sqlalchemy.session import (
     SqlAlchemySession,

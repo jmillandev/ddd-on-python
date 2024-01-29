@@ -1,1 +1,1 @@
-from .created import AccountCreated
+from .created import AccountCreated  # noqa: F401

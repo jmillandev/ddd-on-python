@@ -1,4 +1,4 @@
-from typing import Protocol, runtime_checkable, Optional
+from typing import Optional, Protocol, runtime_checkable
 
 from src.planner.shared.domain.users import UserId
 from src.planner.users.domain.entity import User
