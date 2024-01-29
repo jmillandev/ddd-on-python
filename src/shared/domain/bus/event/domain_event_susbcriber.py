@@ -5,7 +5,7 @@ from .domain_event import DomainEvent
 
 @runtime_checkable
 class DomainEventSubscriber(Protocol):
-    async def __call__(self, domain_event: DomainEvent) -> None:
+    async def __call__(self, event: DomainEvent) -> None:
         ...
 
     @staticmethod

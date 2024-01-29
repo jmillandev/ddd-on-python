@@ -1,20 +1,36 @@
 FROM python:3.11.2-slim-buster
 
+ARG USERNAME=developer
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
 WORKDIR /usr/src/app
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# Update system and install base dependencies 
-RUN apt-get update && apt-get -y install gcc \
+# Create the user
+RUN groupadd --gid $USER_GID $USERNAME \
+  && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+  # Update system and install base dependencies 
+  && apt-get update && apt-get -y install gcc \
   # Network utilities
   netcat curl \
   # Database dependencies
   postgresql \
   # Makefiles
   make \
+  # Superuser
+  sudo \
   # Cleaning
-  && apt-get clean
+  && apt-get clean \
+  # Add sudo support
+  && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+  && chmod 0440 /etc/sudoers.d/$USERNAME \
+  # Add bin folder to PATH
+  && echo "export PATH=$PATH:/home/$USERNAME/.local/bin" >> /home/$USERNAME/.bashrc
+
+USER $USERNAME
 
 # install python dependencies
 RUN pip install --upgrade pip

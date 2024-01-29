@@ -1,6 +1,6 @@
 from src.planner.shared.domain.aggregates import AggregateRoot, aggregate_dataclass
 from src.planner.shared.domain.users import UserId
-from src.planner.users.domain.events.registered import UserRegistered
+from src.planner.shared.domain.users.events import UserRegistered
 from src.planner.users.domain.value_objects import (
     UserCreatedAt,
     UserEmail,
