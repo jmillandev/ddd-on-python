@@ -1,6 +1,9 @@
 from kink import di
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.planner.accounts.application.create.creator import AccountCreator
+from src.planner.accounts.domain.repository import AccountRepository
+from src.planner.accounts.infraestructure.repositories.sqlalchemy import SqlAlcheamyAccountRepository
 from src.planner.auth_token.application.create.creator import AuthTokenCreator
 from src.planner.auth_token.domain.encoder import AuthEncoder
 from src.planner.auth_token.domain.repository import AuthCredentialRepository
@@ -31,14 +34,21 @@ from .event_bus import start_event_bus
 
 def init():
     di.factories[AsyncSession] = lambda _: SqlAlchemySession()
-    di.factories[UserRepository] = lambda _: SqlAlcheamyUserRepository()
+    di[CommandBus] = HardcodedCommandBus()
+    di[QueryBus] = HardcodedQueryBus()
+    di[EventBus] = start_event_bus()
+
+    # Auth
+    di[AuthEncoder] = JoseJwtEncoder()
+    di.factories[AuthTokenCreator] = lambda _: AuthTokenCreator()
     di.factories[
         AuthCredentialRepository
     ] = lambda _: SqlAlcheamyAuthCredentialRepository()
+    # Accounts
+    di.factories[AccountCreator] = lambda _: AccountCreator()
+    di.factories[AccountRepository] = lambda _: SqlAlcheamyAccountRepository()
+
+    # Users
+    di.factories[UserRepository] = lambda _: SqlAlcheamyUserRepository()
     di.factories[UserRegistrator] = lambda _: UserRegistrator()
-    di.factories[AuthTokenCreator] = lambda _: AuthTokenCreator()
     di[UnidirectionalEncryptor] = BcryptUnidirectionalEncryptor()
-    di[CommandBus] = HardcodedCommandBus()
-    di[AuthEncoder] = JoseJwtEncoder()
-    di[QueryBus] = HardcodedQueryBus()
-    di[EventBus] = start_event_bus()

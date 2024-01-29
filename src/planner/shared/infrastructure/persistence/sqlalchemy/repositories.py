@@ -48,14 +48,9 @@ class SqlAlcheamyCreateMixin(Generic[ModelType]):
         return None
 
 
-class SqlAlcheamyFindMixin(Generic[Aggregate]):
+class SqlAlcheamySearchMethodMixin(Generic[Aggregate]):
     session: AsyncSession
     entity_class: type[Aggregate]
-
-    async def search(self, id: UuidValueObject) -> Optional[Aggregate]:
-        """Search object by id"""
-        stmt = select(self.model_class).where(self.model_class.id == id.value).limit(1)  # type: ignore[attr-defined] # noqa: E501
-        return await self._search(stmt)
 
     async def _search(self, stmt: Select) -> Optional[Aggregate]:
         """Search object by select statement"""
@@ -64,6 +59,14 @@ class SqlAlcheamyFindMixin(Generic[Aggregate]):
         if data:
             return dict_to_entity(data.to_dict(), self.entity_class)
         return None
+
+
+class SqlAlcheamyFindMixin(SqlAlcheamySearchMethodMixin):
+
+    async def search(self, id: UuidValueObject) -> Optional[Aggregate]:
+        """Search object by id"""
+        stmt = select(self.model_class).where(self.model_class.id == id.value).limit(1)  # type: ignore[attr-defined] # noqa: E501
+        return await self._search(stmt)
 
 
 # class SqlAlcheamyGetAllMixin:

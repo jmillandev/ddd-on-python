@@ -14,11 +14,12 @@ from src.planner.shared.domain.users import UserId
 from src.planner.shared.domain.users.events import UserRegistered
 from src.shared.domain.bus.event.domain_event import DomainEvent
 
-from .creator import AccountCreator
+from ..creator import AccountCreator
+from src.shared.domain.bus.event.domain_event_susbcriber import DomainEventSubscriber
 
 
 @inject
-class CreateAccountOnUserRegistered:
+class CreateAccountOnUserRegistered(DomainEventSubscriber):
     def __init__(self, user_case: AccountCreator) -> None:
         self.user_case = user_case
 

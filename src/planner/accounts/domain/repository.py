@@ -10,9 +10,6 @@ class AccountRepository(Protocol):
     async def create(self, account: Account) -> None:
         ...
 
-    async def search(self, account_id: AccountId) -> Optional[Account]:
-        ...
-
     async def search_by_name_and_user_id(
         self, name: AccountName, user_id: UserId
     ) -> Optional[Account]:
