@@ -1,3 +1,5 @@
+from kink import inject
+
 from src.planner.accounts.domain.entity import Account
 from src.planner.accounts.domain.exceptions.name_already_registered import (
     NameAlreadyRegistered,
@@ -9,7 +11,6 @@ from src.planner.accounts.domain.value_objects import (
     AccountId,
     AccountName,
 )
-from kink import inject
 from src.planner.shared.domain.users import UserId
 from src.shared.domain.bus.event.event_bus import EventBus
 

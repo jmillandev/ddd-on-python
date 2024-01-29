@@ -61,7 +61,9 @@ class SqlAlcheamySearchMethodMixin(Generic[Aggregate]):
         return None
 
 
-class SqlAlcheamyFindMixin(SqlAlcheamySearchMethodMixin):
+class SqlAlcheamyFindMixin(SqlAlcheamySearchMethodMixin, Generic[Aggregate]):
+    session: AsyncSession
+    entity_class: type[Aggregate]
 
     async def search(self, id: UuidValueObject) -> Optional[Aggregate]:
         """Search object by id"""

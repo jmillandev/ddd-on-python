@@ -7,7 +7,7 @@ from src.shared.domain.bus.event.domain_event_susbcriber import DomainEventSubsc
 
 
 class InMemoryEventBus:
-    _subscriptions: Dict[str, Set[DomainEventSubscriber]]
+    _subscriptions: Dict[str, Set[type[DomainEventSubscriber]]]
 
     def __init__(self, subscribers: Set[type[DomainEventSubscriber]]) -> None:
         self._subscriptions = defaultdict(set)

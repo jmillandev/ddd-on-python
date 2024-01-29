@@ -1,1 +1,3 @@
-from .create_account_on_user_registered import CreateAccountOnUserRegistered  # noqa: F401
+from .create_account_on_user_registered import (  # noqa: F401
+    CreateAccountOnUserRegistered,
+)

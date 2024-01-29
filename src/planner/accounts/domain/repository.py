@@ -1,7 +1,7 @@
 from typing import Optional, Protocol, runtime_checkable
 
 from src.planner.accounts.domain.entity import Account
-from src.planner.accounts.domain.value_objects import AccountId, AccountName
+from src.planner.accounts.domain.value_objects import AccountName
 from src.planner.shared.domain.users.id import UserId
 
 
