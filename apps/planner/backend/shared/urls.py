@@ -1,7 +1,7 @@
 import os
 
 from fastapi import APIRouter, Response
-
+from importlib import import_module
 router = APIRouter()
 
 
@@ -17,8 +17,8 @@ for module in os.listdir("apps/planner/backend"):
     if module in ["shared"]:
         continue
     try:
-        module = __import__(f"apps.planner.backend.{module}.urls", fromlist=["router"])  # type: ignore[assignment] # noqa: E501
+        urls = import_module(f"apps.planner.backend.{module}.urls")
     except ImportError:
         continue
 
-    router.include_router(module.router, tags=[module])  # type: ignore[attr-defined]
+    router.include_router(urls.router, tags=[module])

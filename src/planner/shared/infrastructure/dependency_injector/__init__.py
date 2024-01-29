@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.planner.accounts.application.create.creator import AccountCreator
 from src.planner.accounts.domain.repository import AccountRepository
-from src.planner.accounts.infraestructure.repositories.sqlalchemy import SqlAlcheamyAccountRepository
+from src.planner.accounts.infrastructure.repositories.sqlalchemy import SqlAlcheamyAccountRepository
 from src.planner.auth_token.application.create.creator import AuthTokenCreator
 from src.planner.auth_token.domain.encoder import AuthEncoder
 from src.planner.auth_token.domain.repository import AuthCredentialRepository

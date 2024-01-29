@@ -1,8 +1,9 @@
 from dataclasses import dataclass
+from pydantic import BaseModel, ConfigDict
 
 
-@dataclass(frozen=True)
-class AuthTokenResponse:
+class AuthTokenResponse(BaseModel):
+    model_config = ConfigDict()
     access_token: str
     expires_at: int
     user_id: str

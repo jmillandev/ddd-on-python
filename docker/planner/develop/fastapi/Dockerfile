@@ -8,6 +8,7 @@ WORKDIR /usr/src/app
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV PATH="${PATH}:/home/$USERNAME/.local/bin"
 
 # Create the user
 RUN groupadd --gid $USER_GID $USERNAME \
@@ -26,9 +27,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
   && apt-get clean \
   # Add sudo support
   && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
-  && chmod 0440 /etc/sudoers.d/$USERNAME \
-  # Add bin folder to PATH
-  && echo "export PATH=$PATH:/home/$USERNAME/.local/bin" >> /home/$USERNAME/.bashrc
+  && chmod 0440 /etc/sudoers.d/$USERNAME
 
 USER $USERNAME
 
