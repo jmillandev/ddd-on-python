@@ -16,11 +16,13 @@ from src.planner.auth_token.infrastructure.repositories.sqlalchemy import (
 from src.planner.shared.domain.bus.command import CommandBus
 from src.planner.shared.domain.bus.query import QueryBus
 from src.planner.shared.domain.encryptors.unidirectional import UnidirectionalEncryptor
+from src.planner.shared.domain.generators.uuid import UuidGenerator
 from src.planner.shared.infrastructure.bus.command.hardcoded import HardcodedCommandBus
 from src.planner.shared.infrastructure.bus.query.hardcoded import HardcodedQueryBus
 from src.planner.shared.infrastructure.encryptors.unidirectionals.bcrypt import (
     BcryptUnidirectionalEncryptor,
 )
+from src.planner.shared.infrastructure.generators.uuid.native import Uuid4Generator
 from src.planner.shared.infrastructure.persistence.sqlalchemy.session import (
     SqlAlchemySession,
 )
@@ -30,8 +32,6 @@ from src.planner.users.infrastructure.repositories.sqlalchemy import (
     SqlAlcheamyUserRepository,
 )
 from src.shared.domain.bus.event.event_bus import EventBus
-from src.planner.shared.domain.generators.uuid import UuidGenerator
-from src.planner.shared.infrastructure.generators.uuid.native import Uuid4Generator
 
 from .event_bus import start_event_bus
 

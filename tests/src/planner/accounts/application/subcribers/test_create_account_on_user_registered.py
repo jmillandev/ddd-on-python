@@ -9,17 +9,16 @@ from src.planner.accounts.application.create.subscribers.create_account_on_user_
 )
 from src.planner.accounts.domain.events.created import AccountCreated
 from src.planner.accounts.domain.repository import AccountRepository
+from src.planner.shared.domain.generators.uuid import UuidGenerator
 from src.planner.shared.domain.users.events import UserRegistered
 from src.shared.domain.bus.event.event_bus import EventBus
 from tests.src.planner.accounts.factories import AccountFactory
-from src.planner.shared.domain.generators.uuid import UuidGenerator
 
 faker = Faker()
 pytestmark = pytest.mark.anyio
 
 
 class TestCreateAccountOnUserRegistered:
-
     def setup_method(self):
         self._repository = Mock(AccountRepository)
         self._event_bus = Mock(EventBus)
@@ -31,7 +30,7 @@ class TestCreateAccountOnUserRegistered:
             name=faker.name(),
             email=faker.email(),
             last_name=faker.last_name(),
-            pronoun=faker.word()
+            pronoun=faker.word(),
         )
         self.subscriber = CreateAccountOnUserRegistered(use_case, self.uuid_generator)
 
@@ -41,10 +40,10 @@ class TestCreateAccountOnUserRegistered:
         self.uuid_generator.return_value = uuid
         account = AccountFactory.build(
             id=uuid,
-            name='Main',
-            currency='USD',
+            name="Main",
+            currency="USD",
             user_id=self.event.aggregate_id,
-            balance=0   
+            balance=0,
         )
         account_created = AccountCreated.make(
             account.id.primitive,

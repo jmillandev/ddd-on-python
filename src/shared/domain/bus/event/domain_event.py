@@ -3,7 +3,7 @@ from calendar import timegm
 from dataclasses import dataclass
 from time import gmtime
 from typing import Optional, Union
-from uuid import UUID, uuid4
+from uuid import uuid4
 
 
 @dataclass(frozen=True)

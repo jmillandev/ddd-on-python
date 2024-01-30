@@ -1,5 +1,5 @@
-from uuid import UUID
 from typing import Protocol
+from uuid import UUID
 
 
 class UuidGenerator(Protocol):

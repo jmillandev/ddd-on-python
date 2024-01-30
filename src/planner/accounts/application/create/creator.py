@@ -29,9 +29,7 @@ class AccountCreator:
         currency: AccountCurrency,
         balance: AccountBalance,
     ) -> None:
-        if await self._repository.search_by_name_and_user_id(
-            name, user_id
-        ):
+        if await self._repository.search_by_name_and_user_id(name, user_id):
             raise NameAlreadyRegistered(name)
 
         account = Account.create(id, user_id, name, currency, balance)

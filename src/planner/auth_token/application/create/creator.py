@@ -9,9 +9,15 @@ from src.planner.auth_token.domain.repository import AuthCredentialRepository
 from src.planner.auth_token.domain.value_objects import AuthPassword, AuthUsername
 from src.shared.domain.bus.event.event_bus import EventBus
 
+
 @inject
 class AuthTokenCreator:
-    def __init__(self, repository: AuthCredentialRepository, event_bus: EventBus, encoder: AuthEncoder):
+    def __init__(
+        self,
+        repository: AuthCredentialRepository,
+        event_bus: EventBus,
+        encoder: AuthEncoder,
+    ):
         self._repository = repository
         self._encoder = encoder
         self._event_bus = event_bus
