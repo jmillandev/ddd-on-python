@@ -20,6 +20,7 @@ from ..creator import AccountCreator
 
 @inject
 class CreateAccountOnUserRegistered(DomainEventSubscriber):
+    # TODO: Add test case
     def __init__(self, user_case: AccountCreator) -> None:
         self.user_case = user_case
 
