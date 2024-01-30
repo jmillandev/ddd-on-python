@@ -1,10 +1,11 @@
-from typing import ClassVar, Dict, Protocol, runtime_checkable
+from abc import ABCMeta, abstractmethod
+from typing import Protocol, runtime_checkable
 
 
-@runtime_checkable
-class Command(Protocol):
-    # TODO: Change to Abstract Class
-    __dataclass_fields__: ClassVar[Dict]
+class Command(metaclass=ABCMeta):
+    @abstractmethod
+    def __init__(self) -> None:
+        """Overwrite this methos using @dataclass"""
 
     @classmethod
     def from_dict(cls, data: dict):

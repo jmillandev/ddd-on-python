@@ -7,21 +7,19 @@ from src.planner.auth_token.domain.exceptions.invalid_credentials import (
 )
 from src.planner.auth_token.domain.repository import AuthCredentialRepository
 from src.planner.auth_token.domain.value_objects import AuthPassword, AuthUsername
-
+from src.shared.domain.bus.event.event_bus import EventBus
 
 @inject
 class AuthTokenCreator:
-    def __init__(self, repository: AuthCredentialRepository, encoder: AuthEncoder):
+    def __init__(self, repository: AuthCredentialRepository, event_bus: EventBus, encoder: AuthEncoder):
         self._repository = repository
         self._encoder = encoder
-        # TODO-Events: add event bus
-        # self._event_bus = EventBus()
+        self._event_bus = event_bus
 
     async def __call__(
         self, username: AuthUsername, password: AuthPassword
     ) -> AuthToken:
         credential = await self._repository.search(username)
-        # TODO: Use QueryBus instead Repository? https://pro.codely.com/library/cqrs-command-query-responsibility-segregation-29074/62554/path/step/33532843/discussion/79379/  # noqa:E501
         if not credential or credential.password != password:
             raise InvalidCredentials()
 

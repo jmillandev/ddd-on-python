@@ -2,12 +2,11 @@ import pytest
 from faker import Faker
 from fastapi import status
 from httpx import AsyncClient
+from kink import di
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from apps.planner.backend.config import settings
-from src.planner.users.infrastructure.repositories.sqlalchemy import (
-    SqlAlcheamyUserRepository,
-)
+from src.planner.users.domain.repository import UserRepository
 from tests.src.planner.users.factories import UserFactory
 
 fake = Faker()
@@ -19,10 +18,8 @@ async def test_success_login(
     client: AsyncClient, fake, sqlalchemy_session: AsyncSession
 ) -> None:
     password = fake.password()
-    # TODO: Create DB table for Credentials
     user = UserFactory.build(password=password)
-    # TODO: Use dependency injection instead of repository implementation
-    await SqlAlcheamyUserRepository(sqlalchemy_session).create(user)
+    await di[UserRepository].create(user)  # type:ignore [type-abstract]
     params = {
         "username": user.email.value,
         "password": password,

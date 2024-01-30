@@ -32,7 +32,7 @@ class TestCreateUserCommandHandler:
         command = RegisterUserCommand.from_dict(params)
         # TODO: Use Factory Pattern
         user_registered = UserRegistered.make(
-            user.id.value,
+            user.id.primitive,
             event_id=ANY,
             ocurrend_at=ANY,
             email=user.email.primitive,

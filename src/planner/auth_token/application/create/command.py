@@ -1,7 +1,9 @@
-from pydantic import BaseModel, ConfigDict
+from dataclasses import dataclass
+
+from src.planner.shared.domain.bus.command import Command
 
 
-class CreateAuthTokenCommand(BaseModel):
-    model_config = ConfigDict(frozen=True)
+@dataclass(frozen=True)
+class CreateAuthTokenCommand(Command):
     username: str
     password: str

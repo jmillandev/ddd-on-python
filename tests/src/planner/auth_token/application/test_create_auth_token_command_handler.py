@@ -29,7 +29,7 @@ class TestCreateAuthTokenCommandHandler:
         params = AuthCredentialFactory().to_dict()
         credential = AuthCredentialFactory.build(**params)
         self._repository.search.return_value = credential
-        command = CreateAuthTokenCommand(**params)
+        command = CreateAuthTokenCommand.from_dict(params)
 
         token = await self.handler(command)
         assert isinstance(token, AuthTokenResponse)
@@ -40,7 +40,7 @@ class TestCreateAuthTokenCommandHandler:
 
     async def test_should_raise_error_invalid_username(self) -> None:
         params = AuthCredentialFactory().to_dict()
-        command = CreateAuthTokenCommand(**params)
+        command = CreateAuthTokenCommand.from_dict(params)
         self._repository.search.return_value = None
 
         with pytest.raises(InvalidCredentials) as excinfo:
@@ -51,7 +51,7 @@ class TestCreateAuthTokenCommandHandler:
 
     async def test_should_raise_error_invalid_password(self, fake) -> None:
         params = AuthCredentialFactory().to_dict()
-        command = CreateAuthTokenCommand(**params)
+        command = CreateAuthTokenCommand.from_dict(params)
         params.update(password=fake.password())
         self._repository.search.return_value = AuthCredentialFactory.build(**params)
 

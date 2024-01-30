@@ -8,8 +8,8 @@ from uuid import UUID, uuid4
 
 @dataclass(frozen=True)
 class DomainEvent(metaclass=ABCMeta):
-    aggregate_id: UUID
-    event_id: UUID
+    aggregate_id: str
+    event_id: str
     ocurrend_at: int
 
     @staticmethod
@@ -24,14 +24,14 @@ class DomainEvent(metaclass=ABCMeta):
     @classmethod
     def make(
         cls,
-        aggregate_id: UUID,
-        event_id: Optional[UUID] = None,
+        aggregate_id: str,
+        event_id: Optional[str] = None,
         ocurrend_at: Optional[int] = None,
         **attrs: Union[str, int, bool]
     ) -> "DomainEvent":
         return cls(
             aggregate_id=aggregate_id,
-            event_id=event_id or uuid4(),
+            event_id=event_id or str(uuid4()),
             ocurrend_at=ocurrend_at or timegm(gmtime()),
             **attrs
         )

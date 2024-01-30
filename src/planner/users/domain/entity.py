@@ -48,7 +48,7 @@ class User(AggregateRoot):
         )
         user._record_event(
             UserRegistered.make(
-                user.id.value,
+                user.id.primitive,
                 ocurrend_at=user.created_at.primitive,
                 email=user.email.primitive,
                 pronoun=user.pronoun.primitive,

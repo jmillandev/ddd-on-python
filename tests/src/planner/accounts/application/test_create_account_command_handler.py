@@ -32,10 +32,10 @@ class TestCreateAccountCommandHandler:
         account = AccountFactory.build(**params)
         command = CreateAccountCommand.from_dict(params)
         account_created = AccountCreated.make(
-            account.id.value,
+            account.id.primitive,
             event_id=ANY,
             ocurrend_at=ANY,
-            user_id=account.user_id.value,
+            user_id=account.user_id.primitive,
             name=account.name.primitive,
             currency=account.currency.primitive,
             balance=account.balance.primitive,

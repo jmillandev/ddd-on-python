@@ -34,8 +34,8 @@ class Account(AggregateRoot):
         )
         account._record_event(
             AccountCreated.make(
-                account.id.value,
-                user_id=account.user_id.value,
+                account.id.primitive,
+                user_id=account.user_id.primitive,
                 name=account.name.primitive,
                 currency=account.currency.primitive,
                 balance=account.balance.primitive,

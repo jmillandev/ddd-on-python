@@ -31,7 +31,7 @@ class AccountCreator:
     ) -> None:
         if await self._repository.search_by_name_and_user_id(
             name, user_id
-        ):  # TODO: Implement Criteria
+        ):
             raise NameAlreadyRegistered(name)
 
         account = Account.create(id, user_id, name, currency, balance)

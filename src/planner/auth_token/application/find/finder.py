@@ -13,8 +13,6 @@ from src.planner.shared.domain.users import UserId
 class AuthTokenFinder:
     def __init__(self, encoder: AuthEncoder):
         self._encoder = encoder
-        # TODO-Events: add event bus
-        # self._event_bus = EventBus()
 
     async def __call__(self, access_token: AuthAccessToken) -> AuthToken:
         payload = self._encoder.decode(access_token.primitive)

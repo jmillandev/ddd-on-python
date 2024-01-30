@@ -30,6 +30,8 @@ from src.planner.users.infrastructure.repositories.sqlalchemy import (
     SqlAlcheamyUserRepository,
 )
 from src.shared.domain.bus.event.event_bus import EventBus
+from src.planner.shared.domain.generators.uuid import UuidGenerator
+from src.planner.shared.infrastructure.generators.uuid.native import Uuid4Generator
 
 from .event_bus import start_event_bus
 
@@ -39,6 +41,7 @@ def init():
     di[CommandBus] = HardcodedCommandBus()
     di[QueryBus] = HardcodedQueryBus()
     di[EventBus] = start_event_bus()
+    di[UuidGenerator] = Uuid4Generator()
 
     # Auth
     di[AuthEncoder] = JoseJwtEncoder()
