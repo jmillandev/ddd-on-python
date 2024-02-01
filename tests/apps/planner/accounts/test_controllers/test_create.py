@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from apps.planner.backend.config import settings
 from src.planner.users.domain.repository import UserRepository
 from tests.apps.planner.shared.auth import AuthAsUser
-from tests.src.planner.accounts.factories import AccountFactory
+from tests.src.planner.shared.factories.accounts import AccountFactory
 from tests.src.planner.users.factories import UserFactory
 
 fake = Faker()

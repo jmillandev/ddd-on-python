@@ -17,7 +17,7 @@ depends_on = None
 
 def upgrade() -> None:
     op.create_table(
-        "users",
+        "planner__users",
         sa.Column("email", sa.String(length=50), nullable=False),
         sa.Column("name", sa.String(length=50), nullable=False),
         sa.Column("last_name", sa.String(length=50), nullable=False),
@@ -39,17 +39,17 @@ def upgrade() -> None:
         ),
         sa.PrimaryKeyConstraint("id"),
     )
-    op.create_index(op.f("ix_auth_credentials_username"), "users", ["email"])
+    op.create_index(op.f("ix_auth_credentials_username"), "planner__users", ["email"])
     op.execute(
         """
         CREATE VIEW auth_credentials AS
-            SELECT users.email as username, users.password, users.id as user_id
-            FROM users; 
+            SELECT planner__users.email as username, planner__users.password, planner__users.id as user_id
+            FROM planner__users; 
         """
     )
 
 
 def downgrade() -> None:
     op.execute("DROP VIEW auth_credentials;")
-    op.drop_index(op.f("ix_auth_credentials_username"), table_name="users")
-    op.drop_table("users")
+    op.drop_index(op.f("ix_auth_credentials_username"), table_name="planner__users")
+    op.drop_table("planner__users")

@@ -14,7 +14,7 @@ from src.planner.accounts.domain.exceptions.name_already_registered import (
 from src.planner.accounts.domain.repository import AccountRepository
 from src.planner.shared.domain.exceptions.base import DomainException
 from src.shared.domain.bus.event.event_bus import EventBus
-from tests.src.planner.accounts.factories import AccountFactory
+from tests.src.planner.shared.factories.accounts import AccountFactory
 
 pytestmark = pytest.mark.anyio
 
@@ -58,3 +58,5 @@ class TestCreateAccountCommandHandler:
 
         assert isinstance(excinfo.value, DomainException)
         assert excinfo.value.source == "name"
+        assert self._repository.create.call_count == 0
+        assert self._event_bus.publish.call_count == 0

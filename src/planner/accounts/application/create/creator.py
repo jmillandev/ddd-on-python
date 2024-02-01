@@ -8,9 +8,9 @@ from src.planner.accounts.domain.repository import AccountRepository
 from src.planner.accounts.domain.value_objects import (
     AccountBalance,
     AccountCurrency,
-    AccountId,
     AccountName,
 )
+from src.planner.shared.domain.accounts import AccountId
 from src.planner.shared.domain.users import UserId
 from src.shared.domain.bus.event.event_bus import EventBus
 

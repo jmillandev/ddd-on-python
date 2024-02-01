@@ -5,9 +5,9 @@ from kink import inject
 from src.planner.accounts.domain.value_objects import (
     AccountBalance,
     AccountCurrency,
-    AccountId,
     AccountName,
 )
+from src.planner.shared.domain.accounts import AccountId
 from src.planner.accounts.domain.value_objects.currency import Currency
 from src.planner.shared.domain.generators.uuid import UuidGenerator
 from src.planner.shared.domain.users import UserId
@@ -20,7 +20,6 @@ from ..creator import AccountCreator
 
 @inject
 class CreateAccountOnUserRegistered(DomainEventSubscriber):
-    # TODO: Add test case
     def __init__(
         self, user_case: AccountCreator, uuid_generator: UuidGenerator
     ) -> None:

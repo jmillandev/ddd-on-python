@@ -12,7 +12,7 @@ from src.planner.accounts.domain.repository import AccountRepository
 from src.planner.shared.domain.generators.uuid import UuidGenerator
 from src.planner.shared.domain.users.events import UserRegistered
 from src.shared.domain.bus.event.event_bus import EventBus
-from tests.src.planner.accounts.factories import AccountFactory
+from tests.src.planner.shared.factories.accounts import AccountFactory
 
 faker = Faker()
 pytestmark = pytest.mark.anyio

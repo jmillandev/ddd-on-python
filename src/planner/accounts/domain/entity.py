@@ -2,9 +2,9 @@ from src.planner.accounts.domain.events import AccountCreated
 from src.planner.accounts.domain.value_objects import (
     AccountBalance,
     AccountCurrency,
-    AccountId,
     AccountName,
 )
+from src.planner.shared.domain.accounts import AccountId
 from src.planner.shared.domain.aggregates import AggregateRoot, aggregate_dataclass
 from src.planner.shared.domain.users import UserId
 

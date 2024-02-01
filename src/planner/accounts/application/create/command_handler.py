@@ -3,9 +3,9 @@ from kink import inject
 from src.planner.accounts.domain.value_objects import (
     AccountBalance,
     AccountCurrency,
-    AccountId,
     AccountName,
 )
+from src.planner.shared.domain.accounts import AccountId
 from src.planner.shared.domain.users import UserId
 
 from .command import CreateAccountCommand

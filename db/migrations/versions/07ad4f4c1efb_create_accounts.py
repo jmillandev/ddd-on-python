@@ -17,7 +17,7 @@ depends_on = None
 
 def upgrade() -> None:
     op.create_table(
-        "accounts",
+        "planner__accounts",
         sa.Column("id", sa.UUID(), nullable=False),
         sa.Column("user_id", sa.UUID(), nullable=False),
         sa.Column("name", sa.String(length=50), nullable=False),
@@ -30,10 +30,10 @@ def upgrade() -> None:
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_index(
-        op.f("ix_accounts_name_per_user"), "accounts", ["name", "user_id"], unique=True
+        op.f("ix_planner__accounts_name_per_user"), "planner__accounts", ["name", "user_id"], unique=True
     )
 
 
 def downgrade() -> None:
-    op.drop_table("accounts")
-    op.drop_index(op.f("ix_accounts_name_per_user"), table_name="accounts")
+    op.drop_table("planner__accounts")
+    op.drop_index(op.f("ix_planner__accounts_name_per_user"), table_name="planner__accounts")

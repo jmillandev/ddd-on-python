@@ -6,7 +6,7 @@ from src.planner.accounts.infrastructure.repositories.sqlalchemy import (
     SqlAlcheamyAccountRepository,
 )
 from src.planner.users.domain.repository import UserRepository
-from tests.src.planner.accounts.factories import AccountFactory
+from tests.src.planner.shared.factories.accounts import AccountFactory
 from tests.src.planner.users.factories import UserFactory
 
 pytestmark = pytest.mark.anyio
