@@ -12,7 +12,8 @@ from src.planner.expenses.application.add.adder import ExpenseAdder
 from tests.src.planner.shared.factories.accounts import AccountFactory
 from tests.src.planner.expenses.factories import ExpenseFactory
 
-from src.planner.shared.application.accounts import AccountResponse, FindAccountQuery
+from src.planner.shared.application.accounts.query import FindAccountQuery
+from src.planner.shared.application.accounts.response import AccountResponse
 from src.planner.expenses.domain.events.added import ExpenseAdded
 from src.planner.shared.domain.exceptions.base import DomainException
 from src.shared.domain.exceptions.not_found import NotFound

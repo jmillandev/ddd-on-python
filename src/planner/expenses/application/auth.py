@@ -2,8 +2,8 @@ from typing import cast
 
 from kink import inject
 
-from src.planner.shared.application.query.accounts import FindAccountQuery
-from src.planner.shared.application.query_response.accounts import AccountResponse
+from src.planner.shared.application.accounts.query import FindAccountQuery
+from src.planner.shared.application.accounts.response import AccountResponse
 from src.planner.shared.domain.accounts import AccountId
 from src.planner.shared.domain.bus.query import QueryBus
 from src.planner.shared.domain.exceptions.forbidden import ForbiddenAccess

@@ -1,4 +1,4 @@
-from typing import Any, Generic, TypeVar
+from typing import Any, Generic, TypeVar, Union
 
 from src.planner.shared.domain.exceptions.invalid_value import InvalidValueException
 
@@ -11,7 +11,7 @@ class ValueObject(Generic[T]):
     """
 
     NAME: str
-    BASE_TYPE: Any
+    BASE_TYPE: type[T]
     _value: T
 
     def __init__(self, value: Any) -> None:
@@ -36,7 +36,7 @@ class ValueObject(Generic[T]):
         return self._value
 
     @property
-    def primitive(self) -> Any:
+    def primitive(self) -> Union[str, int, bool]:
         """
         Use this method to get the primitive value of the object. Useful for serialization
         """
