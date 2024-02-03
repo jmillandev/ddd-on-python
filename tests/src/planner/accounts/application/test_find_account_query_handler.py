@@ -30,10 +30,10 @@ class TestFindAccountQueryHandler:
         response = await self.handler(query)
         assert isinstance(response, AccountResponse)
 
-        self._repository.search_by_id_and_user_id.assert_called_once_with(query.id, query.user_id)
+        self._repository.search_by_id_and_user_id.assert_called_once_with(account.id, account.user_id)
 
     async def test_should_raise_error_account_not_found(self) -> None:
-        params = AccountFactory.to_dict()
+        params = AccountFactory().to_dict()
         self._repository.search_by_id_and_user_id.return_value = None
         query = FindAccountQuery(id=params['id'], user_id=params['user_id'])
 
