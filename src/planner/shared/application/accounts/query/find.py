@@ -1,2 +1,7 @@
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
 class FindAccountQuery:
-    pass
+    id: str
+    user_id: str

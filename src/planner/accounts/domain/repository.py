@@ -14,3 +14,8 @@ class AccountRepository(Protocol):
         self, name: AccountName, user_id: UserId
     ) -> Optional[Account]:
         ...
+
+    async def search_by_id_and_user_id(
+        self, name: AccountName, user_id: UserId
+    ) -> Optional[Account]:
+        ...

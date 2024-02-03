@@ -11,6 +11,7 @@ from src.planner.users.application.find.responses import UserResponse
 from src.planner.users.domain.exceptions.not_found import UserNotFound
 from src.planner.users.domain.repository import UserRepository
 from tests.src.planner.users.factories import UserFactory
+from src.shared.domain.exceptions.not_found import NotFound
 
 pytestmark = pytest.mark.anyio
 
@@ -22,10 +23,9 @@ class TestFindUserQueryHandler:
         self.handler = FindUserQueryHandler(use_case)
 
     async def test_should_return_a_user(self) -> None:
-        params = UserFactory.to_dict()
-        user = UserFactory.build(**params)
+        user = UserFactory.build()
         self._repository.search.return_value = user
-        query = FindUserQuery(id=params["id"], user_id=user.id.primitive)
+        query = FindUserQuery(id=user.id.primitive, user_id=user.id.primitive)
 
         response = await self.handler(query)
         assert isinstance(response, UserResponse)
@@ -44,7 +44,7 @@ class TestFindUserQueryHandler:
         with pytest.raises(UserNotFound) as excinfo:
             await self.handler(query)
 
-        assert isinstance(excinfo.value, DomainException)
+        assert isinstance(excinfo.value, NotFound)
         assert excinfo.value.code == 404
 
     async def test_should_raise_forbidden_error(self) -> None:
