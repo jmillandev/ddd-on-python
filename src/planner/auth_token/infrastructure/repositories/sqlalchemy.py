@@ -16,7 +16,7 @@ class SqlAlcheamyAuthCredential(Base):
     user_id = Column(UUID, primary_key=True)
     username = Column(String)
     password = Column(String)
-    __tablename__ = "auth_credentials"
+    __tablename__ = "planner__auth_credentials"
 
 
 class SqlAlcheamyAuthCredentialRepository(SqlAlcheamyRepository):

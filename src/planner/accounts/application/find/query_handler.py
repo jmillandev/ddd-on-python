@@ -15,5 +15,5 @@ class FindAccountQueryHandler:
         self.use_case = use_case
 
     async def __call__(self, query: FindAccountQuery) -> AccountResponse:
-        account = await self.use_case(AccountId(query.id), UserId(query.user_id))
+        account = await self.use_case(AccountId(query.id), UserId(query.owner_id))
         return entity_to_response(account, AccountResponse)

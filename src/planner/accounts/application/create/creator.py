@@ -24,14 +24,14 @@ class AccountCreator:
     async def __call__(
         self,
         id: AccountId,
-        user_id: UserId,
+        owner_id: UserId,
         name: AccountName,
         currency: AccountCurrency,
         balance: AccountBalance,
     ) -> None:
-        if await self._repository.search_by_name_and_user_id(name, user_id):
+        if await self._repository.search_by_name_and_owner_id(name, owner_id):
             raise NameAlreadyRegistered(name)
 
-        account = Account.create(id, user_id, name, currency, balance)
+        account = Account.create(id, owner_id, name, currency, balance)
         await self._repository.create(account)
         await self._event_bus.publish(*account.pull_domain_events())

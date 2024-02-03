@@ -20,7 +20,7 @@ class CreateAccountCommandHandler:
     async def __call__(self, command: CreateAccountCommand) -> None:
         await self.user_case(
             id=AccountId(command.id),
-            user_id=UserId(command.user_id),
+            owner_id=UserId(command.owner_id),
             name=AccountName(command.name),
             currency=AccountCurrency(command.currency),
             balance=AccountBalance(command.balance),

@@ -11,6 +11,7 @@ from src.planner.users.application.register.command_handler import (
 
 
 class HardcodedCommandBus:
+    # TODO: Use dependency injection
     HANDLERS = {
         RegisterUserCommand: RegisterUserCommandHandler,
         CreateAccountCommand: CreateAccountCommandHandler,

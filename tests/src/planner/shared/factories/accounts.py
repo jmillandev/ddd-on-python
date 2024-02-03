@@ -19,5 +19,5 @@ class AccountFactory(AggregateRootFactory[Account]):
     currency: str = field(
         default_factory=lambda: fake.random_element(elements=Currency.keys())
     )
-    user_id: str = field(default_factory=lambda: str(uuid4()))
+    owner_id: str = field(default_factory=lambda: str(uuid4()))
     balance: int = field(default=0)

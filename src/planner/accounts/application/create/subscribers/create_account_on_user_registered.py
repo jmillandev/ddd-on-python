@@ -30,7 +30,7 @@ class CreateAccountOnUserRegistered(DomainEventSubscriber):
         if isinstance(event, UserRegistered):
             await self.user_case(
                 id=AccountId(self.uuid_generator()),
-                user_id=UserId(event.aggregate_id),
+                owner_id=UserId(event.aggregate_id),
                 name=AccountName("Main"),
                 currency=AccountCurrency(Currency.USD),
                 balance=AccountBalance(0),

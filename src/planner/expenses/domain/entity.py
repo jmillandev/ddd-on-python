@@ -14,6 +14,9 @@ class Expense(AggregateRoot):
     account_id: AccountId
     date: ExpenseDate
 
+    def __str__(self) -> str:
+        return f"Expense(id={self.id}, account_id={self.account_id})"
+
     @classmethod
     def add(cls, id: ExpenseId, amount: ExpenseAmount, account_id: AccountId, date: ExpenseDate) -> None:
         expense = cls(id=id, amount=amount, account_id=account_id, date=date)

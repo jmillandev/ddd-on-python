@@ -12,30 +12,30 @@ from src.planner.shared.domain.users import UserId
 @aggregate_dataclass
 class Account(AggregateRoot):
     id: AccountId
-    user_id: UserId
+    owner_id: UserId
     name: AccountName
     currency: AccountCurrency
     balance: AccountBalance
 
     def __str__(self) -> str:
-        return f"[{self.id}] {self.name}"
+        return f"Account(id={self.id}, owner_id={self.owner_id})"
 
     @classmethod
     def create(
         cls,
         id: AccountId,
-        user_id: UserId,
+        owner_id: UserId,
         name: AccountName,
         currency: AccountCurrency,
         balance: AccountBalance,
     ):
         account = cls(
-            id=id, user_id=user_id, name=name, currency=currency, balance=balance
+            id=id, owner_id=owner_id, name=name, currency=currency, balance=balance
         )
         account._record_event(
             AccountCreated.make(
                 account.id.primitive,
-                user_id=account.user_id.primitive,
+                owner_id=account.owner_id.primitive,
                 name=account.name.primitive,
                 currency=account.currency.primitive,
                 balance=account.balance.primitive,

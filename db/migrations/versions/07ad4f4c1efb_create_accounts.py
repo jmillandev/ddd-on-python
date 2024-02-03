@@ -19,18 +19,18 @@ def upgrade() -> None:
     op.create_table(
         "planner__accounts",
         sa.Column("id", sa.UUID(), nullable=False),
-        sa.Column("user_id", sa.UUID(), nullable=False),
+        sa.Column("owner_id", sa.UUID(), nullable=False),
         sa.Column("name", sa.String(length=50), nullable=False),
         sa.Column("currency", sa.String(length=5), nullable=False),
         sa.Column("balance", sa.BigInteger(), nullable=False),
         sa.ForeignKeyConstraint(
-            ["user_id"],
-            ["users.id"],
+            ["owner_id"],
+            ["planner__users.id"],
         ),
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_index(
-        op.f("ix_planner__accounts_name_per_user"), "planner__accounts", ["name", "user_id"], unique=True
+        op.f("ix_planner__accounts_name_per_user"), "planner__accounts", ["name", "owner_id"], unique=True
     )
 
 

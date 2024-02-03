@@ -1,5 +1,7 @@
 from src.planner.shared.domain.value_objects.base import ValueObject
-from datetime import date
+from datetime import date, datetime
+
+DATE_FORMAT = "%d-%m-%Y"
 
 class DateValueObject(ValueObject[date]):
     BASE_TYPE = date
@@ -10,7 +12,7 @@ class DateValueObject(ValueObject[date]):
         if isinstance(value, self.BASE_TYPE):
             return value
         try:
-            return self.BASE_TYPE(value)
+            return datetime.strptime(value, DATE_FORMAT).date()
         except Exception:
             self._fail(f"Invalid {self.BASE_TYPE.__name__}")
             return None  # type: ignore[return-value]

@@ -35,7 +35,7 @@ class TestAddExpenseCommandHandler:
 
         # Arrange
         self.account = AccountFactory.build()
-        self.params = ExpenseFactory().to_dict(account_id=self.account.id.primitive)
+        self.params = ExpenseFactory(account_id=self.account.id.primitive).to_dict()
         self.expense = ExpenseFactory.build(**self.params)
 
     async def test_should_create_an_expenses(self) -> None:

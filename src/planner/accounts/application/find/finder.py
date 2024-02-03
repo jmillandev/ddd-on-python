@@ -9,8 +9,8 @@ class AccountFinder:
     def __init__(self, repository: AccountRepository):
         self._repository = repository
 
-    async def __call__(self, id: AccountId, user_id: UserId) -> Account:
-        account = await self._repository.search_by_id_and_user_id(id, user_id)
+    async def __call__(self, id: AccountId, owner_id: UserId) -> Account:
+        account = await self._repository.search_by_id_and_owner_id(id, owner_id)
         if account is None:
             raise AccountNotFound
 

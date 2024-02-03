@@ -27,7 +27,7 @@ class TestCreateAccountCommandHandler:
         self.handler = CreateAccountCommandHandler(use_case)
 
     async def test_should_create_an_account(self) -> None:
-        self._repository.search_by_name_and_user_id.return_value = None
+        self._repository.search_by_name_and_owner_id.return_value = None
         params = AccountFactory().to_dict()
         account = AccountFactory.build(**params)
         command = CreateAccountCommand.from_dict(params)
@@ -35,7 +35,7 @@ class TestCreateAccountCommandHandler:
             account.id.primitive,
             event_id=ANY,
             ocurrend_at=ANY,
-            user_id=account.user_id.primitive,
+            owner_id=account.owner_id.primitive,
             name=account.name.primitive,
             currency=account.currency.primitive,
             balance=account.balance.primitive,
@@ -48,7 +48,7 @@ class TestCreateAccountCommandHandler:
 
     async def test_should_raise_error_name_already_registered(self) -> None:
         params = AccountFactory().to_dict()
-        self._repository.search_by_name_and_user_id.return_value = AccountFactory.build(
+        self._repository.search_by_name_and_owner_id.return_value = AccountFactory.build(
             **params
         )
         command = CreateAccountCommand.from_dict(params)

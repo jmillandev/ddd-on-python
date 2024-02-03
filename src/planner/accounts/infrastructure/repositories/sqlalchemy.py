@@ -16,11 +16,11 @@ from src.planner.shared.infrastructure.persistence.sqlalchemy.repositories impor
 
 class SqlAlcheamyAccount(Base):
     id = Column(UUID, primary_key=True)
-    user_id = Column(UUID)
+    owner_id = Column(UUID)
     name = Column(String)
     currency = Column(String)
     balance = Column(Integer)
-    __tablename__ = "accounts"
+    __tablename__ = "planner__accounts"
 
 
 @inject
@@ -30,12 +30,12 @@ class SqlAlcheamyAccountRepository(
     model_class = SqlAlcheamyAccount
     entity_class = Account
 
-    async def search_by_name_and_user_id(
-        self, name: AccountName, user_id: UserId
+    async def search_by_name_and_owner_id(
+        self, name: AccountName, owner_id: UserId
     ) -> Optional[Account]:
         stmt = (
             select(SqlAlcheamyAccount)
-            .filter_by(name=name.value, user_id=user_id.value)
+            .filter_by(name=name.value, owner_id=owner_id.value)
             .limit(1)
         )
         return await self._search(stmt)

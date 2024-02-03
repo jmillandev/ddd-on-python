@@ -24,18 +24,18 @@ class TestFindAccountQueryHandler:
 
     async def test_should_return_an_account(self) -> None:
         account = AccountFactory.build()
-        self._repository.search_by_id_and_user_id.return_value = account
-        query = FindAccountQuery(id=account.id.primitive, user_id=account.user_id.primitive)
+        self._repository.search_by_id_and_owner_id.return_value = account
+        query = FindAccountQuery(id=account.id.primitive, owner_id=account.owner_id.primitive)
 
         response = await self.handler(query)
         assert isinstance(response, AccountResponse)
 
-        self._repository.search_by_id_and_user_id.assert_called_once_with(account.id, account.user_id)
+        self._repository.search_by_id_and_owner_id.assert_called_once_with(account.id, account.owner_id)
 
     async def test_should_raise_error_account_not_found(self) -> None:
         params = AccountFactory().to_dict()
-        self._repository.search_by_id_and_user_id.return_value = None
-        query = FindAccountQuery(id=params['id'], user_id=params['user_id'])
+        self._repository.search_by_id_and_owner_id.return_value = None
+        query = FindAccountQuery(id=params['id'], owner_id=params['owner_id'])
 
         with pytest.raises(AccountNotFound) as excinfo:
             await self.handler(query)

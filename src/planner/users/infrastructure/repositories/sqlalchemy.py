@@ -29,7 +29,7 @@ class SqlAlcheamyUser(Base):
         )
     )
 
-    __tablename__ = "users"
+    __tablename__ = "planner__users"
 
 
 class SqlAlcheamyUserRepository(

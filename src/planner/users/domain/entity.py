@@ -24,7 +24,7 @@ class User(AggregateRoot):
     password: UserPassword
 
     def __str__(self) -> str:
-        return f"[{self.id}] {self.email}"
+        return f"User(id={self.id}, email={self.email})"
 
     @classmethod
     def register(

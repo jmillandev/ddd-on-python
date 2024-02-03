@@ -26,6 +26,6 @@ async def create(
     auth_token = await query_bus.ask(FindAuthTokenQuery(access_token=access_token))
     auth_token = cast(AuthTokenResponse, auth_token)
     command = CreateAccountCommand(
-        **params.to_dict(), id=id, user_id=auth_token.user_id
+        **params.to_dict(), id=id, owner_id=auth_token.user_id
     )
     await command_bus.dispatch(command)

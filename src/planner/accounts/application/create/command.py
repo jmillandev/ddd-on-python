@@ -9,4 +9,4 @@ class CreateAccountCommand(Command):
     balance: int
     id: str
     name: str
-    user_id: str
+    owner_id: str

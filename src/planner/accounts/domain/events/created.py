@@ -5,7 +5,7 @@ from src.shared.domain.bus.event.domain_event import DomainEvent
 
 @dataclass(frozen=True)
 class AccountCreated(DomainEvent):
-    user_id: str
+    owner_id: str
     name: str
     currency: str
     balance: int
@@ -16,7 +16,7 @@ class AccountCreated(DomainEvent):
 
     def payload(self) -> dict:
         return {
-            "user_id": self.user_id,
+            "owner_id": self.owner_id,
             "currency": self.currency,
             "name": self.name,
             "balance": self.balance,

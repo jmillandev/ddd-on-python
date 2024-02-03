@@ -35,21 +35,21 @@ class TestCreateAccountOnUserRegistered:
         self.subscriber = CreateAccountOnUserRegistered(use_case, self.uuid_generator)
 
     async def test_should_create_an_account_on_user_registered(self) -> None:
-        self._repository.search_by_name_and_user_id.return_value = None
+        self._repository.search_by_name_and_owner_id.return_value = None
         uuid = faker.uuid4()
         self.uuid_generator.return_value = uuid
         account = AccountFactory.build(
             id=uuid,
             name="Main",
             currency="USD",
-            user_id=self.event.aggregate_id,
+            owner_id=self.event.aggregate_id,
             balance=0,
         )
         account_created = AccountCreated.make(
             account.id.primitive,
             event_id=ANY,
             ocurrend_at=ANY,
-            user_id=account.user_id.primitive,
+            owner_id=account.owner_id.primitive,
             name=account.name.primitive,
             currency=account.currency.primitive,
             balance=account.balance.primitive,
