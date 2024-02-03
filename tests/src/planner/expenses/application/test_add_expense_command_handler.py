@@ -17,6 +17,7 @@ from src.planner.shared.application.accounts.response import AccountResponse
 from src.planner.expenses.domain.events.added import ExpenseAdded
 from src.planner.shared.domain.exceptions.base import DomainException
 from src.shared.domain.exceptions.not_found import NotFound
+from src.planner.shared.application.mappers import entity_to_response
 
 
 pytestmark = pytest.mark.anyio
@@ -39,9 +40,9 @@ class TestAddExpenseCommandHandler:
         self.expense = ExpenseFactory.build(**self.params)
 
     async def test_should_create_an_expenses(self) -> None:
-        command = AddExpenseCommand.from_dict(self.params.update(user_id=self.account.owner_id.primitive))
-        account_query = FindAccountQuery(id=command.id, user_id=command.user_id)
-        account_response = AccountResponse.from_dict(self.account)
+        command = AddExpenseCommand.from_dict(dict(self.params, user_id=self.account.owner_id.primitive))
+        account_query = FindAccountQuery(id=command.account_id, owner_id=command.user_id)
+        account_response = entity_to_response(self.account, AccountResponse)
         self._query_bus.ask.return_value = account_response
         expense_added = ExpenseAdded.make(
             self.expense.id.primitive,
@@ -52,17 +53,15 @@ class TestAddExpenseCommandHandler:
             date=self.expense.date.primitive,
         )
 
-        command = AddExpenseCommand.from_dict(self.params.update(user_id=self.account.owner_id.primitive))
-
         await self.handler(command)
-        
+
         self._query_bus.ask.assert_called_once_with(account_query)
-        self._repository.create.assert_called_once_with(self.expense)
+        self._repository.save.assert_called_once_with(self.expense)
         self._event_bus.publish.assert_called_once_with(expense_added)
 
     async def test_should_raise_error_not_found_if_account_belong_to_another_user(self, faker) -> None:
-        command = AddExpenseCommand.from_dict(self.params.update(user_id=str(faker.uuid4())))
-        account_query = FindAccountQuery(id=command.id, user_id=command.user_id)
+        command = AddExpenseCommand.from_dict(dict(self.params, user_id=str(faker.uuid4())))
+        account_query = FindAccountQuery(id=command.account_id, owner_id=command.user_id)
         self._query_bus.ask.side_effect = NotFound("On Query Bus")
 
         with pytest.raises(NotFound) as excinfo:
@@ -72,5 +71,5 @@ class TestAddExpenseCommandHandler:
         assert excinfo.value.message == "On Query Bus"
 
         self._query_bus.ask.assert_called_once_with(account_query)
-        assert self._repository.create.call_count == 0
-        assert self._repository.publish.call_count == 0
+        assert self._repository.save.call_count == 0
+        assert self._event_bus.publish.call_count == 0

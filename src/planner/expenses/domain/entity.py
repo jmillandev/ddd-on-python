@@ -18,7 +18,7 @@ class Expense(AggregateRoot):
         return f"Expense(id={self.id}, account_id={self.account_id})"
 
     @classmethod
-    def add(cls, id: ExpenseId, amount: ExpenseAmount, account_id: AccountId, date: ExpenseDate) -> None:
+    def add(cls, id: ExpenseId, amount: ExpenseAmount, account_id: AccountId, date: ExpenseDate) -> "Expense":
         expense = cls(id=id, amount=amount, account_id=account_id, date=date)
         expense._record_event(
             ExpenseAdded.make(

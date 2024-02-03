@@ -15,8 +15,8 @@ class ExpenseAuthorizationService:
     def __init__(self, query_bus: QueryBus) -> None:
         self.query_bus = query_bus
 
-    def ensure_user_is_account_owner(self, account_id: AccountId, user_id: UserId) -> None:
-        account = self.query_bus.ask(FindAccountQuery(account_id))
+    async def ensure_user_is_account_owner(self, account_id: AccountId, user_id: UserId) -> None:
+        account = await self.query_bus.ask(FindAccountQuery(id=account_id.primitive, owner_id=user_id.primitive))
         cast(AccountResponse, account)
-        if account.owner_id != user_id:
+        if account.owner_id != user_id.primitive:
             raise ForbiddenAccess

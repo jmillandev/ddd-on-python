@@ -27,6 +27,6 @@ class ExpenseAdder:
         user_id: UserId
     ) -> None:
         await self._auth_service.ensure_user_is_account_owner(account_id, user_id)
-        expense = Expense(id, amount, date, account_id)
+        expense = Expense.add(id, amount, account_id, date)
         await self._repository.save(expense)
-        await self._event_bus.publish(expense.pull_domain_events())
+        await self._event_bus.publish(*expense.pull_domain_events())

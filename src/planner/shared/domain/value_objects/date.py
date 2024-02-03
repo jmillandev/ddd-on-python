@@ -16,3 +16,10 @@ class DateValueObject(ValueObject[date]):
         except Exception:
             self._fail(f"Invalid {self.BASE_TYPE.__name__}")
             return None  # type: ignore[return-value]
+
+    @property
+    def primitive(self) -> str:
+        """
+        Transform date value to string
+        """
+        return self.value.strftime(DATE_FORMAT)

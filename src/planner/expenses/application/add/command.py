@@ -9,3 +9,4 @@ class AddExpenseCommand(Command):
     amount: int
     account_id: str
     date: str
+    user_id: str
