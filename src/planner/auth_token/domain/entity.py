@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Any, Optional
+from typing import Any, Optional, Self
 
 from kink import inject
 
@@ -36,7 +36,7 @@ class AuthToken(AggregateRoot):
         )
 
     @classmethod
-    def create(cls, user_id: UserId) -> "AuthToken":
+    def create(cls, user_id: UserId) -> Self:
         return cls(user_id=user_id, expires_at=AuthExpiresAt.create())  # type: ignore[call-arg]
 
     @property

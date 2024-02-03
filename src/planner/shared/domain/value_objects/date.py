@@ -1,7 +1,9 @@
-from src.planner.shared.domain.value_objects.base import ValueObject
 from datetime import date, datetime
 
+from src.planner.shared.domain.value_objects.base import ValueObject
+
 DATE_FORMAT = "%d-%m-%Y"
+
 
 class DateValueObject(ValueObject[date]):
     BASE_TYPE = date

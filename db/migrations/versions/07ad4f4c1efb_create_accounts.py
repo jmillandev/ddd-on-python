@@ -30,10 +30,15 @@ def upgrade() -> None:
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_index(
-        op.f("ix_planner__accounts_name_per_user"), "planner__accounts", ["name", "owner_id"], unique=True
+        op.f("ix_planner__accounts_name_per_user"),
+        "planner__accounts",
+        ["name", "owner_id"],
+        unique=True,
     )
 
 
 def downgrade() -> None:
     op.drop_table("planner__accounts")
-    op.drop_index(op.f("ix_planner__accounts_name_per_user"), table_name="planner__accounts")
+    op.drop_index(
+        op.f("ix_planner__accounts_name_per_user"), table_name="planner__accounts"
+    )

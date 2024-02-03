@@ -1,10 +1,13 @@
-from src.planner.shared.domain.aggregates import AggregateRoot
 from dataclasses import dataclass
+from typing import Self
+
+from src.planner.shared.domain.accounts import AccountId
+from src.planner.shared.domain.aggregates import AggregateRoot
+
+from .events.added import ExpenseAdded
 from .value_objects.amount import ExpenseAmount
 from .value_objects.date import ExpenseDate
 from .value_objects.id import ExpenseId
-from src.planner.shared.domain.accounts import AccountId
-from .events.added import ExpenseAdded
 
 
 @dataclass
@@ -18,7 +21,13 @@ class Expense(AggregateRoot):
         return f"Expense(id={self.id}, account_id={self.account_id})"
 
     @classmethod
-    def add(cls, id: ExpenseId, amount: ExpenseAmount, account_id: AccountId, date: ExpenseDate) -> "Expense":
+    def add(
+        cls,
+        id: ExpenseId,
+        amount: ExpenseAmount,
+        account_id: AccountId,
+        date: ExpenseDate,
+    ) -> Self:
         expense = cls(id=id, amount=amount, account_id=account_id, date=date)
         expense._record_event(
             ExpenseAdded.make(

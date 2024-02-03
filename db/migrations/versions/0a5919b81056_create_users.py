@@ -39,7 +39,9 @@ def upgrade() -> None:
         ),
         sa.PrimaryKeyConstraint("id"),
     )
-    op.create_index(op.f("ix_planner__auth_credentials_username"), "planner__users", ["email"])
+    op.create_index(
+        op.f("ix_planner__auth_credentials_username"), "planner__users", ["email"]
+    )
     op.execute(
         """
         CREATE VIEW planner__auth_credentials AS
@@ -51,5 +53,7 @@ def upgrade() -> None:
 
 def downgrade() -> None:
     op.execute("DROP VIEW planner__auth_credentials;")
-    op.drop_index(op.f("ix_planner__auth_credentials_username"), table_name="planner__users")
+    op.drop_index(
+        op.f("ix_planner__auth_credentials_username"), table_name="planner__users"
+    )
     op.drop_table("planner__users")

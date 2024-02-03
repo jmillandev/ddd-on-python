@@ -2,7 +2,7 @@ from abc import ABCMeta, abstractmethod
 from calendar import timegm
 from dataclasses import dataclass
 from time import gmtime
-from typing import Optional, Union
+from typing import Optional, Self, Union
 from uuid import uuid4
 
 
@@ -28,7 +28,7 @@ class DomainEvent(metaclass=ABCMeta):
         event_id: Optional[str] = None,
         ocurrend_at: Optional[int] = None,
         **attrs: Union[str, int, bool]
-    ) -> "DomainEvent":
+    ) -> Self:
         return cls(
             aggregate_id=aggregate_id,
             event_id=event_id or str(uuid4()),

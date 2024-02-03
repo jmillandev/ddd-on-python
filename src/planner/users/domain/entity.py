@@ -1,3 +1,5 @@
+from typing import Self
+
 from src.planner.shared.domain.aggregates import AggregateRoot, aggregate_dataclass
 from src.planner.shared.domain.users import UserId
 from src.planner.shared.domain.users.events import UserRegistered
@@ -35,7 +37,7 @@ class User(AggregateRoot):
         last_name: UserLastName,
         pronoun: UserPronoun,
         password: UserPassword,
-    ) -> "User":
+    ) -> Self:
         user = cls(
             id=id,
             created_at=UserCreatedAt.now(),

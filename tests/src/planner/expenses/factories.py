@@ -4,8 +4,9 @@ from uuid import uuid4
 from faker import Faker
 
 from src.planner.expenses.domain.entity import Expense
-from tests.src.shared.domain.factories import AggregateRootFactory
 from src.planner.shared.domain.value_objects.date import DATE_FORMAT
+from tests.src.shared.domain.factories import AggregateRootFactory
+
 fake = Faker()
 
 

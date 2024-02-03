@@ -1,7 +1,8 @@
 from abc import ABCMeta, abstractmethod
-from typing import Protocol, runtime_checkable, Union, Dict
+from typing import Dict, Protocol, Self, Union, runtime_checkable
 
 Primitive = Union[str, int, bool]
+
 
 class Command(metaclass=ABCMeta):
     @abstractmethod
@@ -9,7 +10,7 @@ class Command(metaclass=ABCMeta):
         """Overwrite this methos using @dataclass"""
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Primitive]) -> "Command":
+    def from_dict(cls, data: Dict[str, Primitive]) -> Self:
         attributes = {key: data[key] for key in cls.__annotations__.keys()}
         return cls(**attributes)
 

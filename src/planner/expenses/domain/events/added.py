@@ -14,8 +14,4 @@ class ExpenseAdded(DomainEvent):
         return "planner.expenses.added"
 
     def payload(self) -> dict:
-        return {
-            "date": self.date,
-            "amount": self.amount,
-            "account_id": self.account_id
-        }
+        return {"date": self.date, "amount": self.amount, "account_id": self.account_id}

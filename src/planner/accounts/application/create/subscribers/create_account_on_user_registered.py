@@ -7,8 +7,8 @@ from src.planner.accounts.domain.value_objects import (
     AccountCurrency,
     AccountName,
 )
-from src.planner.shared.domain.accounts import AccountId
 from src.planner.accounts.domain.value_objects.currency import Currency
+from src.planner.shared.domain.accounts import AccountId
 from src.planner.shared.domain.generators.uuid import UuidGenerator
 from src.planner.shared.domain.users import UserId
 from src.planner.shared.domain.users.events import UserRegistered

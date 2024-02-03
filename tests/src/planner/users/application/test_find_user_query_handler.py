@@ -10,8 +10,8 @@ from src.planner.users.application.find.query_handler import FindUserQueryHandle
 from src.planner.users.application.find.responses import UserResponse
 from src.planner.users.domain.exceptions.not_found import UserNotFound
 from src.planner.users.domain.repository import UserRepository
-from tests.src.planner.users.factories import UserFactory
 from src.shared.domain.exceptions.not_found import NotFound
+from tests.src.planner.users.factories import UserFactory
 
 pytestmark = pytest.mark.anyio
 

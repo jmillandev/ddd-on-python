@@ -23,7 +23,7 @@ class ValueObject(Generic[T]):
         if isinstance(value, self.BASE_TYPE):
             return value
         try:
-            return self.BASE_TYPE(value)
+            return self.BASE_TYPE(value)  # type: ignore[call-arg]
         except Exception:
             self._fail(f"Invalid {self.BASE_TYPE.__name__}")
             return None  # type: ignore[return-value]
@@ -40,7 +40,7 @@ class ValueObject(Generic[T]):
         """
         Use this method to get the primitive value of the object. Useful for serialization
         """
-        return self.value
+        return self.value  # type: ignore[return-value]
 
     def _set_value(self, value: Any) -> None:
         casted_value = self._cast(value)
