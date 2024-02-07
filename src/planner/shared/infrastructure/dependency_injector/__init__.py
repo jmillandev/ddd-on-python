@@ -2,6 +2,7 @@ from kink import di
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.planner.accounts.application.create.creator import AccountCreator
+from src.planner.accounts.application.find.finder import AccountFinder
 from src.planner.accounts.domain.repository import AccountRepository
 from src.planner.accounts.infrastructure.repositories.sqlalchemy import (
     SqlAlcheamyAccountRepository,
@@ -51,6 +52,7 @@ def init():
     ] = lambda _: SqlAlcheamyAuthCredentialRepository()
     # Accounts
     di.factories[AccountCreator] = lambda _: AccountCreator()
+    di.factories[AccountFinder] = lambda _: AccountFinder()
     di.factories[AccountRepository] = lambda _: SqlAlcheamyAccountRepository()
 
     # Users

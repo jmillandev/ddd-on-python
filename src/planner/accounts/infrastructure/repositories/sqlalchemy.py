@@ -6,6 +6,7 @@ from sqlalchemy import UUID, Column, Integer, String, select
 from src.planner.accounts.domain.entity import Account
 from src.planner.accounts.domain.value_objects import AccountName
 from src.planner.shared.domain.users import UserId
+from src.planner.shared.domain.accounts import AccountId
 from src.planner.shared.infrastructure.persistence.sqlalchemy.models import Base
 from src.planner.shared.infrastructure.persistence.sqlalchemy.repositories import (
     SqlAlcheamyCreateMixin,
@@ -36,6 +37,16 @@ class SqlAlcheamyAccountRepository(
         stmt = (
             select(SqlAlcheamyAccount)
             .filter_by(name=name.value, owner_id=owner_id.value)
+            .limit(1)
+        )
+        return await self._search(stmt)
+
+    async def search_by_id_and_owner_id(
+        self, id: AccountId, owner_id: UserId
+    ) -> Optional[Account]:
+        stmt = (
+            select(SqlAlcheamyAccount)
+            .filter_by(id=id.value, owner_id=owner_id.value)
             .limit(1)
         )
         return await self._search(stmt)

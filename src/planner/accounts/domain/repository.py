@@ -12,11 +12,11 @@ class AccountRepository(Protocol):
         ...
 
     async def search_by_name_and_owner_id(
-        self, name: AccountName, user_id: UserId
+        self, name: AccountName, owner_id: UserId
     ) -> Optional[Account]:
         ...
 
     async def search_by_id_and_owner_id(
-        self, name: AccountId, user_id: UserId
+        self, id: AccountId, owner_id: UserId
     ) -> Optional[Account]:
         ...
