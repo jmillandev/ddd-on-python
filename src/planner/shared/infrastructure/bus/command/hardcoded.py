@@ -8,6 +8,8 @@ from src.planner.users.application.register.command import RegisterUserCommand
 from src.planner.users.application.register.command_handler import (
     RegisterUserCommandHandler,
 )
+from src.planner.expenses.application.add.command import AddExpenseCommand
+from src.planner.expenses.application.add.command_handler import AddExpenseCommandHandler
 
 
 class HardcodedCommandBus:
@@ -15,6 +17,7 @@ class HardcodedCommandBus:
     HANDLERS = {
         RegisterUserCommand: RegisterUserCommandHandler,
         CreateAccountCommand: CreateAccountCommandHandler,
+        AddExpenseCommand: AddExpenseCommandHandler
     }
 
     async def dispatch(self, command: Command) -> None:

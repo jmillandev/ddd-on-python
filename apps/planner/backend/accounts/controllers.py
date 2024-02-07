@@ -22,7 +22,7 @@ async def create(
     params: CreateAccountSchema,
 ):
     """
-    Create new user.
+    Create new account.
     """
     auth_token = await query_bus.ask(FindAuthTokenQuery(access_token=access_token))
     auth_token = cast(AuthTokenResponse, auth_token)
