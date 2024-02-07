@@ -5,7 +5,7 @@ Faker==19.2.0
 
 # Test suit
 pytest==7.4.2
-fastapi[all]==0.109.0
+fastapi[all]~=0.109.1
 factory_boy==3.3.0
 
 # Linter
