@@ -2,14 +2,16 @@ from unittest.mock import ANY, Mock
 
 import pytest
 
-from src.planner.expenses.application.add.adder import ExpenseAdder
-from src.planner.expenses.application.add.command import AddExpenseCommand
-from src.planner.expenses.application.add.command_handler import (
-    AddExpenseCommandHandler,
+from src.planner.movements.application.auth import MovementAuthorizationService
+from src.planner.movements.application.expenses.add.adder import ExpenseMovementAdder
+from src.planner.movements.application.expenses.add.command import (
+    AddExpenseMovementCommand,
 )
-from src.planner.expenses.application.auth import ExpenseAuthorizationService
-from src.planner.expenses.domain.events.added import ExpenseAdded
-from src.planner.expenses.domain.repository import ExpenseRepository
+from src.planner.movements.application.expenses.add.command_handler import (
+    AddExpenseMovementCommandHandler,
+)
+from src.planner.movements.domain.expenses.events.added import ExpenseMovementAdded
+from src.planner.movements.domain.repository import MovementRepository
 from src.planner.shared.application.accounts.query import FindAccountQuery
 from src.planner.shared.application.accounts.response import AccountResponse
 from src.planner.shared.application.mappers import entity_to_response
@@ -17,31 +19,35 @@ from src.planner.shared.domain.bus.query import QueryBus
 from src.planner.shared.domain.exceptions.base import DomainException
 from src.shared.domain.bus.event.event_bus import EventBus
 from src.shared.domain.exceptions.not_found import NotFound
-from tests.src.planner.expenses.factories import ExpenseFactory
+from tests.src.planner.movements.factories import ExpenseMovementFactory
 from tests.src.planner.shared.factories.accounts import AccountFactory
 
 pytestmark = pytest.mark.anyio
 
 
-class TestAddExpenseCommandHandler:
+class TestAddExpenseMovementCommandHandler:
     def setup_method(self) -> None:
         # Mocks
-        self._repository = Mock(spec=ExpenseRepository)
+        self._repository = Mock(spec=MovementRepository)
         self._event_bus = Mock(EventBus)
         self._query_bus = Mock(QueryBus)
-        self._auth_service = ExpenseAuthorizationService(self._query_bus)
+        self._auth_service = MovementAuthorizationService(self._query_bus)
 
         # Use case And Handler
-        use_case = ExpenseAdder(self._repository, self._event_bus, self._auth_service)
-        self.handler = AddExpenseCommandHandler(use_case)
+        use_case = ExpenseMovementAdder(
+            self._repository, self._event_bus, self._auth_service
+        )
+        self.handler = AddExpenseMovementCommandHandler(use_case)
 
         # Arrange
         self.account = AccountFactory.build()
-        self.params = ExpenseFactory(account_id=self.account.id.primitive).to_dict()
-        self.expense = ExpenseFactory.build(**self.params)
+        self.params = ExpenseMovementFactory(
+            account_id=self.account.id.primitive
+        ).to_dict()
+        self.expense = ExpenseMovementFactory.build(**self.params)
 
     async def test_should_create_an_expenses(self) -> None:
-        command = AddExpenseCommand.from_dict(
+        command = AddExpenseMovementCommand.from_dict(
             dict(self.params, user_id=self.account.owner_id.primitive)
         )
         account_query = FindAccountQuery(
@@ -49,7 +55,7 @@ class TestAddExpenseCommandHandler:
         )
         account_response = entity_to_response(self.account, AccountResponse)
         self._query_bus.ask.return_value = account_response
-        expense_added = ExpenseAdded.make(
+        expense_added = ExpenseMovementAdded.make(
             self.expense.id.primitive,
             event_id=ANY,
             ocurrend_at=ANY,
@@ -67,7 +73,7 @@ class TestAddExpenseCommandHandler:
     async def test_should_raise_error_not_found_if_account_belong_to_another_user(
         self, faker
     ) -> None:
-        command = AddExpenseCommand.from_dict(
+        command = AddExpenseMovementCommand.from_dict(
             dict(self.params, user_id=str(faker.uuid4()))
         )
         account_query = FindAccountQuery(

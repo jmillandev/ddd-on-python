@@ -14,10 +14,10 @@ from src.planner.auth_token.infrastructure.encoders.jose_jwt import JoseJwtEncod
 from src.planner.auth_token.infrastructure.repositories.sqlalchemy import (
     SqlAlchemyAuthCredentialRepository,
 )
-from src.planner.expenses.application.add.adder import ExpenseAdder
-from src.planner.expenses.domain.repository import ExpenseRepository
-from src.planner.expenses.infrastructure.repositories.sqlalchemy import (
-    SqlAlchemyExpenseRepository,
+from src.planner.movements.application.expenses.add.adder import ExpenseMovementAdder
+from src.planner.movements.domain.repository import MovementRepository
+from src.planner.movements.infrastructure.repositories.sqlalchemy import (
+    SqlAlchemyMovementRepository,
 )
 from src.planner.shared.domain.bus.command import CommandBus
 from src.planner.shared.domain.bus.query import QueryBus
@@ -61,8 +61,8 @@ def init():
     di.factories[AccountRepository] = lambda _: SqlAlchemyAccountRepository()
 
     # Expenses
-    di.factories[ExpenseRepository] = lambda _: SqlAlchemyExpenseRepository()
-    di.factories[ExpenseAdder] = lambda _: ExpenseAdder()
+    di.factories[MovementRepository] = lambda _: SqlAlchemyMovementRepository()
+    di.factories[ExpenseMovementAdder] = lambda _: ExpenseMovementAdder()
 
     # Users
     di.factories[UserRepository] = lambda _: SqlAlchemyUserRepository()

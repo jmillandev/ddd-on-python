@@ -6,7 +6,9 @@ from kink import di
 from apps.planner.backend.shared.auth import oauth2_scheme
 from src.planner.auth_token.application.find.query import FindAuthTokenQuery
 from src.planner.auth_token.application.shared.response import AuthTokenResponse
-from src.planner.expenses.application.add.command import AddExpenseCommand
+from src.planner.movements.application.expenses.add.command import (
+    AddExpenseMovementCommand,
+)
 from src.planner.shared.domain.bus.command import CommandBus
 from src.planner.shared.domain.bus.query import QueryBus
 
@@ -27,5 +29,7 @@ async def add(
         AuthTokenResponse,
         await query_bus.ask(FindAuthTokenQuery(access_token=access_token)),
     )
-    command = AddExpenseCommand(**params.to_dict(), id=id, user_id=auth_token.user_id)
+    command = AddExpenseMovementCommand(
+        **params.to_dict(), id=id, user_id=auth_token.user_id
+    )
     await command_bus.dispatch(command)

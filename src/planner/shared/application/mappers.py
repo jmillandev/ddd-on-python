@@ -17,7 +17,7 @@ def dict_to_entity(data: Dict[str, Any], entity_class: type[Aggregate]) -> Aggre
     Returns:
         Entity
     """
-    annotations = entity_class.__annotations__
+    annotations = entity_class.__init__.__annotations__
     attributes = {
         key: annotations[key](value)
         for key, value in data.items()

@@ -1,13 +1,15 @@
 from dataclasses import asdict, dataclass
 
-from src.planner.expenses.application.add.command import AddExpenseCommand
+from src.planner.movements.application.expenses.add.command import (
+    AddExpenseMovementCommand,
+)
 
 
 @dataclass(frozen=True)
 class AddExpenseSchema:
     __annotations__ = {
         key: value
-        for key, value in AddExpenseCommand.__annotations__.items()
+        for key, value in AddExpenseMovementCommand.__annotations__.items()
         if key not in ["id", "user_id"]
     }
 

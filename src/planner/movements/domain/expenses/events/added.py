@@ -4,7 +4,7 @@ from src.shared.domain.bus.event.domain_event import DomainEvent
 
 
 @dataclass(frozen=True)
-class ExpenseAdded(DomainEvent):
+class ExpenseMovementAdded(DomainEvent):
     date: str
     amount: int
     account_id: str

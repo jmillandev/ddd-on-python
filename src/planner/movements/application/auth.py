@@ -11,7 +11,7 @@ from src.planner.shared.domain.users import UserId
 
 
 @inject
-class ExpenseAuthorizationService:
+class MovementAuthorizationService:
     def __init__(self, query_bus: QueryBus) -> None:
         self.query_bus = query_bus
 

@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from faker import Faker
 
-from src.planner.expenses.domain.entity import Expense
+from src.planner.movements.domain.expenses.aggregate import ExpenseMovement
 from src.planner.shared.domain.value_objects.date import DATE_FORMAT
 from tests.src.shared.domain.factories import AggregateRootFactory
 
@@ -11,8 +11,8 @@ fake = Faker()
 
 
 @dataclass
-class ExpenseFactory(AggregateRootFactory[Expense]):
-    _AgregateClass = Expense
+class ExpenseMovementFactory(AggregateRootFactory[ExpenseMovement]):
+    _AgregateClass = ExpenseMovement
 
     id: str = field(default_factory=lambda: str(uuid4()))
     amount: int = field(default_factory=fake.pyint)

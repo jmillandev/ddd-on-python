@@ -4,7 +4,7 @@ from src.planner.shared.domain.bus.command import Command
 
 
 @dataclass(frozen=True)
-class AddExpenseCommand(Command):
+class AddExpenseMovementCommand(Command):
     id: str
     amount: int
     account_id: str

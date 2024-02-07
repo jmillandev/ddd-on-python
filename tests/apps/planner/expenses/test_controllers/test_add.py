@@ -9,7 +9,7 @@ from apps.planner.backend.config import settings
 from src.planner.accounts.domain.repository import AccountRepository
 from src.planner.users.domain.repository import UserRepository
 from tests.apps.planner.shared.auth import AuthAsUser
-from tests.src.planner.expenses.factories import ExpenseFactory
+from tests.src.planner.movements.factories import ExpenseMovementFactory
 from tests.src.planner.shared.factories.accounts import AccountFactory
 from tests.src.planner.users.factories import UserFactory
 
@@ -22,7 +22,9 @@ class TestAddAccountController:
     def setup_method(self):
         self._user = UserFactory.build()
         self._account = AccountFactory.build(owner_id=self._user.id.primitive)
-        self._expense = ExpenseFactory.build(account_id=self._account.id.primitive)
+        self._expense = ExpenseMovementFactory.build(
+            account_id=self._account.id.primitive
+        )
         self._url = f"{settings.API_PREFIX}/v1/expenses/{self._expense.id.primitive}"
         self.params = {
             "amount": self._expense.amount.primitive,

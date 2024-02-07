@@ -1,10 +1,10 @@
 from typing import Protocol, runtime_checkable
 
-from .entity import Expense
+from .aggregate import Movement
 
 
 @runtime_checkable
-class ExpenseRepository(Protocol):
+class MovementRepository(Protocol):
     # TODO: Use save in other repositories
-    async def save(self, expense: Expense) -> None:
+    async def save(self, movement: Movement) -> None:
         ...
