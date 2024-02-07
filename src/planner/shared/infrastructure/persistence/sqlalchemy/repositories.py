@@ -15,7 +15,7 @@ Aggregate = TypeVar("Aggregate", bound=AggregateRoot)
 
 
 @inject
-class SqlAlcheamyRepository(Generic[ModelType, Aggregate]):
+class SqlAlchemyRepository(Generic[ModelType, Aggregate]):
     """
     CRUD object with default methods to Create, Read, Update, Delete (CRUD).
 
@@ -37,7 +37,7 @@ class SqlAlcheamyRepository(Generic[ModelType, Aggregate]):
         self.session = sqlalchemy_session
 
 
-class SqlAlcheamyCreateMixin(Generic[ModelType]):
+class SqlAlchemyCreateMixin(Generic[ModelType]):
     session: AsyncSession
     model_class: ModelType
 
@@ -48,7 +48,18 @@ class SqlAlcheamyCreateMixin(Generic[ModelType]):
         return None
 
 
-class SqlAlcheamySearchMethodMixin(Generic[Aggregate]):
+class SqlAlchemySaveMixin(Generic[ModelType]):
+    session: AsyncSession
+    model_class: ModelType
+
+    async def save(self, entity: Aggregate) -> None:
+        entity_object = self.model_class.from_entity(entity)
+        self.session.add(entity_object)
+        await self.session.commit()
+        return None
+
+
+class SqlAlchemySearchMethodMixin(Generic[Aggregate]):
     session: AsyncSession
     entity_class: type[Aggregate]
 
@@ -61,7 +72,7 @@ class SqlAlcheamySearchMethodMixin(Generic[Aggregate]):
         return None
 
 
-class SqlAlcheamyFindMixin(SqlAlcheamySearchMethodMixin, Generic[Aggregate]):
+class SqlAlchemyFindMixin(SqlAlchemySearchMethodMixin, Generic[Aggregate]):
     session: AsyncSession
     entity_class: type[Aggregate]
 
@@ -71,7 +82,7 @@ class SqlAlcheamyFindMixin(SqlAlcheamySearchMethodMixin, Generic[Aggregate]):
         return await self._search(stmt)
 
 
-# class SqlAlcheamyGetAllMixin:
+# class SqlAlchemyGetAllMixin:
 #     async def all(self, skip: int = 0, limit: int = 10) -> Tuple[Aggregate]:
 # TODO: Use criteria instead offset and limit
 # TODO: Create SkipValueObject and LimitValueObject

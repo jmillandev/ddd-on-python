@@ -5,15 +5,15 @@ from sqlalchemy import UUID, Boolean, Column, DateTime, Enum, String, select
 
 from src.planner.shared.infrastructure.persistence.sqlalchemy.models import Base
 from src.planner.shared.infrastructure.persistence.sqlalchemy.repositories import (
-    SqlAlcheamyCreateMixin,
-    SqlAlcheamyFindMixin,
-    SqlAlcheamyRepository,
+    SqlAlchemyCreateMixin,
+    SqlAlchemyFindMixin,
+    SqlAlchemyRepository,
 )
 from src.planner.users.domain.entity import User
 from src.planner.users.domain.value_objects import UserEmail, pronoun
 
 
-class SqlAlcheamyUser(Base):
+class SqlAlchemyUser(Base):
     id = Column(UUID, primary_key=True)
     created_at = Column(DateTime(timezone=True), nullable=False)
     email = Column(String(50), nullable=False)
@@ -32,15 +32,15 @@ class SqlAlcheamyUser(Base):
     __tablename__ = "planner__users"
 
 
-class SqlAlcheamyUserRepository(
-    SqlAlcheamyRepository, SqlAlcheamyCreateMixin, SqlAlcheamyFindMixin
+class SqlAlchemyUserRepository(
+    SqlAlchemyRepository, SqlAlchemyCreateMixin, SqlAlchemyFindMixin
 ):
-    model_class = SqlAlcheamyUser
+    model_class = SqlAlchemyUser
     entity_class = User
 
     async def search_by_email(self, email: UserEmail) -> Optional[User]:
         """Search user by email"""
         stmt = (
-            select(SqlAlcheamyUser).where(SqlAlcheamyUser.email == email.value).limit(1)
+            select(SqlAlchemyUser).where(SqlAlchemyUser.email == email.value).limit(1)
         )
         return await self._search(stmt)

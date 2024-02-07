@@ -5,14 +5,17 @@ from src.planner.accounts.application.create.creator import AccountCreator
 from src.planner.accounts.application.find.finder import AccountFinder
 from src.planner.accounts.domain.repository import AccountRepository
 from src.planner.accounts.infrastructure.repositories.sqlalchemy import (
-    SqlAlcheamyAccountRepository,
+    SqlAlchemyAccountRepository,
 )
+from src.planner.expenses.application.add.adder import ExpenseAdder
+from src.planner.expenses.domain.repository import ExpenseRepository
+from src.planner.expenses.infrastructure.repositories.sqlalchemy import SqlAlchemyExpenseRepository
 from src.planner.auth_token.application.create.creator import AuthTokenCreator
 from src.planner.auth_token.domain.encoder import AuthEncoder
 from src.planner.auth_token.domain.repository import AuthCredentialRepository
 from src.planner.auth_token.infrastructure.encoders.jose_jwt import JoseJwtEncoder
 from src.planner.auth_token.infrastructure.repositories.sqlalchemy import (
-    SqlAlcheamyAuthCredentialRepository,
+    SqlAlchemyAuthCredentialRepository,
 )
 from src.planner.shared.domain.bus.command import CommandBus
 from src.planner.shared.domain.bus.query import QueryBus
@@ -30,7 +33,7 @@ from src.planner.shared.infrastructure.persistence.sqlalchemy.session import (
 from src.planner.users.application.register.register import UserRegistrator
 from src.planner.users.domain.repository import UserRepository
 from src.planner.users.infrastructure.repositories.sqlalchemy import (
-    SqlAlcheamyUserRepository,
+    SqlAlchemyUserRepository,
 )
 from src.shared.domain.bus.event.event_bus import EventBus
 
@@ -49,13 +52,17 @@ def init():
     di.factories[AuthTokenCreator] = lambda _: AuthTokenCreator()
     di.factories[
         AuthCredentialRepository
-    ] = lambda _: SqlAlcheamyAuthCredentialRepository()
+    ] = lambda _: SqlAlchemyAuthCredentialRepository()
     # Accounts
     di.factories[AccountCreator] = lambda _: AccountCreator()
     di.factories[AccountFinder] = lambda _: AccountFinder()
-    di.factories[AccountRepository] = lambda _: SqlAlcheamyAccountRepository()
+    di.factories[AccountRepository] = lambda _: SqlAlchemyAccountRepository()
+
+    # Expenses
+    di.factories[ExpenseRepository] = lambda _: SqlAlchemyExpenseRepository()
+    di.factories[ExpenseAdder] = lambda _: ExpenseAdder()
 
     # Users
-    di.factories[UserRepository] = lambda _: SqlAlcheamyUserRepository()
+    di.factories[UserRepository] = lambda _: SqlAlchemyUserRepository()
     di.factories[UserRegistrator] = lambda _: UserRegistrator()
     di[UnidirectionalEncryptor] = BcryptUnidirectionalEncryptor()

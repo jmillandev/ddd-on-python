@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import Self
 
 from src.planner.shared.domain.accounts import AccountId
+from src.planner.shared.domain.users import UserId
 from src.planner.shared.domain.aggregates import AggregateRoot
 
 from .events.added import ExpenseAdded
@@ -38,3 +39,10 @@ class Expense(AggregateRoot):
             )
         )
         return expense
+
+
+# TODO: Add to Expense
+@dataclass
+class Account:
+    id: AccountId
+    owner_id: UserId

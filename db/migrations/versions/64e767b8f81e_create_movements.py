@@ -16,8 +16,19 @@ depends_on = None
 
 
 def upgrade() -> None:
-    pass
+    op.create_table(
+        "movements__accounts",
+        sa.Column("id", sa.UUID(), nullable=False),
+        sa.Column("account_id", sa.UUID(), nullable=False),
+        sa.Column("amount", sa.BigInteger(), nullable=False),
+        sa.Column("date", sa.Date(), nullable=False),
+        sa.ForeignKeyConstraint(
+            ["account_id"],
+            ["planner__accounts.id"],
+        ),
+        sa.PrimaryKeyConstraint("id"),
+    )
 
 
 def downgrade() -> None:
-    pass
+    op.drop_table("movements__accounts")

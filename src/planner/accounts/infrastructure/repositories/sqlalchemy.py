@@ -9,13 +9,13 @@ from src.planner.shared.domain.users import UserId
 from src.planner.shared.domain.accounts import AccountId
 from src.planner.shared.infrastructure.persistence.sqlalchemy.models import Base
 from src.planner.shared.infrastructure.persistence.sqlalchemy.repositories import (
-    SqlAlcheamyCreateMixin,
-    SqlAlcheamyRepository,
-    SqlAlcheamySearchMethodMixin,
+    SqlAlchemyCreateMixin,
+    SqlAlchemyRepository,
+    SqlAlchemySearchMethodMixin,
 )
 
 
-class SqlAlcheamyAccount(Base):
+class SqlAlchemyAccount(Base):
     id = Column(UUID, primary_key=True)
     owner_id = Column(UUID)
     name = Column(String)
@@ -25,17 +25,17 @@ class SqlAlcheamyAccount(Base):
 
 
 @inject
-class SqlAlcheamyAccountRepository(
-    SqlAlcheamyRepository, SqlAlcheamySearchMethodMixin, SqlAlcheamyCreateMixin
+class SqlAlchemyAccountRepository(
+    SqlAlchemyRepository, SqlAlchemySearchMethodMixin, SqlAlchemyCreateMixin
 ):
-    model_class = SqlAlcheamyAccount
+    model_class = SqlAlchemyAccount
     entity_class = Account
 
     async def search_by_name_and_owner_id(
         self, name: AccountName, owner_id: UserId
     ) -> Optional[Account]:
         stmt = (
-            select(SqlAlcheamyAccount)
+            select(SqlAlchemyAccount)
             .filter_by(name=name.value, owner_id=owner_id.value)
             .limit(1)
         )
@@ -45,7 +45,7 @@ class SqlAlcheamyAccountRepository(
         self, id: AccountId, owner_id: UserId
     ) -> Optional[Account]:
         stmt = (
-            select(SqlAlcheamyAccount)
+            select(SqlAlchemyAccount)
             .filter_by(id=id.value, owner_id=owner_id.value)
             .limit(1)
         )
