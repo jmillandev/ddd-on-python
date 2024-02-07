@@ -4,11 +4,12 @@ from fastapi import Depends
 from kink import di
 
 from apps.planner.backend.shared.auth import oauth2_scheme
-from src.planner.expenses.application.add.command import AddExpenseCommand
 from src.planner.auth_token.application.find.query import FindAuthTokenQuery
 from src.planner.auth_token.application.shared.response import AuthTokenResponse
+from src.planner.expenses.application.add.command import AddExpenseCommand
 from src.planner.shared.domain.bus.command import CommandBus
 from src.planner.shared.domain.bus.query import QueryBus
+
 from .schemas import AddExpenseSchema
 
 
@@ -22,8 +23,9 @@ async def add(
     """
     Add movement to user's account.
     """
-    auth_token = cast(AuthTokenResponse, await query_bus.ask(FindAuthTokenQuery(access_token=access_token)))
-    command = AddExpenseCommand(
-        **params.to_dict(), id=id, user_id=auth_token.user_id
+    auth_token = cast(
+        AuthTokenResponse,
+        await query_bus.ask(FindAuthTokenQuery(access_token=access_token)),
     )
+    command = AddExpenseCommand(**params.to_dict(), id=id, user_id=auth_token.user_id)
     await command_bus.dispatch(command)

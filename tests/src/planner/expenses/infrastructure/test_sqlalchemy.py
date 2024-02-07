@@ -2,17 +2,15 @@ import pytest
 from kink import di
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.planner.accounts.infrastructure.repositories.sqlalchemy import (
-    SqlAlchemyAccountRepository
-)
-from src.planner.expenses.infrastructure.repositories.sqlalchemy import SqlAlchemyExpenseRepository
-from src.planner.expenses.domain.repository import ExpenseRepository
-from src.planner.users.domain.repository import UserRepository
 from src.planner.accounts.domain.repository import AccountRepository
+from src.planner.expenses.domain.repository import ExpenseRepository
+from src.planner.expenses.infrastructure.repositories.sqlalchemy import (
+    SqlAlchemyExpenseRepository,
+)
+from src.planner.users.domain.repository import UserRepository
+from tests.src.planner.expenses.factories import ExpenseFactory
 from tests.src.planner.shared.factories.accounts import AccountFactory
 from tests.src.planner.users.factories import UserFactory
-from tests.src.planner.expenses.factories import ExpenseFactory
-
 
 pytestmark = pytest.mark.anyio
 
@@ -22,7 +20,7 @@ class TestSqlAlchemyExpenseRepository:
         self.user = UserFactory.build()
         self.account = AccountFactory.build(owner_id=self.user.id.primitive)
         self.expense = ExpenseFactory.build(account_id=self.account.id.primitive)
-    
+
     def test_should_be_a_valid_repository(self):
         assert issubclass(SqlAlchemyExpenseRepository, ExpenseRepository)
 
@@ -38,10 +36,7 @@ class TestSqlAlchemyExpenseRepository:
     ):
         repository = SqlAlchemyExpenseRepository(sqlalchemy_session)
 
-        assert (
-            await repository.search(self.expense.id)
-            is None
-        )
+        assert await repository.search(self.expense.id) is None
 
     async def test_should_return_an_expense_by_id(
         self, sqlalchemy_session: AsyncSession
@@ -53,7 +48,6 @@ class TestSqlAlchemyExpenseRepository:
         await repository.save(self.expense)
         perssisted_expense = await repository.search(self.expense.id)
         assert self.expense == perssisted_expense
-
 
     @pytest.mark.skip(reason="TODO: Return all user expenses.")
     async def test_should_return_all_user_expenses(

@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from typing import Self
 
 from src.planner.shared.domain.accounts import AccountId
-from src.planner.shared.domain.users import UserId
 from src.planner.shared.domain.aggregates import AggregateRoot
+from src.planner.shared.domain.users import UserId
 
 from .events.added import ExpenseAdded
 from .value_objects.amount import ExpenseAmount

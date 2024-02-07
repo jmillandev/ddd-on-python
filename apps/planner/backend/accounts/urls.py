@@ -1,8 +1,8 @@
 from fastapi import APIRouter, status
 
-from .controllers import create, find
 from src.planner.shared.application.accounts.response import AccountResponse
 
+from .controllers import create, find
 
 router = APIRouter()
 
@@ -19,5 +19,5 @@ router.add_api_route(
     methods=["GET"],
     endpoint=find,
     status_code=status.HTTP_200_OK,
-    response_model=AccountResponse
+    response_model=AccountResponse,
 )

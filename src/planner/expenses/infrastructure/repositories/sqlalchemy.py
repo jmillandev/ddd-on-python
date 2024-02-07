@@ -1,14 +1,12 @@
-from typing import Optional
-
 from kink import inject
-from sqlalchemy import UUID, Column, Integer, Date
+from sqlalchemy import UUID, Column, Date, Integer
 
 from src.planner.expenses.domain.entity import Expense
 from src.planner.shared.infrastructure.persistence.sqlalchemy.models import Base
 from src.planner.shared.infrastructure.persistence.sqlalchemy.repositories import (
-    SqlAlchemySaveMixin,
-    SqlAlchemyRepository,
     SqlAlchemyFindMixin,
+    SqlAlchemyRepository,
+    SqlAlchemySaveMixin,
 )
 
 

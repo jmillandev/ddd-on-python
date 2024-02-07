@@ -7,10 +7,11 @@ from apps.planner.backend.shared.auth import oauth2_scheme
 from src.planner.accounts.application.create.command import CreateAccountCommand
 from src.planner.auth_token.application.find.query import FindAuthTokenQuery
 from src.planner.auth_token.application.shared.response import AuthTokenResponse
+from src.planner.shared.application.accounts.query import FindAccountQuery
+from src.planner.shared.application.accounts.response import AccountResponse
 from src.planner.shared.domain.bus.command import CommandBus
 from src.planner.shared.domain.bus.query import QueryBus
-from src.planner.shared.application.accounts.response import AccountResponse
-from src.planner.shared.application.accounts.query import FindAccountQuery
+
 from .schemas import CreateAccountSchema
 
 

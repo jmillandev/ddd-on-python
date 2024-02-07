@@ -2,10 +2,10 @@ import pytest
 from kink import di
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.planner.accounts.domain.repository import AccountRepository
 from src.planner.accounts.infrastructure.repositories.sqlalchemy import (
     SqlAlchemyAccountRepository,
 )
-from src.planner.accounts.domain.repository import AccountRepository
 from src.planner.users.domain.repository import UserRepository
 from tests.src.planner.shared.factories.accounts import AccountFactory
 from tests.src.planner.users.factories import UserFactory
@@ -17,7 +17,7 @@ class TestSqlAlchemyAccountRepository:
     def setup_method(self):
         self.user = UserFactory.build()
         self.account = AccountFactory.build(owner_id=self.user.id.primitive)
-    
+
     def test_should_be_a_valid_repository(self):
         assert issubclass(SqlAlchemyAccountRepository, AccountRepository)
 

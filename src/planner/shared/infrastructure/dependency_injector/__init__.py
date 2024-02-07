@@ -7,15 +7,17 @@ from src.planner.accounts.domain.repository import AccountRepository
 from src.planner.accounts.infrastructure.repositories.sqlalchemy import (
     SqlAlchemyAccountRepository,
 )
-from src.planner.expenses.application.add.adder import ExpenseAdder
-from src.planner.expenses.domain.repository import ExpenseRepository
-from src.planner.expenses.infrastructure.repositories.sqlalchemy import SqlAlchemyExpenseRepository
 from src.planner.auth_token.application.create.creator import AuthTokenCreator
 from src.planner.auth_token.domain.encoder import AuthEncoder
 from src.planner.auth_token.domain.repository import AuthCredentialRepository
 from src.planner.auth_token.infrastructure.encoders.jose_jwt import JoseJwtEncoder
 from src.planner.auth_token.infrastructure.repositories.sqlalchemy import (
     SqlAlchemyAuthCredentialRepository,
+)
+from src.planner.expenses.application.add.adder import ExpenseAdder
+from src.planner.expenses.domain.repository import ExpenseRepository
+from src.planner.expenses.infrastructure.repositories.sqlalchemy import (
+    SqlAlchemyExpenseRepository,
 )
 from src.planner.shared.domain.bus.command import CommandBus
 from src.planner.shared.domain.bus.query import QueryBus
