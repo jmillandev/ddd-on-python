@@ -21,11 +21,18 @@ class TestSqlAlchemyAccountRepository:
     def test_should_be_a_valid_repository(self):
         assert issubclass(SqlAlchemyAccountRepository, AccountRepository)
 
-    async def test_should_create_a_account(self, sqlalchemy_session: AsyncSession):
+    async def test_should_create_an_account(self, sqlalchemy_session: AsyncSession):
         repository = SqlAlchemyAccountRepository(sqlalchemy_session)
         await di[UserRepository].create(self.user)  # type:ignore [type-abstract]
 
-        await repository.create(self.account)
+        await repository.save(self.account)
+
+    async def test_should_update_an_account(self, sqlalchemy_session: AsyncSession):
+        repository = SqlAlchemyAccountRepository(sqlalchemy_session)
+        await di[UserRepository].create(self.user)  # type:ignore [type-abstract]
+
+        await repository.save(self.account)
+        await repository.save(self.account)
 
     async def test_should_not_return_a_non_existing_account(
         self, sqlalchemy_session: AsyncSession
@@ -51,7 +58,7 @@ class TestSqlAlchemyAccountRepository:
         repository = SqlAlchemyAccountRepository(sqlalchemy_session)
         await di[UserRepository].create(self.user)  # type:ignore [type-abstract]
 
-        await repository.create(self.account)
+        await repository.save(self.account)
         perssisted_account = await repository.search_by_name_and_owner_id(
             self.account.name, self.account.owner_id
         )
@@ -63,7 +70,7 @@ class TestSqlAlchemyAccountRepository:
         repository = SqlAlchemyAccountRepository(sqlalchemy_session)
         await di[UserRepository].create(self.user)  # type:ignore [type-abstract]
 
-        await repository.create(self.account)
+        await repository.save(self.account)
         perssisted_account = await repository.search_by_id_and_owner_id(
             self.account.id, self.account.owner_id
         )

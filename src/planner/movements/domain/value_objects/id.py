@@ -1,5 +1,5 @@
 from src.planner.shared.domain.value_objects.uuid import UuidValueObject
 
 
-class ExpenseId(UuidValueObject):
+class MovementId(UuidValueObject):
     NAME = "id"

@@ -48,6 +48,16 @@ class SqlAlchemyCreateMixin(Generic[ModelType]):
         return None
 
 
+class SqlAlchemySaveMixin(Generic[ModelType]):
+    session: AsyncSession
+    model_class: ModelType
+
+    async def save(self, entity: Aggregate) -> None:
+        entity_object = self.model_class.from_entity(entity)
+        await self.session.merge(entity_object)
+        await self.session.commit()
+
+
 class SqlAlchemySearchMethodMixin(Generic[Aggregate]):
     session: AsyncSession
     entity_class: type[Aggregate]

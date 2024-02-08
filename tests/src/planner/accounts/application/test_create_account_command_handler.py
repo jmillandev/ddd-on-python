@@ -43,7 +43,7 @@ class TestCreateAccountCommandHandler:
 
         await self.handler(command)
 
-        self._repository.create.assert_called_once_with(account)
+        self._repository.save.assert_called_once_with(account)
         self._event_bus.publish.assert_called_once_with(account_created)
 
     async def test_should_raise_error_name_already_registered(self) -> None:
@@ -58,5 +58,5 @@ class TestCreateAccountCommandHandler:
 
         assert isinstance(excinfo.value, DomainException)
         assert excinfo.value.source == "name"
-        assert self._repository.create.call_count == 0
+        assert self._repository.save.call_count == 0
         assert self._event_bus.publish.call_count == 0

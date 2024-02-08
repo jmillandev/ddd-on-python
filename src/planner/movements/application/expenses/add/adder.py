@@ -4,9 +4,9 @@ from src.planner.movements.application.auth import MovementAuthorizationService
 from src.planner.movements.domain.expenses.aggregate import ExpenseMovement
 from src.planner.movements.domain.repository import MovementRepository
 from src.planner.movements.domain.value_objects import (
-    ExpenseAmount,
-    ExpenseDate,
-    ExpenseId,
+    MovementAmount,
+    MovementDate,
+    MovementId,
 )
 from src.planner.shared.domain.accounts import AccountId
 from src.planner.shared.domain.users import UserId
@@ -27,9 +27,9 @@ class ExpenseMovementAdder:
 
     async def __call__(
         self,
-        id: ExpenseId,
-        amount: ExpenseAmount,
-        date: ExpenseDate,
+        id: MovementId,
+        amount: MovementAmount,
+        date: MovementDate,
         account_id: AccountId,
         user_id: UserId,
     ) -> None:

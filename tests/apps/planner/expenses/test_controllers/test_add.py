@@ -36,7 +36,7 @@ class TestAddAccountController:
         self, client: AsyncClient, sqlalchemy_session: AsyncSession
     ) -> None:
         await di[UserRepository].create(self._user)  # type: ignore[type-abstract]
-        await di[AccountRepository].create(self._account)  # type: ignore[type-abstract]
+        await di[AccountRepository].save(self._account)  # type: ignore[type-abstract]
         # TODO: Use Factory to create Account
 
         response = await client.post(

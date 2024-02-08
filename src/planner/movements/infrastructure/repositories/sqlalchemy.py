@@ -5,7 +5,7 @@ from sqlalchemy import UUID, Column, Date, Integer, Select, select
 
 from src.planner.movements.domain.aggregate import Movement
 from src.planner.movements.domain.expenses.aggregate import ExpenseMovement
-from src.planner.movements.domain.value_objects.id import ExpenseId
+from src.planner.movements.domain.value_objects.id import MovementId
 from src.planner.shared.application.mappers import dict_to_entity
 from src.planner.shared.infrastructure.persistence.sqlalchemy.models import Base
 from src.planner.shared.infrastructure.persistence.sqlalchemy.repositories import (
@@ -31,7 +31,7 @@ class SqlAlchemyMovementRepository(SqlAlchemyRepository):
         await self.session.commit()
         return None
 
-    async def search(self, id: ExpenseId) -> Optional[ExpenseMovement]:
+    async def search(self, id: MovementId) -> Optional[ExpenseMovement]:
         """Search object by id"""
         stmt = select(self.model_class).where(self.model_class.id == id.value).limit(1)  # type: ignore[attr-defined] # noqa: E501
         return await self._search(stmt)

@@ -27,7 +27,7 @@ class TestCreateAccountController:
         self, client: AsyncClient, sqlalchemy_session: AsyncSession
     ) -> None:
         await di[UserRepository].create(self._user)  # type: ignore[type-abstract]
-        await di[AccountRepository].create(self._account)  # type: ignore[type-abstract]
+        await di[AccountRepository].save(self._account)  # type: ignore[type-abstract]
 
         response = await client.get(self._url, auth=AuthAsUser(self._user.id))
 

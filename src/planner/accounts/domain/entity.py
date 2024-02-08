@@ -1,8 +1,9 @@
-from src.planner.accounts.domain.events import AccountCreated
+from src.planner.accounts.domain.events import AccountCreated, AccountBalanceUpdated
 from src.planner.accounts.domain.value_objects import (
     AccountBalance,
     AccountCurrency,
     AccountName,
+    AccountDeltaBalance
 )
 from src.planner.shared.domain.accounts import AccountId
 from src.planner.shared.domain.aggregates import AggregateRoot, aggregate_dataclass
@@ -42,3 +43,15 @@ class Account(AggregateRoot):
             )
         )
         return account
+
+    def update_balance(self, delta_balance: AccountDeltaBalance) -> None:
+        self.balance += delta_balance
+        self._record_event(
+            AccountBalanceUpdated.make(
+                self.id.primitive,
+                owner_id=self.owner_id.primitive,
+                name=self.name.primitive,
+                currency=self.currency.primitive,
+                balance=self.balance.primitive,
+            )
+        )

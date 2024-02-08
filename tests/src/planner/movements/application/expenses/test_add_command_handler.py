@@ -10,7 +10,7 @@ from src.planner.movements.application.expenses.add.command import (
 from src.planner.movements.application.expenses.add.command_handler import (
     AddExpenseMovementCommandHandler,
 )
-from src.planner.movements.domain.expenses.events.added import ExpenseMovementAdded
+from src.planner.shared.domain.movements.events import ExpenseMovementAdded
 from src.planner.movements.domain.repository import MovementRepository
 from src.planner.shared.application.accounts.query import FindAccountQuery
 from src.planner.shared.application.accounts.response import AccountResponse

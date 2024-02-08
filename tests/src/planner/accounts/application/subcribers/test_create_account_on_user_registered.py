@@ -59,5 +59,5 @@ class TestCreateAccountOnUserRegistered:
 
         await self.subscriber(self.event)
 
-        self._repository.create.assert_called_once_with(account)
+        self._repository.save.assert_called_once_with(account)
         self._event_bus.publish.assert_called_once_with(account_created)

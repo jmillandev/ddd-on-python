@@ -29,7 +29,7 @@ class TestSqlAlchemyMovementRepository:
     async def test_should_create_a_movement(self, sqlalchemy_session: AsyncSession):
         repository = SqlAlchemyMovementRepository(sqlalchemy_session)
         await di[UserRepository].create(self.user)  # type:ignore [type-abstract]
-        await di[AccountRepository].create(self.account)  # type:ignore [type-abstract]
+        await di[AccountRepository].save(self.account)  # type:ignore [type-abstract]
 
         await repository.save(self.expense)
 
@@ -45,7 +45,7 @@ class TestSqlAlchemyMovementRepository:
     ):
         repository = SqlAlchemyMovementRepository(sqlalchemy_session)
         await di[UserRepository].create(self.user)  # type:ignore [type-abstract]
-        await di[AccountRepository].create(self.account)  # type:ignore [type-abstract]
+        await di[AccountRepository].save(self.account)  # type:ignore [type-abstract]
 
         await repository.save(self.expense)
         perssisted_expense = await repository.search(self.expense.id)

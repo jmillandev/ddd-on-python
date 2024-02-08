@@ -33,5 +33,5 @@ class AccountCreator:
             raise NameAlreadyRegistered(name)
 
         account = Account.create(id, owner_id, name, currency, balance)
-        await self._repository.create(account)
+        await self._repository.save(account)
         await self._event_bus.publish(*account.pull_domain_events())

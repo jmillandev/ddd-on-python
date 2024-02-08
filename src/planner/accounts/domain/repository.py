@@ -8,7 +8,7 @@ from src.planner.shared.domain.users.id import UserId
 
 @runtime_checkable
 class AccountRepository(Protocol):
-    async def create(self, account: Account) -> None:
+    async def save(self, account: Account) -> None:
         ...
 
     async def search_by_name_and_owner_id(
@@ -19,4 +19,7 @@ class AccountRepository(Protocol):
     async def search_by_id_and_owner_id(
         self, id: AccountId, owner_id: UserId
     ) -> Optional[Account]:
+        ...
+
+    async def search(self, id: AccountId) -> Optional[Account]:
         ...

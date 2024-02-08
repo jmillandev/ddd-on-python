@@ -9,9 +9,9 @@ from src.planner.shared.domain.accounts import AccountId
 from src.planner.shared.domain.users import UserId
 from src.planner.shared.infrastructure.persistence.sqlalchemy.models import Base
 from src.planner.shared.infrastructure.persistence.sqlalchemy.repositories import (
-    SqlAlchemyCreateMixin,
+    SqlAlchemySaveMixin,
     SqlAlchemyRepository,
-    SqlAlchemySearchMethodMixin,
+    SqlAlchemyFindMixin,
 )
 
 
@@ -26,7 +26,7 @@ class SqlAlchemyAccount(Base):
 
 @inject
 class SqlAlchemyAccountRepository(
-    SqlAlchemyRepository, SqlAlchemySearchMethodMixin, SqlAlchemyCreateMixin
+    SqlAlchemyRepository, SqlAlchemyFindMixin, SqlAlchemySaveMixin
 ):
     model_class = SqlAlchemyAccount
     entity_class = Account

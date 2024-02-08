@@ -1,7 +1,7 @@
 from src.planner.shared.domain.value_objects.integer import IntegerValueObject
 
 
-class ExpenseAmount(IntegerValueObject):
+class MovementAmount(IntegerValueObject):
     NAME = "amount"
     MIN_VALUE = 0
 
