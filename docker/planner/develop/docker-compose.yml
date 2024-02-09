@@ -22,6 +22,7 @@ services:
       timeout: 2s
     depends_on:
       - database
+      - document_db
 
   database:
     image: postgres:15
@@ -33,7 +34,19 @@ services:
       - 5433:5432
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
+  document_db:
+    image: mongo:7
+    ports:
+      - 27017:27017
+    volumes:
+      - document-mercury-db:/data/db
+    env_file:
+      - .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
 
 volumes:
   mercury-db:
+  document-mercury-db:
   dependencies:

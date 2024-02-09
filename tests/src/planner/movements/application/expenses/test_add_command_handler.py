@@ -10,13 +10,13 @@ from src.planner.movements.application.expenses.add.command import (
 from src.planner.movements.application.expenses.add.command_handler import (
     AddExpenseMovementCommandHandler,
 )
-from src.planner.shared.domain.movements.events import ExpenseMovementAdded
 from src.planner.movements.domain.repository import MovementRepository
 from src.planner.shared.application.accounts.query import FindAccountQuery
 from src.planner.shared.application.accounts.response import AccountResponse
 from src.planner.shared.application.mappers import entity_to_response
 from src.planner.shared.domain.bus.query import QueryBus
 from src.planner.shared.domain.exceptions.base import DomainException
+from src.planner.shared.domain.movements.events import ExpenseMovementAdded
 from src.shared.domain.bus.event.event_bus import EventBus
 from src.shared.domain.exceptions.not_found import NotFound
 from tests.src.planner.movements.factories import ExpenseMovementFactory

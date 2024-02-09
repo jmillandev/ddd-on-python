@@ -50,9 +50,3 @@ class TestSqlAlchemyMovementRepository:
         await repository.save(self.expense)
         perssisted_expense = await repository.search(self.expense.id)
         assert self.expense == perssisted_expense
-
-    @pytest.mark.skip(reason="TODO: Return all user expenses.")
-    async def test_should_return_all_user_expenses(
-        self, sqlalchemy_session: AsyncSession
-    ):
-        ...

@@ -5,9 +5,12 @@ fastapi~=0.109.1
 uvicorn==0.22.0
 
 # Database
+## POSTGRESQL
 sqlalchemy==2.0.16 # ORM
 alembic==1.11.1 # Migrations
 asyncpg==0.27.0 # Engine
+## MongoDB
+motor==3.3.2
 
 # Cryptography
 bcrypt~=4.1.1

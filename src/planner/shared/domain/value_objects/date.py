@@ -11,7 +11,9 @@ class DateValueObject(ValueObject[date]):
     def _cast(self, value: str) -> date:
         if value is None:
             raise self._fail("Is required")
-        if isinstance(value, self.BASE_TYPE):
+        if isinstance(value, datetime):  # Date is a subclass of datetime
+            return value.date()
+        if isinstance(value, date):
             return value
         try:
             return datetime.strptime(value, DATE_FORMAT).date()

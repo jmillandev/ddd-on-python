@@ -1,9 +1,9 @@
-from src.planner.accounts.domain.events import AccountCreated, AccountBalanceUpdated
+from src.planner.accounts.domain.events import AccountBalanceUpdated, AccountCreated
 from src.planner.accounts.domain.value_objects import (
     AccountBalance,
     AccountCurrency,
+    AccountDeltaBalance,
     AccountName,
-    AccountDeltaBalance
 )
 from src.planner.shared.domain.accounts import AccountId
 from src.planner.shared.domain.aggregates import AggregateRoot, aggregate_dataclass

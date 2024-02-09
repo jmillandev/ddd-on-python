@@ -6,7 +6,6 @@ from src.planner.movements.domain.value_objects.amount import MovementAmount
 from src.planner.movements.domain.value_objects.date import MovementDate
 from src.planner.movements.domain.value_objects.id import MovementId
 from src.planner.shared.domain.accounts import AccountId
-
 from src.planner.shared.domain.movements.events import ExpenseMovementAdded
 
 

@@ -3,13 +3,18 @@ from unittest.mock import ANY, Mock
 import pytest
 from faker import Faker
 
-from src.planner.accounts.application.update_balance.updater import AccountBalanceUpdater
-from src.planner.accounts.application.update_balance.subscribers import DecreaseAccountBalanceOnExpenseAdded
+from src.planner.accounts.application.update_balance.subscribers import (
+    DecreaseAccountBalanceOnExpenseAdded,
+)
+from src.planner.accounts.application.update_balance.updater import (
+    AccountBalanceUpdater,
+)
 from src.planner.accounts.domain.events.balance_updated import AccountBalanceUpdated
 from src.planner.accounts.domain.repository import AccountRepository
 from src.shared.domain.bus.event.event_bus import EventBus
-from tests.src.planner.shared.factories.accounts import AccountFactory
 from tests.src.planner.movements.factories import ExpenseMovementAddedFactory
+from tests.src.planner.shared.factories.accounts import AccountFactory
+
 faker = Faker()
 pytestmark = pytest.mark.anyio
 

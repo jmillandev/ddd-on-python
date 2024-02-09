@@ -8,3 +8,6 @@ class MovementRepository(Protocol):
     # TODO: Use save in other repositories
     async def save(self, movement: Movement) -> None:
         ...
+
+    async def search(self, id: str) -> Movement:
+        ...

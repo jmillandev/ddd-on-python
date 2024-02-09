@@ -6,6 +6,7 @@ from faker import Faker
 from src.planner.shared.infrastructure.dependency_injector import (
     init as init_dependencies,
 )
+from src.planner.shared.infrastructure.persistence.motor.db import database
 from tests.src.planner.shared.infrastructure.persistence.sqlalchemy.session import (
     SqlalchemyAutoRollbackSession,
 )
@@ -28,3 +29,9 @@ def fake() -> Faker:
 async def sqlalchemy_session() -> AsyncGenerator:
     async with SqlalchemyAutoRollbackSession() as session:
         yield session
+
+
+@pytest.mark.asyncio
+@pytest.fixture(scope="function")
+async def motor_database() -> AsyncGenerator:
+    yield database("mercury_test")

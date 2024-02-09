@@ -1,5 +1,5 @@
 from abc import ABCMeta
-from dataclasses import asdict, field, dataclass
+from dataclasses import asdict, dataclass, field
 from typing import Generic, TypeVar
 
 from faker import Faker
@@ -13,6 +13,7 @@ Event = TypeVar("Event", bound=DomainEvent)
 
 fake = Faker()
 
+
 class AggregateRootFactory(Generic[Aggregate], metaclass=ABCMeta):
     _AgregateClass: type[Aggregate]
 
@@ -24,7 +25,7 @@ class AggregateRootFactory(Generic[Aggregate], metaclass=ABCMeta):
         return dict_to_entity(self.to_dict(), self._AgregateClass)
 
     def to_dict(self) -> dict:
-        return asdict(self)  # type: ignore[call-overload]    
+        return asdict(self)  # type: ignore[call-overload]
 
 
 @dataclass
@@ -37,7 +38,7 @@ class EventDomainFactory(Generic[Event], metaclass=ABCMeta):
     @classmethod
     def build(cls, **kwargs) -> Event:
         return cls(**kwargs).event()
-    
+
     def event(self) -> Event:
         return self._EventClass(**self.to_dict())
 

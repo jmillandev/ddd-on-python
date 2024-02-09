@@ -13,9 +13,7 @@ from ..updater import AccountBalanceUpdater
 
 @inject
 class DecreaseAccountBalanceOnExpenseAdded(DomainEventSubscriber):
-    def __init__(
-        self, user_case: AccountBalanceUpdater
-    ) -> None:
+    def __init__(self, user_case: AccountBalanceUpdater) -> None:
         self.user_case = user_case
 
     async def __call__(self, event: DomainEvent) -> None:

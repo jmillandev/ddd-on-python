@@ -4,9 +4,10 @@ from uuid import uuid4
 from faker import Faker
 
 from src.planner.movements.domain.expenses.aggregate import ExpenseMovement
+from src.planner.shared.domain.movements.events import ExpenseMovementAdded
 from src.planner.shared.domain.value_objects.date import DATE_FORMAT
 from tests.src.shared.domain.factories import AggregateRootFactory, EventDomainFactory
-from src.planner.shared.domain.movements.events import ExpenseMovementAdded
+
 fake = Faker()
 
 

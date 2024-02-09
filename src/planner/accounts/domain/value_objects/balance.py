@@ -1,6 +1,8 @@
-from src.planner.shared.domain.value_objects.integer import IntegerValueObject
-from .delta_balance import AccountDeltaBalance
 from typing import Self
+
+from src.planner.shared.domain.value_objects.integer import IntegerValueObject
+
+from .delta_balance import AccountDeltaBalance
 
 
 class AccountBalance(IntegerValueObject):
