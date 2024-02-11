@@ -8,6 +8,7 @@ from src.planner.movements.infrastructure.repositories.motor import (
 from tests.src.planner.movements.factories import (
     ExpenseMovementFactory,
     IncomeMovementFactory,
+    TransferMovementFactory
 )
 
 pytestmark = pytest.mark.anyio
@@ -62,3 +63,22 @@ class TestMotorMovementRepositoryWithIncomes:
         await repository.save(self.income)
         perssisted_income = await repository.search(self.income.id)
         assert self.income == perssisted_income
+
+
+class TestMotorMovementRepositoryWithTransfers:
+    def setup_method(self):
+        self.transfer = TransferMovementFactory.build()
+
+    async def test_should_create_a_transfer(self, motor_database: AgnosticDatabase):
+        repository = MotorMovementRepository(motor_database)
+
+        await repository.save(self.transfer)
+
+    async def test_should_return_an_transfer_by_id(
+        self, motor_database: AgnosticDatabase
+    ):
+        repository = MotorMovementRepository(motor_database)
+
+        await repository.save(self.transfer)
+        perssisted_transfer = await repository.search(self.transfer.id)
+        assert self.transfer == perssisted_transfer
