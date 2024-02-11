@@ -8,7 +8,7 @@ from src.planner.movements.infrastructure.repositories.motor import (
 from tests.src.planner.movements.factories import (
     ExpenseMovementFactory,
     IncomeMovementFactory,
-    TransferMovementFactory
+    TransferMovementFactory,
 )
 
 pytestmark = pytest.mark.anyio

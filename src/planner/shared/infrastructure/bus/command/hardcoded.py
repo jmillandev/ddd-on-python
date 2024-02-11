@@ -13,14 +13,14 @@ from src.planner.movements.application.expenses.add.command_handler import (
 from src.planner.movements.application.incomes.add.command import (
     AddIncomeMovementCommand,
 )
+from src.planner.movements.application.incomes.add.command_handler import (
+    AddIncomeMovementCommandHandler,
+)
 from src.planner.movements.application.transfers.add.command import (
     AddTransferMovementCommand,
 )
 from src.planner.movements.application.transfers.add.command_handler import (
     AddTransferMovementCommandHandler,
-)
-from src.planner.movements.application.incomes.add.command_handler import (
-    AddIncomeMovementCommandHandler,
 )
 from src.planner.shared.domain.bus.command import Command, CommandBus
 from src.planner.shared.domain.bus.command.exceptions import CommandNotRegistered

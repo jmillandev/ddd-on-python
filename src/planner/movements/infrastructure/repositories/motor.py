@@ -5,8 +5,8 @@ from kink import inject
 from src.planner.movements.domain.aggregate import Movement
 from src.planner.movements.domain.expenses.aggregate import ExpenseMovement
 from src.planner.movements.domain.incomes.aggregate import IncomeMovement
-from src.planner.movements.domain.transfers.aggregate import TransferMovement
 from src.planner.movements.domain.repository import MovementRepository
+from src.planner.movements.domain.transfers.aggregate import TransferMovement
 from src.planner.movements.domain.value_objects.id import MovementId
 from src.planner.shared.application.mappers import dict_to_entity
 from src.planner.shared.infrastructure.persistence.motor.repositories import (
@@ -36,4 +36,9 @@ class MotorMovementRepository(MotorRepository):
         if not result:
             return None
 
-        return dict_to_entity(result, self.TYPES[result["_type"]])
+        return dict_to_entity(result, self.TYPES[result["_type"]])  # type: ignore[arg-type]
+
+    def aggregate_to_dict(self, aggregate) -> dict:
+        data = super().aggregate_to_dict(aggregate)
+        data["_type"] = type(aggregate).__name__
+        return data

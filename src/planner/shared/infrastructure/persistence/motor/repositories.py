@@ -47,9 +47,8 @@ class MotorRepository(metaclass=ABCMeta):
             )
         self._collection = self.database.get_collection(self.COLLECTION_NAME)
 
-    def aggregate_to_dict(self, aggregate):
+    def aggregate_to_dict(self, aggregate) -> dict:
         data = asdict(aggregate)
         for key in data:
             data[key] = object_to_mongo_type(data[key].value)
-        data["_type"] = type(aggregate).__name__
         return data
