@@ -1,5 +1,5 @@
 from os import environ
-
+from asyncio import shield
 from kink import di
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -34,11 +34,11 @@ class SqlalchemyAutoRollbackSession:
         return self._session
 
     async def __aexit__(self, exc_type, exc_value, traceback):
-        await self._session.close()
+        await shield(self._session.close())
         self._session = None
         await self._transaction.rollback()
         self._transaction = None
-        await self._connection.close()
+        await shield(self._connection.close())
         self._connection = None
         di.factories[AsyncSession] = self._old_factory
 
