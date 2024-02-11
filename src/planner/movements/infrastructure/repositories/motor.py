@@ -1,4 +1,4 @@
-from typing import Optional, Union
+from typing import Optional
 
 from src.planner.movements.domain.aggregate import Movement
 from src.planner.movements.domain.expenses.aggregate import ExpenseMovement
@@ -24,7 +24,7 @@ class MotorMovementRepository(MotorRepository):
             upsert=True,
         )
 
-    async def search(self, id: MovementId) -> Optional[Union[ExpenseMovement, IncomeMovement]]:
+    async def search(self, id: MovementId) -> Optional[Movement]:
         """Search object by id"""
         result = await self.collection.find_one({"id": id.value})
         if not result:

@@ -8,6 +8,12 @@ from src.planner.movements.application.expenses.add.command import (
 from src.planner.movements.application.expenses.add.command_handler import (
     AddExpenseMovementCommandHandler,
 )
+from src.planner.movements.application.incomes.add.command import (
+    AddIncomeMovementCommand,
+)
+from src.planner.movements.application.incomes.add.command_handler import (
+    AddIncomeMovementCommandHandler,
+)
 from src.planner.shared.domain.bus.command import Command
 from src.planner.shared.domain.bus.command.exceptions import CommandNotRegistered
 from src.planner.users.application.register.command import RegisterUserCommand
@@ -22,6 +28,7 @@ class HardcodedCommandBus:
         RegisterUserCommand: RegisterUserCommandHandler,
         CreateAccountCommand: CreateAccountCommandHandler,
         AddExpenseMovementCommand: AddExpenseMovementCommandHandler,
+        AddIncomeMovementCommand: AddIncomeMovementCommandHandler,
     }
 
     async def dispatch(self, command: Command) -> None:

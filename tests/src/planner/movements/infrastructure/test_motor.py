@@ -20,9 +20,10 @@ class TestMotorMovementRepository:
     async def test_should_not_return_a_non_existing_movement(
         self, motor_database: AgnosticDatabase
     ):
+        movement = ExpenseMovementFactory.build()
         repository = MotorMovementRepository(motor_database)
 
-        assert await repository.search(self.expense.id) is None
+        assert await repository.search(movement.id) is None
 
 
 class TestMotorMovementRepositoryWithExpenses:
