@@ -1,6 +1,10 @@
 from bcrypt import checkpw, gensalt, hashpw
+from kink import inject
+
+from src.planner.shared.domain.encryptors.unidirectional import UnidirectionalEncryptor
 
 
+@inject(alias=UnidirectionalEncryptor)
 class BcryptUnidirectionalEncryptor:
     def encrypt(self, value: str) -> str:
         return hashpw(value.encode(), gensalt()).decode()

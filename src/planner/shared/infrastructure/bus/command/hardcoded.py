@@ -1,3 +1,5 @@
+from kink import inject
+
 from src.planner.accounts.application.create.command import CreateAccountCommand
 from src.planner.accounts.application.create.command_handler import (
     CreateAccountCommandHandler,
@@ -14,7 +16,7 @@ from src.planner.movements.application.incomes.add.command import (
 from src.planner.movements.application.incomes.add.command_handler import (
     AddIncomeMovementCommandHandler,
 )
-from src.planner.shared.domain.bus.command import Command
+from src.planner.shared.domain.bus.command import Command, CommandBus
 from src.planner.shared.domain.bus.command.exceptions import CommandNotRegistered
 from src.planner.users.application.register.command import RegisterUserCommand
 from src.planner.users.application.register.command_handler import (
@@ -22,6 +24,7 @@ from src.planner.users.application.register.command_handler import (
 )
 
 
+@inject(alias=CommandBus)
 class HardcodedCommandBus:
     # TODO: Use dependency injection
     HANDLERS = {

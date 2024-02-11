@@ -14,11 +14,11 @@ from .creator import AccountCreator
 
 @inject
 class CreateAccountCommandHandler:
-    def __init__(self, user_case: AccountCreator) -> None:
-        self.user_case = user_case
+    def __init__(self, use_case: AccountCreator) -> None:
+        self.use_case = use_case
 
     async def __call__(self, command: CreateAccountCommand) -> None:
-        await self.user_case(
+        await self.use_case(
             id=AccountId(command.id),
             owner_id=UserId(command.owner_id),
             name=AccountName(command.name),

@@ -2,12 +2,14 @@ from typing import Optional
 
 from jose import JWTError, jwt
 from jose.jwt import encode
+from kink import inject
 
 from src.planner.auth_token.domain.encoder import AuthEncoder
 from src.planner.shared.config import settings
 
 
-class JoseJwtEncoder(AuthEncoder):
+@inject(alias=AuthEncoder)
+class JoseJwtEncoder:
     _ALGORITHM = "HS256"
 
     def encode(self, payload: dict) -> str:

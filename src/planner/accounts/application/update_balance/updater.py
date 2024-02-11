@@ -7,7 +7,7 @@ from src.planner.shared.domain.accounts import AccountId
 from src.shared.domain.bus.event.event_bus import EventBus
 
 
-@inject
+@inject(use_factory=True)
 class AccountBalanceUpdater:
     def __init__(self, repository: AccountRepository, event_bus: EventBus):
         self._repository = repository

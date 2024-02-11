@@ -1,8 +1,11 @@
 from typing import Optional
 
+from kink import inject
+
 from src.planner.movements.domain.aggregate import Movement
 from src.planner.movements.domain.expenses.aggregate import ExpenseMovement
 from src.planner.movements.domain.incomes.aggregate import IncomeMovement
+from src.planner.movements.domain.repository import MovementRepository
 from src.planner.movements.domain.value_objects.id import MovementId
 from src.planner.shared.application.mappers import dict_to_entity
 from src.planner.shared.infrastructure.persistence.motor.repositories import (
@@ -10,6 +13,7 @@ from src.planner.shared.infrastructure.persistence.motor.repositories import (
 )
 
 
+@inject(alias=MovementRepository, use_factory=True)
 class MotorMovementRepository(MotorRepository):
     COLLECTION_NAME = "planner__movements"
     TYPES = {

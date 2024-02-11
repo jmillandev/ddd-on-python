@@ -5,6 +5,7 @@ from sqlalchemy import UUID, Column, Date, Integer, Select, select
 
 from src.planner.movements.domain.aggregate import Movement
 from src.planner.movements.domain.expenses.aggregate import ExpenseMovement
+from src.planner.movements.domain.repository import MovementRepository
 from src.planner.movements.domain.value_objects.id import MovementId
 from src.planner.shared.application.mappers import dict_to_entity
 from src.planner.shared.infrastructure.persistence.sqlalchemy.models import Base
@@ -21,7 +22,7 @@ class SqlAlchemyExpense(Base):
     __tablename__ = "movements__accounts"
 
 
-@inject
+@inject(alias=MovementRepository, use_factory=True)
 class SqlAlchemyMovementRepository(SqlAlchemyRepository):
     model_class = SqlAlchemyExpense
 

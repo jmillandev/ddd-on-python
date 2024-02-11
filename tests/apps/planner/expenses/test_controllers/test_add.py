@@ -3,6 +3,7 @@ from faker import Faker
 from fastapi import status
 from httpx import AsyncClient
 from kink import di
+from motor.core import AgnosticDatabase
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from apps.planner.backend.config import settings
@@ -33,7 +34,10 @@ class TestAddExpenseMovementController:
         }
 
     async def test_success(
-        self, client: AsyncClient, sqlalchemy_session: AsyncSession
+        self,
+        client: AsyncClient,
+        sqlalchemy_session: AsyncSession,
+        motor_database: AgnosticDatabase,
     ) -> None:
         await di[UserRepository].create(self._user)  # type: ignore[type-abstract]
         await di[AccountRepository].save(self._account)  # type: ignore[type-abstract]
@@ -47,7 +51,10 @@ class TestAddExpenseMovementController:
         assert response.json() is None
 
     async def test_should_return_unauthorized_missing_token(
-        self, client: AsyncClient, sqlalchemy_session: AsyncSession
+        self,
+        client: AsyncClient,
+        sqlalchemy_session: AsyncSession,
+        motor_database: AgnosticDatabase,
     ) -> None:
         response = await client.post(self._url, json=self.params)
 

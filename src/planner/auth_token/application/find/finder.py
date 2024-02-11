@@ -9,7 +9,7 @@ from src.planner.auth_token.domain.value_objects import AuthAccessToken, AuthExp
 from src.planner.shared.domain.users import UserId
 
 
-@inject
+@inject(use_factory=True)
 class AuthTokenFinder:
     def __init__(self, encoder: AuthEncoder):
         self._encoder = encoder

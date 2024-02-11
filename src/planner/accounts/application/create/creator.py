@@ -15,7 +15,7 @@ from src.planner.shared.domain.users import UserId
 from src.shared.domain.bus.event.event_bus import EventBus
 
 
-@inject
+@inject(use_factory=True)
 class AccountCreator:
     def __init__(self, repository: AccountRepository, event_bus: EventBus):
         self._repository = repository

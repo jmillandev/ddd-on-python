@@ -20,15 +20,13 @@ from ..creator import AccountCreator
 
 @inject
 class CreateAccountOnUserRegistered(DomainEventSubscriber):
-    def __init__(
-        self, user_case: AccountCreator, uuid_generator: UuidGenerator
-    ) -> None:
-        self.user_case = user_case
+    def __init__(self, use_case: AccountCreator, uuid_generator: UuidGenerator) -> None:
+        self.use_case = use_case
         self.uuid_generator = uuid_generator
 
     async def __call__(self, event: DomainEvent) -> None:
         if isinstance(event, UserRegistered):
-            await self.user_case(
+            await self.use_case(
                 id=AccountId(self.uuid_generator()),
                 owner_id=UserId(event.aggregate_id),
                 name=AccountName("Main"),

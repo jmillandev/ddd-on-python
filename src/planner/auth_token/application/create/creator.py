@@ -10,7 +10,7 @@ from src.planner.auth_token.domain.value_objects import AuthPassword, AuthUserna
 from src.shared.domain.bus.event.event_bus import EventBus
 
 
-@inject
+@inject(use_factory=True)
 class AuthTokenCreator:
     def __init__(
         self,

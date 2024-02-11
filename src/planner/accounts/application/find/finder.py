@@ -7,7 +7,7 @@ from src.planner.shared.domain.accounts import AccountId
 from src.planner.shared.domain.users import UserId
 
 
-@inject
+@inject(use_factory=True)
 class AccountFinder:
     def __init__(self, repository: AccountRepository):
         self._repository = repository

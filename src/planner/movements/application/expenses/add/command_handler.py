@@ -14,11 +14,11 @@ from .command import AddExpenseMovementCommand
 
 @inject
 class AddExpenseMovementCommandHandler:
-    def __init__(self, user_case: ExpenseMovementAdder) -> None:
-        self.user_case = user_case
+    def __init__(self, use_case: ExpenseMovementAdder) -> None:
+        self.use_case = use_case
 
     async def __call__(self, command: AddExpenseMovementCommand) -> None:
-        await self.user_case(
+        await self.use_case(
             id=MovementId(command.id),
             amount=MovementAmount(command.amount),
             account_id=AccountId(command.account_id),

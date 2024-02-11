@@ -7,7 +7,7 @@ from src.planner.users.domain.exceptions.not_found import UserNotFound
 from src.planner.users.domain.repository import UserRepository
 
 
-@inject
+@inject(use_factory=True)
 class UserFinder:
     def __init__(self, repository: UserRepository):
         self._repository = repository

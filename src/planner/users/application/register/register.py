@@ -14,7 +14,7 @@ from src.planner.users.domain.value_objects import (
 from src.shared.domain.bus.event.event_bus import EventBus
 
 
-@inject
+@inject(use_factory=True)
 class UserRegistrator:
     def __init__(self, repository: UserRepository, event_bus: EventBus):
         self._repository = repository

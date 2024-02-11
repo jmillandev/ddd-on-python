@@ -6,9 +6,7 @@ from starlette.middleware.cors import CORSMiddleware
 from apps.planner.backend.config import settings
 from apps.planner.backend.shared.urls import router
 from src.planner.shared.domain.exceptions.base import DomainException
-from src.planner.shared.infrastructure.dependency_injector import (
-    init as init_dependencies,
-)
+from src.shared.infrastructure.dependency_injector import init as init_dependencies
 
 init_dependencies()
 

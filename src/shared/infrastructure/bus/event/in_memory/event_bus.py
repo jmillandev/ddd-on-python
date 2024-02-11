@@ -2,10 +2,14 @@ from asyncio import gather
 from collections import defaultdict
 from typing import Dict, Set
 
+from kink import inject
+
 from src.shared.domain.bus.event.domain_event import DomainEvent
 from src.shared.domain.bus.event.domain_event_susbcriber import DomainEventSubscriber
+from src.shared.domain.bus.event.event_bus import EventBus
 
 
+@inject(alias=EventBus)
 class InMemoryEventBus:
     _subscriptions: Dict[str, Set[type[DomainEventSubscriber]]]
 

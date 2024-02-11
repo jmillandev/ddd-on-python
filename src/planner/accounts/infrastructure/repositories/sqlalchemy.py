@@ -4,6 +4,7 @@ from kink import inject
 from sqlalchemy import UUID, Column, Integer, String, select
 
 from src.planner.accounts.domain.entity import Account
+from src.planner.accounts.domain.repository import AccountRepository
 from src.planner.accounts.domain.value_objects import AccountName
 from src.planner.shared.domain.accounts import AccountId
 from src.planner.shared.domain.users import UserId
@@ -24,7 +25,7 @@ class SqlAlchemyAccount(Base):
     __tablename__ = "planner__accounts"
 
 
-@inject
+@inject(alias=AccountRepository, use_factory=True)
 class SqlAlchemyAccountRepository(
     SqlAlchemyRepository, SqlAlchemyFindMixin, SqlAlchemySaveMixin
 ):

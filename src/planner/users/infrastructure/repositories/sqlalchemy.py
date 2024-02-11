@@ -1,6 +1,7 @@
 """User respository"""
 from typing import Optional
 
+from kink import inject
 from sqlalchemy import UUID, Boolean, Column, DateTime, Enum, String, select
 
 from src.planner.shared.infrastructure.persistence.sqlalchemy.models import Base
@@ -10,6 +11,7 @@ from src.planner.shared.infrastructure.persistence.sqlalchemy.repositories impor
     SqlAlchemyRepository,
 )
 from src.planner.users.domain.entity import User
+from src.planner.users.domain.repository import UserRepository
 from src.planner.users.domain.value_objects import UserEmail, pronoun
 
 
@@ -32,6 +34,7 @@ class SqlAlchemyUser(Base):
     __tablename__ = "planner__users"
 
 
+@inject(alias=UserRepository, use_factory=True)
 class SqlAlchemyUserRepository(
     SqlAlchemyRepository, SqlAlchemyCreateMixin, SqlAlchemyFindMixin
 ):

@@ -1,9 +1,11 @@
 """User respository"""
 from typing import Optional
 
+from kink import inject
 from sqlalchemy import UUID, Column, String, select
 
 from src.planner.auth_token.domain.entity import AuthCredential
+from src.planner.auth_token.domain.repository import AuthCredentialRepository
 from src.planner.auth_token.domain.value_objects import AuthPassword, AuthUsername
 from src.planner.shared.domain.users import UserId
 from src.planner.shared.infrastructure.persistence.sqlalchemy.models import Base
@@ -19,6 +21,7 @@ class SqlAlchemyAuthCredential(Base):
     __tablename__ = "planner__auth_credentials"
 
 
+@inject(alias=AuthCredentialRepository, use_factory=True)
 class SqlAlchemyAuthCredentialRepository(SqlAlchemyRepository):
     model_class = SqlAlchemyAuthCredential
     entity_class = AuthCredential
