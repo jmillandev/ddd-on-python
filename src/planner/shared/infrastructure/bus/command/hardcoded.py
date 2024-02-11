@@ -13,6 +13,12 @@ from src.planner.movements.application.expenses.add.command_handler import (
 from src.planner.movements.application.incomes.add.command import (
     AddIncomeMovementCommand,
 )
+from src.planner.movements.application.transfers.add.command import (
+    AddTransferMovementCommand,
+)
+from src.planner.movements.application.transfers.add.command_handler import (
+    AddTransferMovementCommandHandler,
+)
 from src.planner.movements.application.incomes.add.command_handler import (
     AddIncomeMovementCommandHandler,
 )
@@ -32,6 +38,7 @@ class HardcodedCommandBus:
         CreateAccountCommand: CreateAccountCommandHandler,
         AddExpenseMovementCommand: AddExpenseMovementCommandHandler,
         AddIncomeMovementCommand: AddIncomeMovementCommandHandler,
+        AddTransferMovementCommand: AddTransferMovementCommandHandler,
     }
 
     async def dispatch(self, command: Command) -> None:
