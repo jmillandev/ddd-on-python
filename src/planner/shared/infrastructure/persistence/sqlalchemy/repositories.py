@@ -26,45 +26,48 @@ class SqlAlchemyRepository(Generic[ModelType, Aggregate]):
     model_class: ModelType
     entity_class: type[Aggregate]
 
-    def __init__(self, sqlalchemy_session: AsyncSession):
+    def __init__(self, sqlalchemy_sessionmaker: type[AsyncSession]):
         """
         CRUD object with default methods to Create, Read, Update, Delete (CRUD).
 
         **Parameters**
 
-        * `sqlalchemy_session`: A SQLAlchemy database session object.
+        * `sqlalchemy_sessionmaker`: A SQLAlchemy database session object.
         """
-        self.session = sqlalchemy_session
+        self.sessionmaker = sqlalchemy_sessionmaker
 
 
 class SqlAlchemyCreateMixin(Generic[ModelType]):
-    session: AsyncSession
+    sessionmaker: type[AsyncSession]
     model_class: ModelType
 
     async def create(self, entity: Aggregate) -> None:
         entity_object = self.model_class.from_entity(entity)
-        self.session.add(entity_object)
-        await self.session.commit()
+        async with self.sessionmaker() as session:
+            session.add(entity_object)
+            await session.commit()
         return None
 
 
 class SqlAlchemySaveMixin(Generic[ModelType]):
-    session: AsyncSession
+    sessionmaker: type[AsyncSession]
     model_class: ModelType
 
     async def save(self, entity: Aggregate) -> None:
         entity_object = self.model_class.from_entity(entity)
-        await self.session.merge(entity_object)
-        await self.session.commit()
+        async with self.sessionmaker() as session:
+            await session.merge(entity_object)
+            await session.commit()
 
 
 class SqlAlchemySearchMethodMixin(Generic[Aggregate]):
-    session: AsyncSession
+    sessionmaker: type[AsyncSession]
     entity_class: type[Aggregate]
 
     async def _search(self, stmt: Select) -> Optional[Aggregate]:
         """Search object by select statement"""
-        result = await self.session.execute(stmt)
+        async with self.sessionmaker() as session:
+            result = await session.execute(stmt)
         data = result.scalars().first()
         if data:
             return dict_to_entity(data.to_dict(), self.entity_class)
@@ -72,7 +75,7 @@ class SqlAlchemySearchMethodMixin(Generic[Aggregate]):
 
 
 class SqlAlchemyFindMixin(SqlAlchemySearchMethodMixin, Generic[Aggregate]):
-    session: AsyncSession
+    sessionmaker: type[AsyncSession]
     entity_class: type[Aggregate]
 
     async def search(self, id: UuidValueObject) -> Optional[Aggregate]:
@@ -88,7 +91,7 @@ class SqlAlchemyFindMixin(SqlAlchemySearchMethodMixin, Generic[Aggregate]):
 # stmt = select(self.model).offset(skip)
 # if limit is not None:
 #     stmt = stmt.limit(limit)
-# result = await self.session.execute(stmt)
+# result = await self.sessionmaker.execute(stmt)
 # return tuple(
 #     dict_to_entity(data.to_dict(), self.entity_class)
 #     for data in result.scalars().all()

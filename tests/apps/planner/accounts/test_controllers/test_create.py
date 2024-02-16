@@ -28,7 +28,7 @@ class TestCreateAccountController:
         }
 
     async def test_success(
-        self, client: AsyncClient, sqlalchemy_session: AsyncSession
+        self, client: AsyncClient, sqlalchemy_sessionmaker: type[AsyncSession]
     ) -> None:
         await di[UserRepository].create(self._user)  # type: ignore[type-abstract]
 
@@ -40,7 +40,7 @@ class TestCreateAccountController:
         assert response.json() is None
 
     async def test_should_return_unauthorized_missing_token(
-        self, client: AsyncClient, sqlalchemy_session: AsyncSession
+        self, client: AsyncClient, sqlalchemy_sessionmaker: type[AsyncSession]
     ) -> None:
         response = await client.post(self._url, json=self.params)
 

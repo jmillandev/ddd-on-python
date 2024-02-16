@@ -1,5 +1,6 @@
-from asyncio import shield
+from contextlib import asynccontextmanager
 from os import environ
+from typing import Any
 
 from kink import di
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -7,6 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from src.planner.shared.infrastructure.persistence.sqlalchemy.session import (
     SqlAlchemySession,
     engine,
+    sessionmaker,
 )
 
 
@@ -16,32 +18,29 @@ class SqlalchemyAutoRollbackSession:
         Database dependency
         :param session: AsyncSession is used for testing
         """
-        self._session = None
         self._connection = None
         self._transaction = None
 
-    async def __aenter__(self) -> AsyncSession:
-        self._old_factory = di.factories[AsyncSession]
-        di.factories[AsyncSession] = get_session
+    async def begin(self):
+        self._old_factory = di.factories[type[AsyncSession]]
+        di.factories[type[AsyncSession]] = get_sessionmaker
         if self._connection is not None:
             raise RuntimeError("Already exists a connection!")
-
         self._connection = await engine.connect()
+        di[current_test()] = self._connection
         self._transaction = await self._connection.begin()
-        self._session = SqlAlchemySession(
-            bind=self._connection, join_transaction_mode="create_savepoint"
-        )
-        di[current_test()] = self._session
-        return self._session
 
-    async def __aexit__(self, exc_type, exc_value, traceback):
-        await shield(self._session.close())
-        self._session = None
+    @asynccontextmanager
+    async def __call__(self) -> Any:
+        async with SqlAlchemySession(bind=self._connection) as session:
+            yield session
+
+    async def roolback(self):
         await self._transaction.rollback()
         self._transaction = None
-        await shield(self._connection.close())
+        await self._connection.close()
         self._connection = None
-        di.factories[AsyncSession] = self._old_factory
+        di.factories[type[AsyncSession]] = self._old_factory
 
 
 def current_test() -> str:
@@ -51,3 +50,11 @@ def current_test() -> str:
 def get_session(di):
     test = current_test()
     return di[test]
+
+
+def get_sessionmaker(di):
+    test = current_test()
+    LocalSession = sessionmaker()
+    conection = di[test]
+    LocalSession.configure(bind=conection)
+    return LocalSession

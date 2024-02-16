@@ -24,7 +24,7 @@ class TestCreateAccountController:
         self._url = f"{settings.API_PREFIX}/v1/accounts/{self._account.id.primitive}"
 
     async def test_success(
-        self, client: AsyncClient, sqlalchemy_session: AsyncSession
+        self, client: AsyncClient, sqlalchemy_sessionmaker: type[AsyncSession]
     ) -> None:
         await di[UserRepository].create(self._user)  # type: ignore[type-abstract]
         await di[AccountRepository].save(self._account)  # type: ignore[type-abstract]
@@ -41,7 +41,7 @@ class TestCreateAccountController:
         }
 
     async def test_should_return_not_found(
-        self, client: AsyncClient, sqlalchemy_session: AsyncSession
+        self, client: AsyncClient, sqlalchemy_sessionmaker: type[AsyncSession]
     ) -> None:
         response = await client.get(self._url, auth=AuthAsUser(self._user.id))
 
@@ -55,7 +55,7 @@ class TestCreateAccountController:
         assert error_response["source"] == "unknown"
 
     async def test_should_return_unauthorized_missing_token(
-        self, client: AsyncClient, sqlalchemy_session: AsyncSession
+        self, client: AsyncClient, sqlalchemy_sessionmaker: type[AsyncSession]
     ) -> None:
         response = await client.get(self._url)
 

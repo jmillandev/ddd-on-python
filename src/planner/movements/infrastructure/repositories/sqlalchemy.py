@@ -28,8 +28,9 @@ class SqlAlchemyMovementRepository(SqlAlchemyRepository):
 
     async def save(self, entity: Movement) -> None:
         entity_object = self.model_class.from_entity(entity)
-        self.session.add(entity_object)
-        await self.session.commit()
+        async with self.sessionmaker() as session:
+            session.add(entity_object)
+            await session.commit()
         return None
 
     async def search(self, id: MovementId) -> Optional[ExpenseMovement]:
@@ -39,7 +40,8 @@ class SqlAlchemyMovementRepository(SqlAlchemyRepository):
 
     async def _search(self, stmt: Select) -> Optional[ExpenseMovement]:
         """Search movement by select statement"""
-        result = await self.session.execute(stmt)
+        async with self.sessionmaker() as session:
+            result = await session.execute(stmt)
         data = result.scalars().first()
         if data:
             return dict_to_entity(data.to_dict(), ExpenseMovement)

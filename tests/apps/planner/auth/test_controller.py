@@ -15,7 +15,7 @@ pytestmark = pytest.mark.anyio
 
 
 async def test_success_login(
-    client: AsyncClient, fake, sqlalchemy_session: AsyncSession
+    client: AsyncClient, fake, sqlalchemy_sessionmaker: type[AsyncSession]
 ) -> None:
     password = fake.password()
     user = UserFactory.build(password=password)

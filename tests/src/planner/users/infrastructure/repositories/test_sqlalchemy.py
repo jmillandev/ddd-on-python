@@ -10,14 +10,18 @@ pytestmark = pytest.mark.anyio
 
 
 class TestSqlAlchemyUserRepository:
-    async def test_should_create_a_user(self, sqlalchemy_session: AsyncSession):
-        repository = SqlAlchemyUserRepository(sqlalchemy_session)
+    async def test_should_create_a_user(
+        self, sqlalchemy_sessionmaker: type[AsyncSession]
+    ):
+        repository = SqlAlchemyUserRepository(sqlalchemy_sessionmaker)
         user = UserFactory.build()
 
         await repository.create(user)
 
-    async def test_should_return_a_user_by_id(self, sqlalchemy_session: AsyncSession):
-        repository = SqlAlchemyUserRepository(sqlalchemy_session)
+    async def test_should_return_a_user_by_id(
+        self, sqlalchemy_sessionmaker: type[AsyncSession]
+    ):
+        repository = SqlAlchemyUserRepository(sqlalchemy_sessionmaker)
         user = UserFactory.build()
 
         await repository.create(user)
@@ -25,18 +29,18 @@ class TestSqlAlchemyUserRepository:
         assert user == await repository.search(user.id)
 
     async def test_should_not_return_a_non_existing_user(
-        self, sqlalchemy_session: AsyncSession
+        self, sqlalchemy_sessionmaker: type[AsyncSession]
     ):
-        repository = SqlAlchemyUserRepository(sqlalchemy_session)
+        repository = SqlAlchemyUserRepository(sqlalchemy_sessionmaker)
         user = UserFactory.build()
 
         assert await repository.search(user.id) is None
         assert await repository.search_by_email(user.email) is None
 
     async def test_should_return_a_user_by_email(
-        self, sqlalchemy_session: AsyncSession
+        self, sqlalchemy_sessionmaker: type[AsyncSession]
     ):
-        repository = SqlAlchemyUserRepository(sqlalchemy_session)
+        repository = SqlAlchemyUserRepository(sqlalchemy_sessionmaker)
         user = UserFactory.build()
 
         await repository.create(user)

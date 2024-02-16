@@ -6,4 +6,10 @@ from src.planner.shared.config import settings
 engine = create_async_engine(
     str(settings.DATABASE_URI), echo=True, poolclass=pool.NullPool
 )
-SqlAlchemySession = async_sessionmaker(engine, autoflush=False, expire_on_commit=False)
+
+
+def sessionmaker():
+    return async_sessionmaker(engine, autoflush=False, expire_on_commit=False)
+
+
+SqlAlchemySession = sessionmaker()

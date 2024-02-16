@@ -17,11 +17,15 @@ pytestmark = pytest.mark.anyio
 
 
 class TestSqlAlchemyAuthCredentialRepository:
-    async def test_should_return_a_credentials(self, sqlalchemy_session: AsyncSession):
+    async def test_should_return_a_credentials(
+        self, sqlalchemy_sessionmaker: type[AsyncSession]
+    ):
         # TODO: Create a Credential Table and propagate user changes to it. Actually, the credential table is a view  # noqa:E501
         attrs = UserFactory.to_dict()
-        user_repository = SqlAlchemyUserRepository(sqlalchemy_session)
-        credential_repository = SqlAlchemyAuthCredentialRepository(sqlalchemy_session)
+        user_repository = SqlAlchemyUserRepository(sqlalchemy_sessionmaker)
+        credential_repository = SqlAlchemyAuthCredentialRepository(
+            sqlalchemy_sessionmaker
+        )
         user = UserFactory.build(**attrs)
         credential = AuthCredential(
             user_id=UserId(attrs["id"]),
@@ -33,9 +37,9 @@ class TestSqlAlchemyAuthCredentialRepository:
         assert credential == await credential_repository.search(credential.username)
 
     async def test_should_not_return_a_non_existing_credential(
-        self, sqlalchemy_session: AsyncSession
+        self, sqlalchemy_sessionmaker: type[AsyncSession]
     ):
-        repository = SqlAlchemyAuthCredentialRepository(sqlalchemy_session)
+        repository = SqlAlchemyAuthCredentialRepository(sqlalchemy_sessionmaker)
         credential = AuthCredentialFactory.build()
 
         assert await repository.search(credential.username) is None

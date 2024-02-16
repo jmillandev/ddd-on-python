@@ -36,7 +36,7 @@ class TestAddExpenseMovementController:
     async def test_success(
         self,
         client: AsyncClient,
-        sqlalchemy_session: AsyncSession,
+        sqlalchemy_sessionmaker: type[AsyncSession],
         motor_database: AgnosticDatabase,
     ) -> None:
         await di[UserRepository].create(self._user)  # type: ignore[type-abstract]
@@ -53,7 +53,7 @@ class TestAddExpenseMovementController:
     async def test_should_return_unauthorized_missing_token(
         self,
         client: AsyncClient,
-        sqlalchemy_session: AsyncSession,
+        sqlalchemy_sessionmaker: type[AsyncSession],
         motor_database: AgnosticDatabase,
     ) -> None:
         response = await client.post(self._url, json=self.params)

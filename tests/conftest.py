@@ -25,9 +25,11 @@ def fake() -> Faker:
 
 @pytest.mark.asyncio
 @pytest.fixture(scope="function")
-async def sqlalchemy_session() -> AsyncGenerator:
-    async with SqlalchemyAutoRollbackSession() as session:
-        yield session
+async def sqlalchemy_sessionmaker() -> AsyncGenerator:
+    sessionmaker = SqlalchemyAutoRollbackSession()
+    await sessionmaker.begin()
+    yield sessionmaker
+    await sessionmaker.roolback()
 
 
 @pytest.mark.asyncio

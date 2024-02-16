@@ -21,23 +21,27 @@ class TestSqlAlchemyAccountRepository:
     def test_should_be_a_valid_repository(self):
         assert issubclass(SqlAlchemyAccountRepository, AccountRepository)
 
-    async def test_should_create_an_account(self, sqlalchemy_session: AsyncSession):
-        repository = SqlAlchemyAccountRepository(sqlalchemy_session)
+    async def test_should_create_an_account(
+        self, sqlalchemy_sessionmaker: type[AsyncSession]
+    ):
+        repository = SqlAlchemyAccountRepository(sqlalchemy_sessionmaker)
         await di[UserRepository].create(self.user)  # type:ignore [type-abstract]
 
         await repository.save(self.account)
 
-    async def test_should_update_an_account(self, sqlalchemy_session: AsyncSession):
-        repository = SqlAlchemyAccountRepository(sqlalchemy_session)
+    async def test_should_update_an_account(
+        self, sqlalchemy_sessionmaker: type[AsyncSession]
+    ):
+        repository = SqlAlchemyAccountRepository(sqlalchemy_sessionmaker)
         await di[UserRepository].create(self.user)  # type:ignore [type-abstract]
 
         await repository.save(self.account)
         await repository.save(self.account)
 
     async def test_should_not_return_a_non_existing_account(
-        self, sqlalchemy_session: AsyncSession
+        self, sqlalchemy_sessionmaker: type[AsyncSession]
     ):
-        repository = SqlAlchemyAccountRepository(sqlalchemy_session)
+        repository = SqlAlchemyAccountRepository(sqlalchemy_sessionmaker)
 
         assert (
             await repository.search_by_name_and_owner_id(
@@ -53,9 +57,9 @@ class TestSqlAlchemyAccountRepository:
         )
 
     async def test_should_return_an_account_by_user_and_name(
-        self, sqlalchemy_session: AsyncSession
+        self, sqlalchemy_sessionmaker: type[AsyncSession]
     ):
-        repository = SqlAlchemyAccountRepository(sqlalchemy_session)
+        repository = SqlAlchemyAccountRepository(sqlalchemy_sessionmaker)
         await di[UserRepository].create(self.user)  # type:ignore [type-abstract]
 
         await repository.save(self.account)
@@ -65,9 +69,9 @@ class TestSqlAlchemyAccountRepository:
         assert self.account == perssisted_account
 
     async def test_should_return_an_account_by_id_and_owner_id(
-        self, sqlalchemy_session: AsyncSession
+        self, sqlalchemy_sessionmaker: type[AsyncSession]
     ):
-        repository = SqlAlchemyAccountRepository(sqlalchemy_session)
+        repository = SqlAlchemyAccountRepository(sqlalchemy_sessionmaker)
         await di[UserRepository].create(self.user)  # type:ignore [type-abstract]
 
         await repository.save(self.account)

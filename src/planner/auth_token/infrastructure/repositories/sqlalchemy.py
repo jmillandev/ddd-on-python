@@ -33,7 +33,8 @@ class SqlAlchemyAuthCredentialRepository(SqlAlchemyRepository):
             .where(SqlAlchemyAuthCredential.username == username.value)
             .limit(1)
         )
-        result = await self.session.execute(stmt)
+        async with self.sessionmaker() as session:
+            result = await session.execute(stmt)
         data = result.scalars().first()
         if data:
             return AuthCredential(

@@ -33,7 +33,7 @@ class TestFindController:
         self._user = UserFactory.build()
 
     async def test_success(
-        self, client: AsyncClient, sqlalchemy_session: AsyncSession
+        self, client: AsyncClient, sqlalchemy_sessionmaker: type[AsyncSession]
     ) -> None:
         await di[UserRepository].create(self._user)  # type: ignore[type-abstract]
 
@@ -52,7 +52,7 @@ class TestFindController:
         }
 
     async def test_should_return_unauthorized_missing_token(
-        self, client: AsyncClient, sqlalchemy_session: AsyncSession
+        self, client: AsyncClient, sqlalchemy_sessionmaker: type[AsyncSession]
     ) -> None:
         response = await client.get(f"{settings.API_PREFIX}/v1/users/{self._user.id}")
 
@@ -65,7 +65,7 @@ class TestFindController:
         assert error_response["source"] == "access_token"
 
     async def test_should_return_unauthorized_invalid_token(
-        self, client: AsyncClient, sqlalchemy_session: AsyncSession
+        self, client: AsyncClient, sqlalchemy_sessionmaker: type[AsyncSession]
     ) -> None:
         user = UserFactory.build()
 

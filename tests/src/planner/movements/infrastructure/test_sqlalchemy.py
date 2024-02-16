@@ -26,24 +26,26 @@ class TestSqlAlchemyMovementRepository:
     def test_should_be_a_valid_repository(self):
         assert issubclass(SqlAlchemyMovementRepository, MovementRepository)
 
-    async def test_should_create_a_movement(self, sqlalchemy_session: AsyncSession):
-        repository = SqlAlchemyMovementRepository(sqlalchemy_session)
+    async def test_should_create_a_movement(
+        self, sqlalchemy_sessionmaker: type[AsyncSession]
+    ):
+        repository = SqlAlchemyMovementRepository(sqlalchemy_sessionmaker)
         await di[UserRepository].create(self.user)  # type:ignore [type-abstract]
         await di[AccountRepository].save(self.account)  # type:ignore [type-abstract]
 
         await repository.save(self.expense)
 
     async def test_should_not_return_a_non_existing_expense(
-        self, sqlalchemy_session: AsyncSession
+        self, sqlalchemy_sessionmaker: type[AsyncSession]
     ):
-        repository = SqlAlchemyMovementRepository(sqlalchemy_session)
+        repository = SqlAlchemyMovementRepository(sqlalchemy_sessionmaker)
 
         assert await repository.search(self.expense.id) is None
 
     async def test_should_return_an_expense_by_id(
-        self, sqlalchemy_session: AsyncSession
+        self, sqlalchemy_sessionmaker: type[AsyncSession]
     ):
-        repository = SqlAlchemyMovementRepository(sqlalchemy_session)
+        repository = SqlAlchemyMovementRepository(sqlalchemy_sessionmaker)
         await di[UserRepository].create(self.user)  # type:ignore [type-abstract]
         await di[AccountRepository].save(self.account)  # type:ignore [type-abstract]
 

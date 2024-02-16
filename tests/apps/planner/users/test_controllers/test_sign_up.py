@@ -13,7 +13,7 @@ pytestmark = pytest.mark.anyio
 
 class TestSignUpController:
     async def test_success(
-        self, client: AsyncClient, sqlalchemy_session: AsyncSession
+        self, client: AsyncClient, sqlalchemy_sessionmaker: type[AsyncSession]
     ) -> None:
         params = {
             "id": fake.uuid4(),
