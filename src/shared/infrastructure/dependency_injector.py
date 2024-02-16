@@ -49,6 +49,8 @@ from src.shared.domain.bus.event.domain_event_susbcriber import DomainEventSubsc
 from src.shared.infrastructure.bus.event.in_memory.event_bus import (  # noqa: F401
     InMemoryEventBus,
 )
+from src.planner.users.infrastructure.storages.local import LocalUserFileStorage  # noqa: F401
+from src.planner.users.infrastructure.mime_guessers.magic import MagicMimeGuesser  # noqa: F401
 
 
 def search_subscribers() -> Set[type[DomainEventSubscriber]]:

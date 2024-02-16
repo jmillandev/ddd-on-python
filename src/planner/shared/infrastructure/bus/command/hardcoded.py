@@ -28,6 +28,8 @@ from src.planner.users.application.register.command import RegisterUserCommand
 from src.planner.users.application.register.command_handler import (
     RegisterUserCommandHandler,
 )
+from src.planner.users.application.update_avatar.command import UpdateUserAvatarCommand
+from src.planner.users.application.update_avatar.command_handler import UpdateUserAvatarCommandHandler
 
 
 @inject(alias=CommandBus)
@@ -39,6 +41,7 @@ class HardcodedCommandBus:
         AddExpenseMovementCommand: AddExpenseMovementCommandHandler,
         AddIncomeMovementCommand: AddIncomeMovementCommandHandler,
         AddTransferMovementCommand: AddTransferMovementCommandHandler,
+        UpdateUserAvatarCommand: UpdateUserAvatarCommandHandler,
     }
 
     async def dispatch(self, command: Command) -> None:

@@ -7,7 +7,7 @@ from src.planner.users.domain.value_objects.email import UserEmail
 
 @runtime_checkable
 class UserRepository(Protocol):
-    async def create(self, user: User) -> None:
+    async def save(self, user: User) -> None:
         ...
 
     async def search(self, user_id: UserId) -> Optional[User]:

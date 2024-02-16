@@ -9,6 +9,7 @@ from src.planner.shared.infrastructure.persistence.sqlalchemy.repositories impor
     SqlAlchemyCreateMixin,
     SqlAlchemyFindMixin,
     SqlAlchemyRepository,
+    SqlAlchemySaveMixin
 )
 from src.planner.users.domain.entity import User
 from src.planner.users.domain.repository import UserRepository
@@ -36,7 +37,7 @@ class SqlAlchemyUser(Base):
 
 @inject(alias=UserRepository, use_factory=True)
 class SqlAlchemyUserRepository(
-    SqlAlchemyRepository, SqlAlchemyCreateMixin, SqlAlchemyFindMixin
+    SqlAlchemyRepository, SqlAlchemyCreateMixin, SqlAlchemyFindMixin, SqlAlchemySaveMixin
 ):
     model_class = SqlAlchemyUser
     entity_class = User

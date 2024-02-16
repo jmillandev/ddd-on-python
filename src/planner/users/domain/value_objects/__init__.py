@@ -6,3 +6,4 @@ from .name import UserName  # noqa: F401
 from .password import UserPassword  # noqa: F401
 from .pronoun import UserPronoun  # noqa: F401
 from .updated_at import UserUpdatedAt  # noqa: F401
+from .avatar import UserAvatar  # noqa: F401

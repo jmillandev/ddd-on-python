@@ -11,6 +11,7 @@ from src.planner.users.domain.value_objects import (
     UserName,
     UserPassword,
     UserPronoun,
+    UserAvatar
 )
 
 
@@ -59,3 +60,15 @@ class User(AggregateRoot):
             )
         )
         return user
+
+    async def update_avatar(self, avatar: UserAvatar) -> None:
+        # TODO: Add UserAvatarUpdated 
+        # self._record_event(
+        #     UserAvatarUpdated.make(
+        #         self.id.primitive,
+        #         new_avatar=avatar.url,
+        #         old_avatar=self.avatar.url
+        #     )
+        # )
+        self.avatar = avatar
+        await self.avatar.push()
