@@ -59,7 +59,7 @@ def search_subscribers() -> Set[type[DomainEventSubscriber]]:
 
 
 def init(dependency_injector: Container = di) -> None:
-    dependency_injector.factories[type[AsyncSession]] = lambda _: SqlAlchemySession
+    dependency_injector.factories[type[AsyncSession]] = lambda _: SqlAlchemySession  # type: ignore[misc]  # noqa: E501
     # TODO: I'm not sure if this is the best way. Maybe this will to create a
     # new connection every time it's called
     dependency_injector.factories[AgnosticDatabase] = lambda _: database()

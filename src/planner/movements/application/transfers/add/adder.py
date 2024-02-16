@@ -1,3 +1,5 @@
+from asyncio import gather
+
 from kink import inject
 
 from src.planner.movements.application.auth import MovementAuthorizationService
@@ -34,9 +36,11 @@ class TransferMovementAdder:
         destination_id: AccountId,
         user_id: UserId,
     ) -> None:
-        # TODO: Use gather to improve performance - https://github.com/sqlalchemy/sqlalchemy/discussions/9312  # noqa: E501
-        await self._auth_service.ensure_user_is_account_owner(origin_id, user_id)
-        await self._auth_service.ensure_user_is_account_owner(destination_id, user_id)
+        coros = [
+            self._auth_service.ensure_user_is_account_owner(origin_id, user_id),
+            self._auth_service.ensure_user_is_account_owner(destination_id, user_id),
+        ]
+        await gather(*coros)
         expense = TransferMovement.add(id, amount, origin_id, destination_id, date)
         await self._repository.save(expense)
         await self._event_bus.publish(*expense.pull_domain_events())

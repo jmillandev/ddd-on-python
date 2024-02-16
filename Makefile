@@ -8,6 +8,7 @@ dev:
 	./init.sh run --rm planner_api $(command)
 
 up:
+	make migrate
 	uvicorn apps.planner.backend.server:app --reload --workers 1 --host 0.0.0.0 --port 8080	
 
 psql:
