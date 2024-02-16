@@ -55,7 +55,7 @@ class TestCreateAccountOnUserRegistered:
             balance=account.balance.primitive,
         )
 
-        assert self.event.__class__ in self.subscriber.subscribed_to()
+        assert self.event.__class__ is self.subscriber.subscribed_to()
 
         await self.subscriber(self.event)
 

@@ -1,5 +1,3 @@
-from typing import Set
-
 from kink import inject
 
 from src.planner.accounts.domain.value_objects import (
@@ -37,5 +35,5 @@ class CreateAccountOnUserRegistered(DomainEventSubscriber):
         raise RuntimeError
 
     @staticmethod
-    def subscribed_to() -> Set[type[DomainEvent]]:
-        return {UserRegistered}
+    def subscribed_to() -> type[DomainEvent]:
+        return UserRegistered

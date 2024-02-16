@@ -1,4 +1,4 @@
-from typing import Protocol, Set, runtime_checkable
+from typing import Protocol, runtime_checkable
 
 from .domain_event import DomainEvent
 
@@ -9,5 +9,5 @@ class DomainEventSubscriber(Protocol):
         ...
 
     @staticmethod
-    def subscribed_to() -> Set[type[DomainEvent]]:
+    def subscribed_to() -> type[DomainEvent]:
         ...

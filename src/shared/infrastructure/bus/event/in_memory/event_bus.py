@@ -16,8 +16,7 @@ class InMemoryEventBus:
     def __init__(self, subscribers: Set[type[DomainEventSubscriber]]) -> None:
         self._subscriptions = defaultdict(set)
         for subscriber in subscribers:
-            for event_klass in subscriber.subscribed_to():
-                self._subscriptions[event_klass.event_name()].add(subscriber)
+            self._subscriptions[subscriber.subscribed_to().event_name()].add(subscriber)
 
     async def publish(self, *events: DomainEvent) -> None:
         coros = set()

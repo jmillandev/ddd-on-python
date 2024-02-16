@@ -1,5 +1,3 @@
-from typing import Set
-
 from kink import inject
 
 from src.planner.accounts.domain.value_objects.delta_balance import AccountDeltaBalance
@@ -26,5 +24,5 @@ class IncreaseAccountBalanceOnIncomeAdded(DomainEventSubscriber):
         raise RuntimeError
 
     @staticmethod
-    def subscribed_to() -> Set[type[DomainEvent]]:
-        return {IncomeMovementAdded}
+    def subscribed_to() -> type[DomainEvent]:
+        return IncomeMovementAdded
